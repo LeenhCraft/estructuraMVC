@@ -1,7 +1,7 @@
 <?php
 //definimos la url general en base al server
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-    define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/lnh/web/");
+    define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/lnh/estructuraMVC/");
 } else {
     define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . '/');
 }

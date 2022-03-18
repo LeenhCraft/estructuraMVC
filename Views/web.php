@@ -1,3 +1,6 @@
 <?php headerWeb($data); ?>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis porro nobis laboriosam ex veniam dolorem officia architecto, alias numquam a dolore, est iste mollitia eos accusantium, dolores facere quis nam.
+<div class="container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus tenetur ab, ullam totam commodi recusandae laboriosam incidunt autem. Ducimus praesentium culpa neque. Fuga ipsam beatae officia aliquid ipsa eius incidunt.</p>
+    
+</div>
 <?php footerWeb($data); ?>

@@ -26,8 +26,10 @@
   <meta name="twitter:image" content="">
 
   <?php
-  if (!empty($data['stilos'])) {
-    echo $data['stilos'];
+  if (isset($data['css']) && !empty($data['css'])) {
+    for ($i = 0; $i < count($data['css']); $i++) {
+      echo '<link rel="stylesheet" type="text/css" href="' . media() . $data['css'][$i] . '">';
+    }
   }
   ?>
 
