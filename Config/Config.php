@@ -11,9 +11,9 @@ date_default_timezone_set('America/Lima');
 
 //Datos de conexión a Base de Datos
 const DB_HOST = "localhost";
-const DB_NAME = "db";
-const DB_USER = "root";
-const DB_PASSWORD = "";
+const DB_NAME = "db_project";
+const DB_USER = "db_leenh";
+const DB_PASSWORD = "321321";
 const DB_CHARSET = "charset=utf8";
 
 //Deliminadores decimal y millar Ej. 24,1989.00

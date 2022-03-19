@@ -24,6 +24,7 @@
   <meta name="twitter:title" content="">
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
+  <link rel="stylesheet" href="<?php echo media() . 'css/bootstrap.css'; ?>">
 
   <?php
   if (isset($data['css']) && !empty($data['css'])) {

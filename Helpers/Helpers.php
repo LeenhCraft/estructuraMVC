@@ -150,6 +150,7 @@ function enviarEmail($data, $template)
     $mail = new PHPMailer(true);
     $emailDestino = $data['email'];
     $asunto = $data['asunto'];
+    $nombre = 'leenh';
     ob_start();
     require_once("Views/Template/Email/" . $template . ".php");
     $mensaje = ob_get_clean();
@@ -158,19 +159,21 @@ function enviarEmail($data, $template)
 
     try {
         //Server settings
-        // $mail->SMTPDebug = 0 o 1;
+        // $mail->SMTPDebug = mostrar debug: 0 no mostrar: 1;
         $mail->SMTPDebug = 0;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        // $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->Host       = 'mail.leenhcraft.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = '2018100486facke@gmail.com';                     //SMTP username
-        $mail->Password   = 'DJ-leenh-#1';                               //SMTP password
+        $mail->Username   = 'no-reply@leenhcraft.com';                     //SMTP username
+        $mail->Password   = '*Fqn[JA$TNj+';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
 
         //Recipients
-        $mail->setFrom('2018100486facke@gmail.com', 'Servidor Local');
-        $mail->addAddress($emailDestino, 'Joe User');     //Add a recipient
+        $mail->setFrom('no-reply@leenhcraft.com', $asunto);
+        $mail->addAddress($emailDestino, $nombre);     //Add a recipient
         // $mail->addAddress('ellen@example.com');               //Name is optional
         // $mail->addReplyTo('info@example.com', 'Information');
         // $mail->addCC('cc@example.com');
