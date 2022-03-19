@@ -1,8 +1,11 @@
 <script>
     const base_url = "<?php echo base_url(); ?>";
 </script>
-<script src="<?php echo media() . 'js/bootstrap.min.js'; ?>"></script>
-<script src="<?php echo media() . 'js/jquery.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/jquery.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/popper.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/bootstrap.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/font.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/sweetalert2.all.min.js'; ?>"></script>
 
 <?php
 if (isset($data['js']) && !empty($data['js'])) {

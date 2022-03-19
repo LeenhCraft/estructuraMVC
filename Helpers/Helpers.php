@@ -150,7 +150,7 @@ function enviarEmail($data, $template)
     $mail = new PHPMailer(true);
     $emailDestino = $data['email'];
     $asunto = $data['asunto'];
-    $nombre = 'leenh';
+    $nombre = $data['nombre'];;
     ob_start();
     require_once("Views/Template/Email/" . $template . ".php");
     $mensaje = ob_get_clean();
@@ -172,7 +172,7 @@ function enviarEmail($data, $template)
         $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
 
         //Recipients
-        $mail->setFrom('no-reply@leenhcraft.com', $asunto);
+        $mail->setFrom('no-reply@leenhcraft.com', NOMBRE_EMPRESA);
         $mail->addAddress($emailDestino, $nombre);     //Add a recipient
         // $mail->addAddress('ellen@example.com');               //Name is optional
         // $mail->addReplyTo('info@example.com', 'Information');

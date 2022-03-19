@@ -5,9 +5,8 @@
   <meta charset="utf-8">
   <title><?php echo $data['titulo_web']; ?></title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="<?php echo $data['meta_content']; ?>" name="keywords">
   <meta content="" name="description">
-  <link rel="icon" type="image/png" href="<?php echo media(); ?>images/logo.png">
+  <link rel="icon" type="image/png" href="<?php echo media(); ?>img/logo.png">
 
   <meta name="Author" lang="es" content="leenhcraft.com">
 
@@ -24,7 +23,9 @@
   <meta name="twitter:title" content="">
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
-  <link rel="stylesheet" href="<?php echo media() . 'css/bootstrap.css'; ?>">
+  <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>">
+  <link rel="stylesheet" href="<?php echo media() . 'css/plugins/all.min.css'; ?>">
+  <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
 
   <?php
   if (isset($data['css']) && !empty($data['css'])) {

@@ -15,36 +15,35 @@ class Login extends Controllers
     public function login()
     {
         $data['tag_page']     = "Login - Biblio Web 2.0";
-        $data['page_title']   = "Biblio Web";
+        $data['titulo_web']   = "Biblio Web";
         $data['page_name']    = "login";
-        $data['page_functions_js'] = "functions_login.js";
+        $data['css'] = ['css/custom.css'];
+        $data['js'] = ['js/app/fn_lg.js'];
         $this->views->getView($this, "login", $data);
     }
 
     public function loginUser()
     {
-        //dep($_POST);
         if ($_POST) {
-            if (empty($_POST['txtEmail']) || empty($_POST['txtPassword'])) {
-                $arrResponse = array('status' => false, 'msg' => 'Error de datos');
+            if (empty($_POST['usuario']) || empty($_POST['pass'])) {
+                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No deje campos vacios');
             } else {
-                $strUsuario  =  strtolower(strClean($_POST['txtEmail']));
-                $strPassword = hash("SHA256", $_POST['txtPassword']);
+                $strUsuario  =  strtolower(strClean($_POST['usuario']));
+                $strPassword = hash("SHA256", $_POST['pass']);
                 $requestUser = $this->model->loginUser($strUsuario, $strPassword);
                 if (empty($requestUser)) {
-                    $arrResponse = array('status' => false, 'msg' => 'El usuario o la contraseña es incorrecto.');
+                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario o contraseña incorrectas');
                 } else {
                     $arrData = $requestUser;
-                    if ($arrData['usu_estado'] == 1) {
-                        $_SESSION['idUser'] = $arrData['usu_id'];
-                        $_SESSION['login'] = true;
-
-                        $arrData = $this->model->sessionLogin($_SESSION['idUser']);
-                        //$_SESSION['userData'] = $arrData;
-
-                        $arrResponse = array('status' => true, 'msg' => 'ok');
+                    if ($arrData['usu_activo'] == 1 && $arrData['usu_estado'] == 1) {
+                        // $_SESSION['idUser'] = $arrData['usu_id'];
+                        // $_SESSION['login'] = true;
+                        // $arrData = $this->model->sessionLogin($_SESSION['idUser']);
+                        $arrResponse = array('status' => false, 'icon' => 'success', 'text' => 'Bienvenido');
+                    } else if ($arrData['usu_activo'] == 0 && $arrData['usu_estado'] == 1) {
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario sin confirmar, revise su email para confirmar su cuenta.');
                     } else {
-                        $arrResponse = array('status' => false, 'msg' => 'Usuario inactivo.');
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario bloqueado');
                     }
                 }
             }
@@ -52,6 +51,84 @@ class Login extends Controllers
         }
         die();
     }
+
+    public function registrar()
+    {
+        if ($_POST) {
+            $usu = strClean($_POST['regusu']);
+            $pass = strClean($_POST['regpass']);
+            $conpas = strClean($_POST['regconpass']);
+            if (empty($usu) || empty($pass) || empty($conpas)) {
+                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No deje campos vacios');
+            } else {
+                if ($pass === $conpas) {
+                    $token = passGenerator(32);
+                    $request = $this->model->regusu($usu, hash("SHA256", $pass), $token);
+                    if ($request === 'ok') {
+                        $url = BASE_URL . 'login/activar/' . $usu . '/' . $token . '==';
+                        $data['email'] = $usu;
+                        $data['asunto'] = 'Link de activación de cuenta';
+                        $data['nombre'] = 'LEENH';
+                        $data['token'] = $url;
+                        $senmail = enviarEmail($data, 'email');
+                        if ($senmail['status']) {
+                            $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Usuario registrado, se envió un link de activación a su correo');
+                        } else {
+                            $arrResponse = array('status' => false, 'icon' => 'error', 'text' => 'No se puedo enviar el email');
+                        }
+                    } else if ($request === 'no') {
+                        $arrResponse = array('status' => false, 'icon' => 'error', 'text' => 'Ocurrio un error al intentar registrar');
+                    } else if ($request === 'exist') {
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'El usuario ya existe');
+                    }
+                } else {
+                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Las contraseñas no coinciden');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function activar(string $params)
+    {
+        // REQUEST_METHOD
+
+        if (empty($params)) {
+            header('Location: ' . base_url());
+        } else {
+            $arrParams = explode(',', $params);
+            $strEmail = (!empty($arrParams[0])) ? strClean($arrParams[0]) : '';
+            $strToken = (!empty($arrParams[1])) ? strClean($arrParams[1]) : '';
+            if (empty($strEmail) || empty($strToken)) {
+                header('Location: ' . base_url());
+            } else {
+
+
+                $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
+                if (empty($arrResponse)) {
+                    header('Location: ' . base_url());
+                } else {
+                    $request = $this->model->activar($strEmail, $strToken);
+                    if ($request) {
+                        $data['content'] = 'cuenta activa';
+                    } else {
+                        $data['content'] = 'ocurrio un error';
+                    }
+                    $data['tag_page']     = "Login - Biblio Web 2.0";
+                    $data['titulo_web']   = "Biblio Web";
+                    $data['page_name']    = "login";
+                    $data['css'] = ['css/custom.css'];
+                    $data['js'] = ['js/app/fn_lg.js'];
+                    $this->views->getView($this, "activacion", $data);
+                }
+            }
+        }
+        die();
+    }
+
+    /*
+    
 
     public function resetPass()
     {
@@ -104,32 +181,7 @@ class Login extends Controllers
         die();
     }
 
-    public function confirmUser(string $params)
-    {
-        if (empty($params)) {
-            header('Location: ' . base_url());
-        } else {
-            $arrParams = explode(',', $params);
-            $strEmail = strClean($arrParams[0]);
-            $strToken = strClean($arrParams[1]);
-
-            $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
-
-            if (empty($arrResponse)) {
-                header('Location: ' . base_url());
-            } else {
-                $data['tag_page']     = "Cambiar contraseña";
-                $data['page_title']   = "Cambiar Contraseña";
-                $data['page_name']    = "cambiar_contraseña";
-                $data['email']     = $strEmail;
-                $data['token']     = $strToken;
-                $data['idpersona']    = $arrResponse['usu_id'];
-                $data['page_functions_js'] = "functions_login.js";
-                $this->views->getView($this, "cambiar_password", $data);
-            }
-        }
-        die();
-    }
+    
 
     public function setPassword()
     {
@@ -167,4 +219,5 @@ class Login extends Controllers
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         die();
     }
+    */
 }
