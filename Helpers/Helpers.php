@@ -10,24 +10,25 @@ function media()
     return BASE_URL . "Assets/";
 }
 
-function headerWeb($data = "")
+function headerWeb($view, $data = "")
 {
-    $view_header = "Views/Template/header_web.php";
+    $view_header = "Views/Template/$view.php";
     require_once $view_header;
 }
 
-function footerWeb($data = "")
+function footerWeb($view, $data = "")
 {
-    $view_footer = "Views/Template/footer_web.php";
+    $view_footer = "Views/Template/$view.php";
     require_once $view_footer;
 }
 
 //Muestra información formateada
-function dep($data)
+function dep($data, $exit = 0)
 {
     $format  = print_r('<pre>');
     $format .= print_r($data);
     $format .= print_r('</pre>');
+    ($exit != 0) ? $format .= exit : '';
     return $format;
 }
 //Elimina exceso de espacios entre palabras
@@ -145,58 +146,89 @@ function enviarEmail($data, $template)
     require 'vendor/phpmailer/phpmailer/src/Exception.php';
     require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
     require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+    require_once 'Models/serverEmail.php';
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
-    $emailDestino = $data['email'];
-    $asunto = $data['asunto'];
-    $nombre = $data['nombre'];;
-    ob_start();
-    require_once("Views/Template/Email/" . $template . ".php");
-    $mensaje = ob_get_clean();
+    $objEmail = new serverEmail();
     $msg = [];
 
+    $dataEmail = $objEmail->leerConfig();
+    if (!empty($dataEmail)) {
+        $emailDestino = $data['email'];
+        $asunto = $data['asunto'];
+        $nombre = $data['nombre'];;
+        ob_start();
+        require_once("Views/Template/Email/" . $template . ".php");
+        $mensaje = ob_get_clean();
+        try {
+            //Server settings
+            // $mail->SMTPDebug = mostrar debug: 0 no mostrar: 1;
+            $mail->SMTPDebug = 0;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            // $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->Host       = $dataEmail['em_host'];                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = $dataEmail['em_usermail'];                     //SMTP username
+            $mail->Password   = $dataEmail['em_pass'];                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = $dataEmail['em_port'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
 
-    try {
-        //Server settings
-        // $mail->SMTPDebug = mostrar debug: 0 no mostrar: 1;
-        $mail->SMTPDebug = 0;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        // $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->Host       = '';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = '';                     //SMTP username
-        $mail->Password   = '';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
+            //Recipients
+            $mail->setFrom($dataEmail['em_usermail'], NOMBRE_EMPRESA);
+            $mail->addAddress($emailDestino, $nombre);     //Add a recipient
+            // $mail->addAddress('ellen@example.com');               //Name is optional
+            // $mail->addReplyTo('info@example.com', 'Information');
+            // $mail->addCC('cc@example.com');
+            // $mail->addBCC('bcc@example.com');
 
-        //Recipients
-        $mail->setFrom('no-reply@leenhcraft.com', NOMBRE_EMPRESA);
-        $mail->addAddress($emailDestino, $nombre);     //Add a recipient
-        // $mail->addAddress('ellen@example.com');               //Name is optional
-        // $mail->addReplyTo('info@example.com', 'Information');
-        // $mail->addCC('cc@example.com');
-        // $mail->addBCC('bcc@example.com');
+            //Attachments - archivos adjuntos
+            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
-        //Attachments - archivos adjuntos
-        // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+            //Content - mensaje
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $asunto;
+            $mail->Body    = $mensaje;
+            $mail->AltBody = 'leenhcraft.com';
+            $mail->charSet = "UTF-8";
 
-        //Content - mensaje
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = $asunto;
-        $mail->Body    = $mensaje;
-        $mail->AltBody = 'leenhcraft.com';
-        $mail->charSet = "UTF-8";
+            $mail->send();
+            $msg['status'] = true;
+            $msg['text'] = 'Mensaje enviado';
+        } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $msg['status'] = false;
+            $msg['text'] = "No se pudo enviar el mensaje. Error de correo: {$mail->ErrorInfo}";
+        }
+    } else {
+        $msg['status'] = false;
+        $msg['text'] = "No se a configurado un servidor de email";
 
-        $mail->send();
-        $msg['status'] = true;
-        $msg['text'] = 'Mensaje enviado';
-    } catch (Exception $e) {
-        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        $msg['status'] = true;
-        $msg['text'] = "No se pudo enviar el mensaje. Error de correo: {$mail->ErrorInfo}";
     }
     return $msg;
+}
+
+function getPermisos($idmod)
+{
+    // require_once 'Models/NivelesModel.php';
+    // $obj = new NivelesModel();
+    // return $obj->getPermisosMod($idmod);
+}
+
+function menus()
+{
+    require_once "Models/NivelesModel.php";
+    $nivel = new NivelesModel();
+    $data = $nivel->menus($_SESSION['lnh_r']);
+    return $data;
+}
+
+function submenus(int $idmenu)
+{
+    require_once "Models/NivelesModel.php";
+    $nivel = new NivelesModel();
+    $data = $nivel->submenus($idmenu);
+    return $data;
 }

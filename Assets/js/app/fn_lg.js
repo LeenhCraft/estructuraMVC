@@ -19,6 +19,7 @@ $(document).ready(function () {
           icon: objData.icon,
           confirmButtonText: "ok",
         });
+        window.location = base_url + "dashboard";
       } else {
         Swal.fire({
           title: "Advertencia!",
@@ -30,9 +31,9 @@ $(document).ready(function () {
     });
   });
 
-  $("#frmregister").submit(function (event) {
+  $("#frmreset").submit(function (event) {
     event.preventDefault();
-    let ajaxUrl = base_url + "/login/registrar";
+    let ajaxUrl = base_url + "/login/resetPass";
     var form = $(this).serialize();
     divLoading.css("display", "flex");
     $.post(ajaxUrl, form, function (data) {
@@ -43,6 +44,10 @@ $(document).ready(function () {
           text: objData.text,
           icon: objData.icon,
           confirmButtonText: "ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         });
       } else {
         Swal.fire({
@@ -53,8 +58,44 @@ $(document).ready(function () {
         });
       }
       divLoading.css("display", "none");
-      $("#frmregister").trigger("reset");
+      $("#frmreset").trigger("reset");
     });
+  });
+
+  $("#formCambiarPass").submit(function (event) {
+    event.preventDefault();
+    var ajaxUrl = base_url + '/Login/setPassword';
+    var form = $(this).serialize();
+    divLoading.css("display", "flex");
+    $.post(ajaxUrl, form, function (data) {
+      let objData = JSON.parse(data);
+      if (objData["status"]) {
+        Swal.fire({
+          title: "Excelente!",
+          text: objData.text,
+          icon: objData.icon,
+          confirmButtonText: "ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location = base_url;
+          }
+        });
+      } else {
+        Swal.fire({
+          title: "Advertencia!",
+          text: objData.text,
+          icon: objData.icon,
+          confirmButtonText: "ok",
+        });
+      }
+      divLoading.css("display", "none");
+      $("#frmreset").trigger("reset");
+    });
+  });
+
+  $('.login-content [data-toggle="flip"]').click(function () {
+    $(".login-box").toggleClass("flipped");
+    return false;
   });
 });
 
