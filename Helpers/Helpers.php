@@ -163,10 +163,10 @@ function enviarEmail($data, $template)
         $mail->SMTPDebug = 0;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         // $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->Host       = 'mail.leenhcraft.com';                     //Set the SMTP server to send through
+        $mail->Host       = '';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'no-reply@leenhcraft.com';                     //SMTP username
-        $mail->Password   = '*Fqn[JA$TNj+';                               //SMTP password
+        $mail->Username   = '';                     //SMTP username
+        $mail->Password   = '';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
