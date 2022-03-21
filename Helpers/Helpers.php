@@ -152,6 +152,7 @@ function enviarEmail($data, $template)
     $mail = new PHPMailer(true);
     $objEmail = new serverEmail();
     $msg = [];
+
     $dataEmail = $objEmail->leerConfig();
     if (!empty($dataEmail)) {
         $emailDestino = $data['email'];
@@ -204,6 +205,7 @@ function enviarEmail($data, $template)
     } else {
         $msg['status'] = false;
         $msg['text'] = "No se a configurado un servidor de email";
+
     }
     return $msg;
 }
