@@ -17,33 +17,40 @@ class Login extends Controllers
         $data['tag_page']     = "Login - Biblio Web 2.0";
         $data['titulo_web']   = "Biblio Web";
         $data['page_name']    = "login";
-        $data['css'] = ['css/custom.css'];
-        $data['js'] = ['js/app/fn_lg.js'];
+        $data['css'] = ['css/custom.css', 'css/main.css'];
+        $data['js'] = ['js/plugins/main.js', 'js/app/fn_lg.js'];
         $this->views->getView($this, "login", $data);
     }
 
     public function loginUser()
     {
-        if ($_POST) {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
             if (empty($_POST['usuario']) || empty($_POST['pass'])) {
                 $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No deje campos vacios');
             } else {
                 $strUsuario  =  strtolower(strClean($_POST['usuario']));
-                $strPassword = hash("SHA256", $_POST['pass']);
-                $requestUser = $this->model->loginUser($strUsuario, $strPassword);
+                // password_verify($pas, $consulta['contrasena'])
+                // $strPassword = hash("SHA256", $_POST['pass']);
+                $strPassword = $_POST['pass'];
+                $requestUser = $this->model->loginUser($strUsuario);
                 if (empty($requestUser)) {
                     $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario o contraseña incorrectas');
                 } else {
-                    $arrData = $requestUser;
-                    if ($arrData['usu_activo'] == 1 && $arrData['usu_estado'] == 1) {
-                        // $_SESSION['idUser'] = $arrData['usu_id'];
-                        // $_SESSION['login'] = true;
-                        // $arrData = $this->model->sessionLogin($_SESSION['idUser']);
-                        $arrResponse = array('status' => false, 'icon' => 'success', 'text' => 'Bienvenido');
-                    } else if ($arrData['usu_activo'] == 0 && $arrData['usu_estado'] == 1) {
-                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario sin confirmar, revise su email para confirmar su cuenta.');
+                    if (password_verify($strPassword, $requestUser['usu_pass'])) {
+                        $arrData = $requestUser;
+                        if ($arrData['usu_activo'] == 1 && $arrData['usu_estado'] == 1) {
+                            $_SESSION['lnh_id'] = $arrData['usu_id'];
+                            $_SESSION['lnh_r'] = $arrData['idrol'];
+                            $_SESSION['login'] = true;
+                            // $arrData = $this->model->sessionLogin($_SESSION['idUser']);
+                            $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Bienvenido');
+                        } else if ($arrData['usu_activo'] == 0 && $arrData['usu_estado'] == 1) {
+                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario sin confirmar, revise su email para confirmar su cuenta.');
+                        } else {
+                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario bloqueado');
+                        }
                     } else {
-                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario bloqueado');
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Contraseña incorrecta');
                     }
                 }
             }
@@ -54,7 +61,7 @@ class Login extends Controllers
 
     public function registrar()
     {
-        if ($_POST) {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
             $usu = strClean($_POST['regusu']);
             $pass = strClean($_POST['regpass']);
             $conpas = strClean($_POST['regconpass']);
@@ -63,7 +70,7 @@ class Login extends Controllers
             } else {
                 if ($pass === $conpas) {
                     $token = passGenerator(32);
-                    $request = $this->model->regusu($usu, hash("SHA256", $pass), $token);
+                    $request = $this->model->regusu($usu, password_hash($pass, PASSWORD_DEFAULT), $token);
                     if ($request === 'ok') {
                         $url = BASE_URL . 'login/activar/' . $usu . '/' . $token . '==';
                         $data['email'] = $usu;
@@ -103,8 +110,6 @@ class Login extends Controllers
             if (empty($strEmail) || empty($strToken)) {
                 header('Location: ' . base_url());
             } else {
-
-
                 $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
                 if (empty($arrResponse)) {
                     header('Location: ' . base_url());
@@ -127,52 +132,45 @@ class Login extends Controllers
         die();
     }
 
-    /*
-    
-
     public function resetPass()
     {
-
-        if ($_POST) {
-
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
             if (empty($_POST['txtEmailReset'])) {
-                $arrResponse = array('status' => false, 'msg' => 'Error de datos');
+                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Error de datos');
             } else {
-                $token = token();
                 $strEmail = strtolower(strClean($_POST['txtEmailReset']));
                 $arrData = $this->model->getUserEmail($strEmail);
 
                 if (empty($arrData)) {
-                    $arrResponse = array('status' => false, 'msg' => 'Usuario no encontrado.');
+                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario no encontrado.');
                 } else {
-                    $idpersona = $arrData['usu_id'];
-                    $nombreUsuario = $arrData['usu_nombre'] . ' ' . $arrData['usu_apellidos'];
-
-                    $url_recovery = base_url() . 'login/confirmUser/' . $strEmail . '/' . $token;
-
-                    $requestUpdate = $this->model->setTokenUser($idpersona, $token);
-
-                    $dataUsuario = array(
-                        'nombreUsuario' => $nombreUsuario,
-                        'email' => $strEmail,
-                        'asunto' => 'Recuperar cuenta - ' . NOMBRE_REMITENTE,
-                        'url_recovery' => $url_recovery
-                    );
-
-                    if ($requestUpdate) {
-
-                        // $sendEmail = sendEmail($dataUsuario, 'email_cambioPassword');
-                        $sendEmail = enviarEmail($dataUsuario, 'email_cambioPassword');
-                        // dep($sendEmail);
-                        // exit;
-
-                        if ($sendEmail) {
-                            $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                    if ($arrData['usu_estado'] == 1) {
+                        if ($arrData['usu_activo'] == 0) {
+                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Esta intentando reestablecer una cuenta sin activar.');
                         } else {
-                            $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.2');
+                            $token = passGenerator(15);
+                            $url_recovery = base_url() . 'login/recover/' . $strEmail . '/' . $token . '==';
+                            $request = $this->model->setTokenUser($strEmail, $token);
+                            $dataUsuario = array(
+                                'nombre' => $arrData['per_nombre'],
+                                'nombreUsuario' => $arrData['per_nombre'],
+                                'email' => $strEmail,
+                                'asunto' => 'Recuperar cuenta - ' . NOMBRE_EMPRESA,
+                                'url_recovery' => $url_recovery
+                            );
+                            if ($request) {
+                                $sendEmail = enviarEmail($dataUsuario, 'email_cambioPassword');
+                                if ($sendEmail) {
+                                    $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                                } else {
+                                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intenta más tarde.2');
+                                }
+                            } else {
+                                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intenta más tarde.');
+                            }
                         }
                     } else {
-                        $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Cuenta inactiva, imposible reestablecer');
                     }
                 }
             }
@@ -181,43 +179,67 @@ class Login extends Controllers
         die();
     }
 
-    
+    public function recover(string $params)
+    {
+        if (empty($params)) {
+            header('Location: ' . base_url());
+        } else {
+            $arrParams = explode(',', $params);
+            $strEmail = strClean($arrParams[0]);
+            $strToken = strClean($arrParams[1]);
 
+            $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
+
+            if (empty($arrResponse)) {
+                header('Location: ' . base_url());
+            } else {
+                $data['tag_page']     = "Cambiar contraseña";
+                $data['titulo_web']   = "Cambiar Contraseña";
+                $data['page_name']    = "cambiar_contraseña";
+                $data['email']     = $strEmail;
+                $data['token']     = $strToken;
+                $data['idpersona']    = $arrResponse['usu_id'];
+                $data['js'] = ['js/app/fn_lg.js'];
+                $data['css'] = ['css/main.css', 'css/custom.css'];
+                $this->views->getView($this, "cambiar_password", $data);
+            }
+        }
+        die();
+    }
     public function setPassword()
     {
-        $l = '1';
-        // echo '<pre>' . var_dump($data) . '</pre>';exit;
-        // if (empty($_POST['idUsuario']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm']) || empty($_POST['txtEmail']) || empty($_POST['txtToken'])) {
-        if ($l === '11') {
-            $arrResponse = array('status' => false, 'msg' => 'Error de datos 1');
-        } else {
-            $intIdpersona = intval($_POST['idUsuario']);
-            $strPassword = $_POST['txtPassword'];
-            $strPasswordConfirm = $_POST['txtPasswordConfirm'];
-            $strEmail = strClean($_POST['txtEmail']);
-            $strToken = strClean($_POST['txtToken']);
-
-            if ($strPassword != $strPasswordConfirm) {
-                $arrResponse = array('status' => false, 'msg' => 'Las contraseñas no son iguales.');
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            $l = '1';
+            if ($l === '11') {
+                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Error de datos 1');
             } else {
-                $arrResponseUser = $this->model->getUsuario($strEmail, $strToken, $intIdpersona);
-                if (empty($arrResponseUser)) {
-                    $arrResponse = array('status' => false, 'msg' => 'Error de datos.');
+                $intIdpersona = intval(strClean($_POST['idUsuario']));
+                $strPassword = $_POST['txtPassword'];
+                $strPasswordConfirm = $_POST['txtPasswordConfirm'];
+                $strEmail = strClean($_POST['txtEmail']);
+                $strToken = strClean($_POST['txtToken']);
+
+                if ($strPassword != $strPasswordConfirm) {
+                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Las contraseñas no son iguales.');
                 } else {
-
-                    $strPassword = hash("SHA256", $strPassword);
-                    $requestPass =  $this->model->insertPassword($intIdpersona, $strPassword);
-
-                    if ($requestPass) {
-                        $arrResponse = array('status' => true, 'msg' => 'Contraseña actualizada con exito.');
+                    $arrResponseUser = $this->model->getUsuario($strEmail, $strToken, $intIdpersona);
+                    if (empty($arrResponseUser)) {
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Error de datos.');
                     } else {
-                        $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intente más tarde.');
+
+                        $strPassword = password_hash($strPassword, PASSWORD_DEFAULT);
+                        $requestPass =  $this->model->insertPassword($intIdpersona, $strPassword);
+
+                        if ($requestPass) {
+                            $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Contraseña actualizada con exito.');
+                        } else {
+                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intente más tarde.');
+                        }
                     }
                 }
             }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            die();
         }
-        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-        die();
     }
-    */
 }

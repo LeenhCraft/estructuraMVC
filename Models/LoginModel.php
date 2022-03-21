@@ -12,13 +12,12 @@ class LoginModel extends Mysql
 		parent::__construct();
 	}
 
-	public function loginUser(string $usuario, string $password)
+	public function loginUser(string $usuario, string $password = "")
 	{
 		$this->strUsuario = $usuario;
 		$this->strPassword = $password;
 		$sql = "SELECT * FROM sis_usuarios WHERE 
-				usu_usuario = '$this->strUsuario' and 
-				usu_pass = '$this->strPassword'";
+				usu_usuario like '$this->strUsuario'";
 		$request = $this->select($sql);
 		return $request;
 	}
@@ -47,19 +46,17 @@ class LoginModel extends Mysql
 
 	public function getUserEmail(string $email)
 	{
-		$this->strUsuario = $email;
-		$sql = "SELECT usu_id,usu_nombre,usu_apellidos,usu_estado FROM sis_usuarios p
-		WHERE usu_usuario = '$this->strUsuario' AND usu_estado = 1";
+		$sql = "SELECT * FROM sis_usuarios a
+		INNER JOIN bib_personal b ON b.idpersona=a.idpersona
+		WHERE a.usu_usuario like '$email'";
 		$request = $this->select($sql);
 		return $request;
 	}
 
-	public function setTokenUser(int $idpersona, string $token)
+	public function setTokenUser(string $email, string $token)
 	{
-		$this->intIdUsuario = $idpersona;
-		$this->strToken = $token;
-		$sql = "UPDATE sis_usuarios SET usu_token = ? WHERE usu_id=$this->intIdUsuario";
-		$arrData = array($this->strToken);
+		$sql = "UPDATE sis_usuarios SET usu_token = ? WHERE usu_usuario like '$email'";
+		$arrData = array($token);
 		$request = $this->update($sql, $arrData);
 		return $request;
 	}

@@ -24,4 +24,4 @@ const SPM = ",";
 const SMONEY = "S/ ";
 
 //Otros datos
-const NOMBRE_EMPRESA = "Leenhcraft";
+const NOMBRE_EMPRESA = "Biblio Web";
