@@ -34,7 +34,7 @@ class Login extends Controllers
                 $strPassword = $_POST['pass'];
                 $requestUser = $this->model->loginUser($strUsuario);
                 if (empty($requestUser)) {
-                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario o contraseña incorrectas');
+                    $arrResponse = array('status' => false, 'icon' => 'error', 'text' => 'No existe el usuario inrgesado.');
                 } else {
                     if (password_verify($strPassword, $requestUser['usu_pass'])) {
                         $arrData = $requestUser;
