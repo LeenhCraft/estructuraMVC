@@ -5,7 +5,7 @@ class Dashboard extends Controllers
     {
         session_start();
         if (!isset($_SESSION['login'])) {
-            header('Location: ' . base_url());
+            header('Location: ' . base_url() . 'login');
         }
         parent::__construct();
     }
@@ -13,12 +13,12 @@ class Dashboard extends Controllers
     public function dashboard()
     {
         $data['titulo_web'] = 'Biblio Web';
-        $this->views->getView($this, "dashboard", $data);
+        $this->views->getView('App/Dashboard', "dashboard", $data);
     }
 
     public function demo()
     {
         dep(strtolower(get_class($this)));
-        menus();
+        dep(password_hash(321321, PASSWORD_DEFAULT));
     }
 }

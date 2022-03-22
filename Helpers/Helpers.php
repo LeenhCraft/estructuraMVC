@@ -12,13 +12,25 @@ function media()
 
 function headerWeb($view, $data = "")
 {
-    $view_header = "Views/Template/$view.php";
+    $view_header = "Views/Web/Template/$view.php";
     require_once $view_header;
 }
 
 function footerWeb($view, $data = "")
 {
-    $view_footer = "Views/Template/$view.php";
+    $view_footer = "Views/Web/Template/$view.php";
+    require_once $view_footer;
+}
+
+function headerApp($view, $data = "")
+{
+    $view_header = "Views/App/$view.php";
+    require_once $view_header;
+}
+
+function footerApp($view, $data = "")
+{
+    $view_footer = "Views/App/$view.php";
     require_once $view_footer;
 }
 

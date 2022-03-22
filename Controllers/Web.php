@@ -12,6 +12,6 @@ class Web extends Controllers
 		$data['meta_content'] = "sistemas, nueva cajamarca, pagina web, leenh";
 		// $data['css'] = ['css/bootstrap.css'];
 		// $data['js'] = ['js/jquery.min.js', 'js/bootstrap.min.js'];
-		$this->views->getView($this, "web", $data);
+		$this->views->getView('Web', "web", $data);
 	}
 }

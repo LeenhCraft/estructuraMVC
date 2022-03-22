@@ -19,7 +19,7 @@ class Login extends Controllers
         $data['page_name']    = "login";
         $data['css'] = ['css/custom.css', 'css/main.css'];
         $data['js'] = ['js/plugins/main.js', 'js/app/fn_lg.js'];
-        $this->views->getView($this, "login", $data);
+        $this->views->getView('App/Login', "login", $data);
     }
 
     public function loginUser()
@@ -101,34 +101,34 @@ class Login extends Controllers
     {
         // REQUEST_METHOD
 
-        if (empty($params)) {
-            header('Location: ' . base_url());
-        } else {
-            $arrParams = explode(',', $params);
-            $strEmail = (!empty($arrParams[0])) ? strClean($arrParams[0]) : '';
-            $strToken = (!empty($arrParams[1])) ? strClean($arrParams[1]) : '';
-            if (empty($strEmail) || empty($strToken)) {
-                header('Location: ' . base_url());
-            } else {
-                $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
-                if (empty($arrResponse)) {
-                    header('Location: ' . base_url());
-                } else {
-                    $request = $this->model->activar($strEmail, $strToken);
-                    if ($request) {
-                        $data['content'] = 'cuenta activa';
-                    } else {
-                        $data['content'] = 'ocurrio un error';
-                    }
-                    $data['tag_page']     = "Login - Biblio Web 2.0";
-                    $data['titulo_web']   = "Biblio Web";
-                    $data['page_name']    = "login";
-                    $data['css'] = ['css/custom.css'];
-                    $data['js'] = ['js/app/fn_lg.js'];
-                    $this->views->getView($this, "activacion", $data);
-                }
-            }
-        }
+        // if (empty($params)) {
+        //     header('Location: ' . base_url());
+        // } else {
+        //     $arrParams = explode(',', $params);
+        //     $strEmail = (!empty($arrParams[0])) ? strClean($arrParams[0]) : '';
+        //     $strToken = (!empty($arrParams[1])) ? strClean($arrParams[1]) : '';
+        //     if (empty($strEmail) || empty($strToken)) {
+        //         header('Location: ' . base_url());
+        //     } else {
+        //         $arrResponse = $this->model->getUsuario($strEmail, $strToken, 0);
+        //         if (empty($arrResponse)) {
+        //             header('Location: ' . base_url());
+        //         } else {
+        //             $request = $this->model->activar($strEmail, $strToken);
+        //             if ($request) {
+        //                 $data['content'] = 'cuenta activa';
+        //             } else {
+        //                 $data['content'] = 'ocurrio un error';
+        //             }
+        //             $data['tag_page']     = "Login - Biblio Web 2.0";
+        //             $data['titulo_web']   = "Biblio Web";
+        //             $data['page_name']    = "login";
+        //             $data['css'] = ['css/custom.css'];
+        //             $data['js'] = ['js/app/fn_lg.js'];
+        //             $this->views->getView($this, "activacion", $data);
+        //         }
+        //     }
+        // }
         die();
     }
 
@@ -201,7 +201,7 @@ class Login extends Controllers
                 $data['idpersona']    = $arrResponse['usu_id'];
                 $data['js'] = ['js/plugins/jquery.validate.min.js', 'js/app/demo.js', 'js/app/fn_lg.js'];
                 $data['css'] = ['css/main.css', 'css/custom.css'];
-                $this->views->getView($this, "cambiar_password", $data);
+                $this->views->getView('App/Login', "cambiar_password", $data);
             }
         }
         exit();
