@@ -9,6 +9,7 @@ class Dashboard extends Controllers
         }
         parent::__construct();
     }
+
     public function dashboard()
     {
         $data['titulo_web'] = 'Biblio Web';
@@ -18,5 +19,6 @@ class Dashboard extends Controllers
     public function demo()
     {
         dep(strtolower(get_class($this)));
+        menus();
     }
 }

@@ -1,5 +1,5 @@
 <!-- Navbar-->
-<header class="app-header"><a class="app-header__logo" href="index.html"><?php echo NOMBRE_EMPRESA; ?></a>
+<header class="app-header"><a class="app-header__logo" href=""><?php echo NOMBRE_EMPRESA; ?></a>
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
@@ -24,36 +24,47 @@
     </div>
     <ul class="app-menu">
         <?php
-        foreach (menus() as $row) {
-            if ($row['men_url_si'] == 1) {
+        if (!empty(menus())) {
+            foreach (menus() as $row) {
+                if ($row['men_url_si'] == 1) {
         ?>
-                <li>
-                    <a class="app-menu__item" href="<?= $row['men_url']; ?>">
-                        <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
-                        <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
-                    </a>
-                </li>
+                    <li>
+                        <a class="app-menu__item" href="<?= $row['men_url']; ?>">
+                            <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
+                            <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
+                        </a>
+                    </li>
+                <?php
+                } else {
+                ?>
+                    <li class="treeview">
+                        <a class="app-menu__item" href="#" data-toggle="treeview">
+                            <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
+                            <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
+                            <i class="treeview-indicator fa fa-angle-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <?php
+                            foreach (submenus($row['idmenu']) as $key) {
+                            ?>
+                                <li><a class="treeview-item" href="<?= $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </li>
             <?php
-            } else {
-            ?>
-                <li class="treeview">
-                    <a class="app-menu__item" href="#" data-toggle="treeview">
-                        <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
-                        <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
-                        <i class="treeview-indicator fa fa-angle-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <?php
-                        foreach (submenus($row['idmenu']) as $key) {
-                        ?>
-                            <li><a class="treeview-item" href="<?= $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
-                        <?php
-                        }
-                        ?>
-                    </ul>
-                </li>
-        <?php
+                }
             }
+        } else {
+            ?>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class="app-menu__icon fa-solid fa-magnifying-glass"></i>
+                    <span class="app-menu__label">Sin menus</span>
+                </a>
+            </li>
+        <?php
         }
         ?>
     </ul>

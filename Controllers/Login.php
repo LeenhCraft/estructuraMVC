@@ -26,7 +26,7 @@ class Login extends Controllers
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
             if (empty($_POST['usuario']) || empty($_POST['pass'])) {
-                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No deje campos vacios');
+                $arrResponse = array('status' => false, 'title' => '', 'icon' => 'warning', 'text' => 'No deje campos vacios');
             } else {
                 $strUsuario  =  strtolower(strClean($_POST['usuario']));
                 // password_verify($pas, $consulta['contrasena'])
@@ -34,7 +34,7 @@ class Login extends Controllers
                 $strPassword = $_POST['pass'];
                 $requestUser = $this->model->loginUser($strUsuario);
                 if (empty($requestUser)) {
-                    $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario o contraseña incorrectas');
+                    $arrResponse = array('status' => false, 'title' => 'Atención!', 'icon' => 'warning', 'text' => 'El usuario es invalido, por favor vuelva a intentarlo');
                 } else {
                     if (password_verify($strPassword, $requestUser['usu_pass'])) {
                         $arrData = $requestUser;
@@ -43,14 +43,14 @@ class Login extends Controllers
                             $_SESSION['lnh_r'] = $arrData['idrol'];
                             $_SESSION['login'] = true;
                             // $arrData = $this->model->sessionLogin($_SESSION['idUser']);
-                            $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Bienvenido');
+                            $arrResponse = array('status' => true, 'title' => 'Excelente!!', 'icon' => 'success', 'text' => 'Bienvenido');
                         } else if ($arrData['usu_activo'] == 0 && $arrData['usu_estado'] == 1) {
-                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario sin confirmar, revise su email para confirmar su cuenta.');
+                            $arrResponse = array('status' => false, 'title' => '', 'icon' => 'warning', 'text' => 'Usuario sin confirmar, revise su email para confirmar su cuenta.');
                         } else {
-                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Usuario bloqueado');
+                            $arrResponse = array('status' => false, 'title' => '', 'icon' => 'warning', 'text' => 'Usuario bloqueado');
                         }
                     } else {
-                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Contraseña incorrecta');
+                        $arrResponse = array('status' => false, 'title' => '', 'icon' => 'warning', 'text' => 'Contraseña incorrecta');
                     }
                 }
             }
@@ -199,12 +199,12 @@ class Login extends Controllers
                 $data['email']     = $strEmail;
                 $data['token']     = $strToken;
                 $data['idpersona']    = $arrResponse['usu_id'];
-                $data['js'] = ['js/app/fn_lg.js'];
+                $data['js'] = ['js/plugins/jquery.validate.min.js', 'js/app/demo.js', 'js/app/fn_lg.js'];
                 $data['css'] = ['css/main.css', 'css/custom.css'];
                 $this->views->getView($this, "cambiar_password", $data);
             }
         }
-        die();
+        exit();
     }
     public function setPassword()
     {
@@ -222,24 +222,54 @@ class Login extends Controllers
                 if ($strPassword != $strPasswordConfirm) {
                     $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Las contraseñas no son iguales.');
                 } else {
-                    $arrResponseUser = $this->model->getUsuario($strEmail, $strToken, $intIdpersona);
-                    if (empty($arrResponseUser)) {
-                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Error de datos.');
-                    } else {
-
-                        $strPassword = password_hash($strPassword, PASSWORD_DEFAULT);
-                        $requestPass =  $this->model->insertPassword($intIdpersona, $strPassword);
-
-                        if ($requestPass) {
-                            $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Contraseña actualizada con exito.');
+                    $mensaje = '';
+                    if (validar_clave($strPassword, $mensaje)) {
+                        $arrResponseUser = $this->model->getUsuario($strEmail, $strToken, $intIdpersona);
+                        if (empty($arrResponseUser)) {
+                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'Error de datos.');
                         } else {
-                            $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intente más tarde.');
+                            $strPassword = password_hash($strPassword, PASSWORD_DEFAULT);
+                            $requestPass =  $this->model->insertPassword($intIdpersona, $strPassword);
+
+                            if ($requestPass) {
+                                $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Contraseña actualizada con exito.');
+                            } else {
+                                $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intente más tarde.');
+                            }
                         }
+                    } else {
+                        $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => $mensaje);
                     }
                 }
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             die();
+        } else {
+            header('Location: ' . base_url() . 'dashboard');
         }
+    }
+
+    public function patrones()
+    {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            $request = $this->model->p();
+            if (!empty($request)) {
+                $arrResponse = array('status' => true, 'cant' => count($request), 'data' => $request);
+            } else {
+                $arrResponse = array('status' => false, 'icon' => 'error', 'title' => 'Sin patrones de validación', 'text' => '');
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function demo()
+    {
+        dep([exec('getmac'), strtok(exec('getmac'), ''), exec('whoami'), substr(php_uname(), 0, 7)]);
+        $pasword = 'DJ-leenh-1';
+        dep($pasword);
+        $error_encontrado = "";
+        dep(validar_clave($pasword, $error_encontrado));
+        dep($error_encontrado);
     }
 }

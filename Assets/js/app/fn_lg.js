@@ -1,3 +1,4 @@
+let objPatron = "";
 $(document).ready(function () {
   let divLoading = $("#divLoading");
   $('[data-toggle="tooltip"]').tooltip({
@@ -8,21 +9,24 @@ $(document).ready(function () {
   $(".fa-circle-info").tooltip();
   $("#frmlogin").submit(function (event) {
     event.preventDefault();
-    let ajaxUrl = base_url + "/login/loginUser";
-    var form = $(this).serialize();
+    let ajaxUrl = base_url + "login/loginUser";
+    let form = $(this).serialize();
     $.post(ajaxUrl, form, function (data) {
       let objData = JSON.parse(data);
       if (objData["status"]) {
         Swal.fire({
-          title: "Excelente!",
+          title: objData.title,
           text: objData.text,
           icon: objData.icon,
           confirmButtonText: "ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location = base_url + "dashboard";
+          }
         });
-        window.location = base_url + "dashboard";
       } else {
         Swal.fire({
-          title: "Advertencia!",
+          title: objData.title,
           text: objData.text,
           icon: objData.icon,
           confirmButtonText: "ok",
@@ -33,8 +37,8 @@ $(document).ready(function () {
 
   $("#frmreset").submit(function (event) {
     event.preventDefault();
-    let ajaxUrl = base_url + "/login/resetPass";
-    var form = $(this).serialize();
+    let ajaxUrl = base_url + "login/resetPass";
+    let form = $(this).serialize();
     divLoading.css("display", "flex");
     $.post(ajaxUrl, form, function (data) {
       let objData = JSON.parse(data);
@@ -64,8 +68,8 @@ $(document).ready(function () {
 
   $("#formCambiarPass").submit(function (event) {
     event.preventDefault();
-    var ajaxUrl = base_url + '/Login/setPassword';
-    var form = $(this).serialize();
+    let ajaxUrl = base_url + "Login/setPassword";
+    let form = $(this).serialize();
     divLoading.css("display", "flex");
     $.post(ajaxUrl, form, function (data) {
       let objData = JSON.parse(data);
@@ -93,6 +97,21 @@ $(document).ready(function () {
     });
   });
 
+  let ajaxUrl = base_url + "login/patrones";
+  $.post(ajaxUrl, function (data) {
+    objPatron = JSON.parse(data);
+    if (objPatron["status"]) {
+      console.log(objPatron);
+    } else {
+      Swal.fire({
+        title: objPatron.title,
+        text: objPatron.text,
+        icon: objPatron.icon,
+        confirmButtonText: "ok",
+      });
+    }
+  });
+
   $('.login-content [data-toggle="flip"]').click(function () {
     $(".login-box").toggleClass("flipped");
     return false;
@@ -100,8 +119,8 @@ $(document).ready(function () {
 });
 
 function verpass(e, input) {
-  var selector = "#" + input;
-  var elem = $(selector);
+  let selector = "#" + input;
+  let elem = $(selector);
   console.log(elem);
 
   if (elem.attr("type") == "password") {
@@ -112,46 +131,44 @@ function verpass(e, input) {
 }
 
 function ocultarbarra(e) {
-  var selector = "#" + e;
-  var elem = $(selector);
+  let selector = "#" + e;
+  let elem = $(selector);
   elem.hide("slow");
 }
 
 function validarfuerza(e, a) {
-  var elem = $(e).val();
-  var forca = 5;
-
+  let elem = $(e).val();
+  let fuerza = 0;
   if (elem == "") {
-    forca = 0;
+    fuerza = 0;
   }
-  if (elem.length >= 4 && elem.length <= 7) {
-    forca += 10;
-  } else if (elem.length > 7) {
-    forca += 25;
+  if (elem.length >= 6 && elem.length <= 9) {
+    fuerza += 10;
+  } else if (elem.length > 9) {
+    fuerza += 25;
   }
-
-  if (elem.length >= 5 && elem.match(/[a-z]+/)) {
-    forca += 10;
-  }
-
-  if (elem.length >= 6 && elem.match(/[A-Z]+/)) {
-    forca += 20;
+  if (elem.length >= 7 && elem.match(/[a-z]+/)) {
+    fuerza += 15;
   }
 
-  if (elem.length >= 7 && elem.match(/[@#$%&;*]/)) {
-    forca += 25;
+  if (elem.length >= 8 && elem.match(/[A-Z]+/)) {
+    fuerza += 20;
   }
 
-  if (elem.match(/([1-9]+)\1{3,}/)) {
-    forca += -25;
+  if (elem.length >= 9 && elem.match(/[@#$%&;*]/)) {
+    fuerza += 25;
   }
-  console.log(forca);
-  mostrarForca(forca, a);
+
+  if (elem.match(/([0-9]+).*\1{1}/)) {
+    fuerza += -25;
+  }
+  console.log(fuerza);
+  mostrarForca(fuerza, a);
 }
 
 function mostrarForca(forca, a) {
-  var selector = "#" + a;
-  var elem = $(selector);
+  let selector = "#" + a;
+  let elem = $(selector);
   elem.show("slow");
   if (forca < 30 && forca >= 5) {
     elem.html(
@@ -174,4 +191,10 @@ function mostrarForca(forca, a) {
       '<div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'
     );
   }
+}
+
+function verAyuda(elem) {
+  let selector = "#" + elem;
+  let div = $(selector);
+  div.show('swing');
 }

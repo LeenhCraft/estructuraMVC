@@ -205,7 +205,6 @@ function enviarEmail($data, $template)
     } else {
         $msg['status'] = false;
         $msg['text'] = "No se a configurado un servidor de email";
-
     }
     return $msg;
 }
@@ -231,4 +230,39 @@ function submenus(int $idmenu)
     $nivel = new NivelesModel();
     $data = $nivel->submenus($idmenu);
     return $data;
+}
+
+function validar_clave($clave, &$error_clave)
+{
+    if (strlen($clave) < 6) {
+        $error_clave = "La clave debe tener al menos 6 caracteres";
+        return false;
+    }
+    if (strlen($clave) > 16) {
+        $error_clave = "La clave no puede tener más de 16 caracteres";
+        return false;
+    }
+    if (!preg_match('`[a-z]`', $clave)) {
+        $error_clave = "La clave debe tener al menos una letra minúscula";
+        return false;
+    }
+    if (!preg_match('`[A-Z]`', $clave)) {
+        $error_clave = "La clave debe tener al menos una letra mayúscula";
+        return false;
+    }
+    if (!preg_match('`[0-9]`', $clave)) {
+        $error_clave = "La clave debe tener al menos un caracter numérico";
+        return false;
+    }
+    if (!preg_match('/[@#$%&;*]/', $clave)) {
+        $error_clave = "La clave debe tener al menos un caracter especial del tipo @, #, $, %, &, *";
+        return false;
+    }
+    if (preg_match('/([0-9]+).*\1{1}/', $clave)) {
+        $error_clave = "La clave no debe tener un número que se repita más de una vez.";
+        return false;
+    }
+    // [@#$%&;*]
+    $error_clave = "";
+    return true;
 }

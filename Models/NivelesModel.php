@@ -21,7 +21,9 @@ class NivelesModel extends Mysql
 
     public function submenus(int $idmenu)
     {
-        $sql = "SELECT * FROM sis_submenus WHERE idmenu = '$idmenu' AND sub_visible = 1 ORDER BY sub_orden ASC";
+        $idrol = (isset($_SESSION['lnh_r']) && !empty($_SESSION['lnh_r'])) ? $_SESSION['lnh_r'] : 0;
+        $sql = "SELECT * FROM sis_permisos a
+        INNER JOIN sis_submenus b ON a.idsubmenu=b.idsubmenu WHERE b.idmenu = '$idmenu' AND b.sub_visible = 1 AND a.idrol = '$idrol' ORDER BY b.sub_orden ASC";
         $request = $this->select_all($sql);
         return $request;
     }
