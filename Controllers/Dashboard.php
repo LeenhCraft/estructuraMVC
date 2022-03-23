@@ -22,9 +22,9 @@ class Dashboard extends Controllers
 
     public function demo()
     {
-        dep(strtolower(get_class($this)));
-        dep(password_hash(321321, PASSWORD_DEFAULT));
-        dep(getPermisos(get_class($this)));
-        dep(submenus(1));
+        // dep(strtolower(get_class($this)));
+        // dep(password_hash(321321, PASSWORD_DEFAULT));
+        // dep(getPermisos(get_class($this)));
+        // dep($_SESSION);        
     }
 }

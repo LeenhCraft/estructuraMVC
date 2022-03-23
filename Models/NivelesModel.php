@@ -22,7 +22,7 @@ class NivelesModel extends Mysql
     public function submenus(int $idmenu)
     {
         $idrol = (isset($_SESSION['lnh_r']) && !empty($_SESSION['lnh_r'])) ? $_SESSION['lnh_r'] : 0;
-        $sql = "SELECT b.sub_nombre,b.sub_icono,b.sub_url FROM sis_permisos a
+        $sql = "SELECT b.idsubmenu,b.idmenu,b.sub_nombre,b.sub_icono,b.sub_url FROM sis_permisos a
         INNER JOIN sis_submenus b ON a.idsubmenu=b.idsubmenu 
         WHERE b.idmenu = '$idmenu' AND b.sub_visible = 1 AND a.idrol = '$idrol' ORDER BY b.sub_orden ASC";
         $request = $this->select_all($sql);
@@ -30,6 +30,8 @@ class NivelesModel extends Mysql
         $return = [];
         for ($i = 0; $i < count($request); $i++) {
             $return[$i] = [
+                'idmenu' => $request[$i]['idmenu'],
+                'idsubmenu' => $request[$i]['idsubmenu'],
                 'sub_nombre' => (!empty($request[$i]['sub_nombre']) ? ucfirst($request[$i]['sub_nombre']) : ucfirst('sin nombre')),
                 'sub_icono' => (!empty($request[$i]['sub_icono']) ? $request[$i]['sub_icono'] : 'fa-solid fa-circle-notch'),
                 'sub_url' => (!empty($request[$i]['sub_url']) ? $request[$i]['sub_url'] : '#')
@@ -51,5 +53,12 @@ class NivelesModel extends Mysql
             'perm_u' => (!empty($request['perm_u']) ? $request['perm_u'] : '0'),
             'perm_d' => (!empty($request['perm_d']) ? $request['perm_d'] : '0')
         ];
+    }
+
+    public function pertenece($submenu, $menu)
+    {
+        $sql = "SELECT * FROM sis_submenus WHERE idmenu = '$menu' AND sub_url like BINARY '$submenu'";
+        $request = $this->select($sql);
+        return $request;
     }
 }

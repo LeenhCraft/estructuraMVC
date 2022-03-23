@@ -244,6 +244,14 @@ function getPermisos($idmod)
     return $obj->getPermisosMod(strtolower($idmod));
 }
 
+function pertenece($submen, $menu)
+{
+    require_once 'Models/NivelesModel.php';
+    $obj = new NivelesModel();
+    $request = $obj->pertenece($submen, $menu);
+    return (!empty($request)) ? true : false;
+}
+
 function validar_clave($clave, &$error_clave)
 {
     if (strlen($clave) < 6) {

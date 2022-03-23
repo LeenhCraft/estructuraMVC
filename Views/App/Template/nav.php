@@ -1,3 +1,9 @@
+<?php
+$url = !empty($_GET['url']) ? $_GET['url'] : 'web/web';
+$arrUrl = explode("/", $url);
+$ctrl = $arrUrl[0];
+$expand = $active = '';
+?>
 <!-- Navbar-->
 <header class="app-header"><a class="app-header__logo" href=""><?php echo NOMBRE_EMPRESA; ?></a>
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
@@ -22,7 +28,7 @@
             <p class="app-sidebar__user-designation">rol</p>
         </div>
     </div>
-    <ul class="app-menu">
+    <ul class="app-menu text-white">
         <?php
         if (!empty(menus())) {
             foreach (menus() as $row) {
@@ -36,8 +42,10 @@
                     </li>
                 <?php
                 } else {
+                    $submenus = submenus($row['idmenu']);
+                    $expand = (pertenece($ctrl, $row['idmenu'])) ? 'is-expanded' : '';
                 ?>
-                    <li class="treeview">
+                    <li class="treeview <?= $expand; ?>">
                         <a class="app-menu__item" href="#" data-toggle="treeview">
                             <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
                             <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
@@ -45,9 +53,10 @@
                         </a>
                         <ul class="treeview-menu">
                             <?php
-                            foreach (submenus($row['idmenu']) as $key) {
+                            foreach ($submenus as $key) {
+                                $active = ($key['sub_url'] == $ctrl) ? 'active' : '';
                             ?>
-                                <li><a class="treeview-item" href="<?= $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
+                                <li><a class="treeview-item <?= $active; ?>" href="<?= $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
                             <?php
                             }
                             ?>

@@ -3,19 +3,19 @@ class Usuarios extends Controllers
 {
     public function __construct()
     {
+        parent::__construct();
+        session_start();
+        if (!isset($_SESSION['login'])) {
+            header('Location: ' . base_url() . 'login');
+        }
     }
 
     public function usuarios()
     {
-        //otro metodo de restringir el acceso
-        // if (empty($_SESSION['permisosMod']['r'])) {
-        //     header("Location:".base_url().'/dashboard');
-        // }
-        $data['tag_page']   = "Usuarios - Biblio Web 2.0";
-        $data['page_title'] = "USUARIOS - <small>Biblio Web</small>";
+        $data['titulo_web']   = "Usuarios - Biblio Web 2.0";
+        $data['titulo_web2'] = "USUARIOS - <small>Biblio Web</small>";
         $data['page_name']  = "usuarios";
-        $data['page_functions_js'] = "functions_usuarios.js";
-        $this->views->getView($this, "usuarios", $data);
+        $this->views->getView('App/Usuarios', "usuarios", $data);
     }
 
     public function setUsuario()
@@ -189,7 +189,7 @@ class Usuarios extends Controllers
                     $strPassword
                 );
                 if ($request_user) {
-                    sessionUser($_SESSION['idUser']);
+                    // sessionUser($_SESSION['idUser']);
                     $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
                 } else {
                     $arrResponse = array("status" => false, "msg" => 'No es posible actualizar los datos.');
@@ -213,7 +213,7 @@ class Usuarios extends Controllers
                 $request_datafiscal = "truee"; //elimina esto y cambia la condicion
                 //$request_datafiscal = $this->model->updateDataFiscal($idUsuario,$strNit,$strNomFiscal, $strDirFiscal);
                 if ($request_datafiscal === "truee") {
-                    sessionUser($_SESSION['idUser']);
+                    // sessionUser($_SESSION['idUser']);
                     $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
                 } else {
                     $arrResponse = array("status" => false, "msg" => 'No es posible actualizar los datos.');
