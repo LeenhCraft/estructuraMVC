@@ -221,13 +221,6 @@ function enviarEmail($data, $template)
     return $msg;
 }
 
-function getPermisos($idmod)
-{
-    // require_once 'Models/NivelesModel.php';
-    // $obj = new NivelesModel();
-    // return $obj->getPermisosMod($idmod);
-}
-
 function menus()
 {
     require_once "Models/NivelesModel.php";
@@ -242,6 +235,13 @@ function submenus(int $idmenu)
     $nivel = new NivelesModel();
     $data = $nivel->submenus($idmenu);
     return $data;
+}
+
+function getPermisos($idmod)
+{
+    require_once 'Models/NivelesModel.php';
+    $obj = new NivelesModel();
+    return $obj->getPermisosMod(strtolower($idmod));
 }
 
 function validar_clave($clave, &$error_clave)
