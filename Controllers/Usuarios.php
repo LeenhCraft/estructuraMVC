@@ -1,11 +1,13 @@
 <?php
 class Usuarios extends Controllers
 {
+    private $permisos;
     public function __construct()
     {
         parent::__construct();
         session_start();
-        if (!isset($_SESSION['login'])) {
+        $this->permisos = getPermisos(get_class($this));
+        if (!isset($_SESSION['login']) || $this->permisos['perm_r'] != 1) {
             header('Location: ' . base_url() . 'login');
         }
     }
@@ -14,7 +16,7 @@ class Usuarios extends Controllers
     {
         $data['titulo_web']   = "Usuarios - Biblio Web 2.0";
         $data['titulo_web2'] = "USUARIOS - <small>Biblio Web</small>";
-        $data['page_name']  = "usuarios";
+        $data['permisos']  = $this->permisos;
         $this->views->getView('App/Usuarios', "usuarios", $data);
     }
 
@@ -200,9 +202,9 @@ class Usuarios extends Controllers
         die();
     }
 
-    public function putDFical()
+    public function personal()
     {
-        if ($_POST) {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST" && $this->permisos['perm_r'] == 1) {
             if (empty($_POST['txtNit']) || empty($_POST['txtNombreFiscal']) || empty($_POST['txtDirFiscal'])) {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
             } else {

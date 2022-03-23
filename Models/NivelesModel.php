@@ -13,7 +13,7 @@ class NivelesModel extends Mysql
         WHERE idmenu IN( SELECT DISTINCT (c.idmenu) 
         FROM sis_permisos a INNER JOIN sis_submenus b ON a.idsubmenu = b.idsubmenu 
         LEFT JOIN sis_menus c ON c.idmenu = b.idmenu 
-        WHERE a.idrol = '$idrol' AND c.men_visible = 1 ) ORDER BY men_orden ASC";
+        WHERE a.idrol = '$idrol'  AND a.perm_r = 1 AND c.men_visible = 1 ) ORDER BY men_orden ASC";
         $request = $this->select_all($sql);
         $data = [];
         return $request;
@@ -24,7 +24,7 @@ class NivelesModel extends Mysql
         $idrol = (isset($_SESSION['lnh_r']) && !empty($_SESSION['lnh_r'])) ? $_SESSION['lnh_r'] : 0;
         $sql = "SELECT b.idsubmenu,b.idmenu,b.sub_nombre,b.sub_icono,b.sub_url FROM sis_permisos a
         INNER JOIN sis_submenus b ON a.idsubmenu=b.idsubmenu 
-        WHERE b.idmenu = '$idmenu' AND b.sub_visible = 1 AND a.idrol = '$idrol' ORDER BY b.sub_orden ASC";
+        WHERE b.idmenu = '$idmenu' AND b.sub_visible = 1 AND a.perm_r = 1 AND a.idrol = '$idrol' ORDER BY b.sub_orden ASC";
         $request = $this->select_all($sql);
 
         $return = [];
