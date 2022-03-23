@@ -110,4 +110,11 @@ class LoginModel extends Mysql
 		$request = $this->update($sql, $arrData);
 		return $request;
 	}
+
+	public function p()
+	{
+		$sql = "SELECT pat_expresion as patron,pat_valor as pts FROM sis_conf_patronpass WHERE pat_usar=1 AND pat_estado=1 ORDER BY pat_orden ASC";
+		$request = $this->select_all($sql);
+		return $request;
+	}
 }

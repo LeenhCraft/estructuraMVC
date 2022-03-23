@@ -21,39 +21,35 @@ class NivelesModel extends Mysql
 
     public function submenus(int $idmenu)
     {
-        $sql = "SELECT * FROM sis_submenus WHERE idmenu = '$idmenu' AND sub_visible = 1 ORDER BY sub_orden ASC";
+        $idrol = (isset($_SESSION['lnh_r']) && !empty($_SESSION['lnh_r'])) ? $_SESSION['lnh_r'] : 0;
+        $sql = "SELECT b.sub_nombre,b.sub_icono,b.sub_url FROM sis_permisos a
+        INNER JOIN sis_submenus b ON a.idsubmenu=b.idsubmenu 
+        WHERE b.idmenu = '$idmenu' AND b.sub_visible = 1 AND a.idrol = '$idrol' ORDER BY b.sub_orden ASC";
         $request = $this->select_all($sql);
-        return $request;
+
+        $return = [];
+        for ($i = 0; $i < count($request); $i++) {
+            $return[$i] = [
+                'sub_nombre' => (!empty($request[$i]['sub_nombre']) ? ucfirst($request[$i]['sub_nombre']) : ucfirst('sin nombre')),
+                'sub_icono' => (!empty($request[$i]['sub_icono']) ? $request[$i]['sub_icono'] : 'fa-solid fa-circle-notch'),
+                'sub_url' => (!empty($request[$i]['sub_url']) ? $request[$i]['sub_url'] : '#')
+            ];
+        }
+        return $return;
     }
 
-    public function getPermisosMod($idmod)
+    public function getPermisosMod($param)
     {
-        $idusu = $_SESSION['nmr'];
-        // limitar permisos a solo el modulo actual
-        $sql = "SELECT
-                    c.mod_cod AS modulo,
-                    a.perm_r,
-                    a.perm_w,
-                    a.perm_u,
-                    a.perm_d
-                FROM
-                    sis_permisos a
-                INNER JOIN sis_rol b ON
-                    a.idrol = b.idrol
-                INNER JOIN sis_modulo c ON
-                    a.idmodulo = c.idmodulo
-                INNER JOIN sis_usuarios d ON
-                    b.idrol = d.idrol
-                WHERE
-                    c.mod_cod LIKE BINARY '{$idmod}'
-                AND
-                    d.usu_id = '{$idusu}'";
+        $idrol = $_SESSION['lnh_r'];
+        $sql = "SELECT * FROM sis_permisos a 
+        INNER JOIN sis_submenus b ON a.idsubmenu=b.idsubmenu 
+        WHERE b.sub_controlador LIKE BINARY '$param' AND a.idrol='$idrol' AND b.sub_visible='1'";
         $request = $this->select($sql);
-        // $arrPermisos = array();
-        // for ($i = 0; $i < count($request); $i++) {
-        //     $arrPermisos[$request[$i]['idmodulo']] = $request[$i];
-        // }
-        // return $arrPermisos;
-        return $request;
+        return [
+            'perm_r' => (!empty($request['perm_r']) ? $request['perm_r'] : '0'),
+            'perm_w' => (!empty($request['perm_w']) ? $request['perm_w'] : '0'),
+            'perm_u' => (!empty($request['perm_u']) ? $request['perm_u'] : '0'),
+            'perm_d' => (!empty($request['perm_d']) ? $request['perm_d'] : '0')
+        ];
     }
 }
