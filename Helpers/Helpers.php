@@ -286,3 +286,9 @@ function validar_clave($clave, &$error_clave)
     $error_clave = "";
     return true;
 }
+
+function getModal($ruta, $data = "")
+{
+    $view_modal = "Views/App/Template/Modals/{$ruta}.php";
+    require_once $view_modal;
+}

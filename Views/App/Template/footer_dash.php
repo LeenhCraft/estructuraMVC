@@ -7,6 +7,8 @@
 <script src="<?php echo media() . 'js/plugins/main.js'; ?>"></script>
 <script src="<?php echo media() . 'js/plugins/sweetalert2.all.min.js'; ?>"></script>
 <script src="<?php echo media() . 'js/plugins/pace.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/jquery.dataTables.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/plugins/dataTables.bootstrap.min.js'; ?>"></script>
 
 <?php
 if (isset($data['js']) && !empty($data['js'])) {
