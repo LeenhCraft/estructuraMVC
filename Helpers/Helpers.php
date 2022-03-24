@@ -292,3 +292,26 @@ function getModal($ruta, $data = "")
     $view_modal = "Views/App/Template/Modals/{$ruta}.php";
     require_once $view_modal;
 }
+
+function consultaDNI($dni)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://apiperu.dev/api/dni/$dni",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_POSTFIELDS => "",
+        CURLOPT_HTTPHEADER => [
+            "Authorization: Bearer 3fe97dac2bd89bddf396d1b284801fbb5a4c4d628e964fc9b64145635578848d"
+        ],
+    ]);
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    return $response;
+}

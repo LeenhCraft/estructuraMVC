@@ -97,7 +97,7 @@ class Login extends Controllers
         die();
     }
 
-    public function activar(string $params)
+    public function activar($params)
     {
         // REQUEST_METHOD
 
@@ -179,7 +179,7 @@ class Login extends Controllers
         die();
     }
 
-    public function recover(string $params)
+    public function recover($params)
     {
         if (empty($params)) {
             header('Location: ' . base_url());
@@ -206,6 +206,7 @@ class Login extends Controllers
         }
         exit();
     }
+    
     public function setPassword()
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {

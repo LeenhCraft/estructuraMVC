@@ -40,4 +40,9 @@
 </head>
 
 <body class="app sidebar-mini">
+    <div id="divLoading">
+        <div>
+            <img src="<?php echo media() . 'img/loading.svg' ?>" alt="Loading">
+        </div>
+    </div>
     <?php require_once "nav.php"; ?>

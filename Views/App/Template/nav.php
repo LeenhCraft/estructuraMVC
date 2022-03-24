@@ -56,7 +56,7 @@ $expand = $active = '';
                             foreach ($submenus as $key) {
                                 $active = ($key['sub_url'] == $ctrl) ? 'active' : '';
                             ?>
-                                <li><a class="treeview-item <?= $active; ?>" href="<?= $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
+                                <li><a class="treeview-item <?= $active; ?>" href="<?= BASE_URL . $key['sub_url']; ?>"><i class="icon <?= $key['sub_icono']; ?> mr-2"></i> <?= $key['sub_nombre']; ?></a></li>
                             <?php
                             }
                             ?>

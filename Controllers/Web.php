@@ -15,4 +15,14 @@ class Web extends Controllers
 		// $data['js'] = ['js/jquery.min.js', 'js/bootstrap.min.js'];
 		$this->views->getView('Web', "web", $data);
 	}
+
+	public function consultar($parametro)
+	{
+		if (strtoupper($_SERVER['REQUEST_METHOD']) === "GET") {
+			$dni = intval(strClean($parametro));
+			$response = consultaDNI($dni);
+			echo $response;
+		}
+		die();
+	}
 }
