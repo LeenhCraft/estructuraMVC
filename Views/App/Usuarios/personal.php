@@ -1,5 +1,4 @@
 <?php headerApp('Template/header_dash', $data); ?>
-
 <main class="app-content">
     <div class="row">
         <div class="col-12">

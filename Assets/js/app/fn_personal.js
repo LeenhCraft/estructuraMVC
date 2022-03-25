@@ -156,7 +156,6 @@ function fntEdit(nmr) {
   //
   $.get(ajaxUrl, function (data) {
     let objData = JSON.parse(data);
-    console.log(objData);
     if (objData.status) {
       $("#item").val(objData.data.nmr);
       $("#txtsearch").val(objData.data.dni);
