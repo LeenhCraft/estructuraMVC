@@ -160,7 +160,7 @@ class Login extends Controllers
                             );
                             if ($request) {
                                 $sendEmail = enviarEmail($dataUsuario, 'email_cambioPassword');
-                                if ($sendEmail) {
+                                if ($sendEmail['status']) {
                                     $arrResponse = array('status' => true, 'icon' => 'success', 'text' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
                                 } else {
                                     $arrResponse = array('status' => false, 'icon' => 'warning', 'text' => 'No es posible realizar el proceso, intenta más tarde.2');
@@ -266,12 +266,11 @@ class Login extends Controllers
 
     public function demo()
     {
-        dep([exec('getmac'), strtok(exec('getmac'), ''), exec('whoami'), substr(php_uname(), 0, 7)]);
-        $pasword = 'DJ-leenh-1';
-        dep($pasword);
-        $error_encontrado = "";
-        dep(validar_clave($pasword, $error_encontrado));
-        dep($error_encontrado);
-        dep(password_hash('123456', PASSWORD_DEFAULT));
+        // dep([exec('getmac'), strtok(exec('getmac'), ''), exec('whoami'), substr(php_uname(), 0, 7)]);
+        // $pasword = 'DJ-leenh-1';
+        // dep($pasword);
+        // $error_encontrado = "";
+        // dep(validar_clave($pasword, $error_encontrado));
+        // dep($error_encontrado);
     }
 }

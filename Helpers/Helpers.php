@@ -171,7 +171,7 @@ function enviarEmail($data, $template)
         $asunto = $data['asunto'];
         $nombre = $data['nombre'];;
         ob_start();
-        require_once("Views/Template/Email/" . $template . ".php");
+        require_once("Views/App/Template/Email/" . $template . ".php");
         $mensaje = ob_get_clean();
         try {
             //Server settings
