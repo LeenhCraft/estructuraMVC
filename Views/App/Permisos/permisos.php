@@ -7,7 +7,7 @@
                 if ($data['permisos']['perm_w'] == 1) {
                 ?>
                     <button class="btn btn-primary ft-b" type="button" onclick="openModal();">
-                        <i class="fas fa-plus-circle"></i> Nuevo Rol
+                        <i class="fas fa-plus-circle"></i> Nuevo Permisos
                     </button>
                 <?php
                 }
@@ -17,9 +17,9 @@
         <div class="col-12">
             <div class="tile">
                 <div class="table-responsive p-1">
-                    <table id="sis_rol" class="table table-hover" width="100%">
+                    <table id="sis_permisos" class="table table-hover" width="100%">
                         <thead>
-                            <tr><th>idrol</th><th>rol_nombre</th><th>rol_cod</th><th>rol_descripcion</th><th>rol_estado</th><th>rol_fecha</th><th></th></tr>
+                            <tr><th>idpermisos</th><th>idrol</th><th>idsubmenu</th><th>perm_r</th><th>perm_w</th><th>perm_u</th><th>perm_d</th><th></th></tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -31,7 +31,7 @@
 </main>
 <?php
 if ($data['permisos']['perm_w'] == 1 || $data['permisos']['perm_u'] == 1) {
-    getModal('mdlRol');
+    getModal('mdlPermisos');
 }
 footerApp('Template/footer_dash', $data);
 ?>

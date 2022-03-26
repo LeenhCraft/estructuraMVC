@@ -1,0 +1,1 @@
+[Fri Mar 25 16:46:28.036815 2022] [php:warn] [pid 6844:tid 1900] [client 127.0.0.1:53441] PHP Warning:  Undefined array key "lnh_r" in C:\\xampp\\htdocs\\lnh\\estructuraMVC\\Models\\NivelesModel.php on line 54

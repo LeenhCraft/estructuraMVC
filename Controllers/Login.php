@@ -272,5 +272,6 @@ class Login extends Controllers
         $error_encontrado = "";
         dep(validar_clave($pasword, $error_encontrado));
         dep($error_encontrado);
+        dep(password_hash('123456', PASSWORD_DEFAULT));
     }
 }

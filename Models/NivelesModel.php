@@ -16,7 +16,16 @@ class NivelesModel extends Mysql
         WHERE a.idrol = '$idrol'  AND a.perm_r = 1 AND c.men_visible = 1 ) ORDER BY men_orden ASC";
         $request = $this->select_all($sql);
         $data = [];
-        return $request;
+        for ($i = 0; $i < count($request); $i++) {
+            $data[$i] = [
+                'idmenu' => $request[$i]['idmenu'],
+                'men_nombre' => (!empty($request[$i]['men_nombre'])) ? ucfirst($request[$i]['men_nombre']) : ucfirst('sin nombre'),
+                'men_icono' => (!empty($request[$i]['men_icono'])) ? $request[$i]['men_icono'] : 'fa-solid fa-circle-notch',
+                'men_url_si' => (!empty($request[$i]['men_url_si'])) ? $request[$i]['men_url_si'] : 0,
+                'men_url' => (!empty($request[$i]['sub_icono'])) ? $request[$i]['sub_icono'] : 'fa-solid fa-circle-notch'
+            ];
+        }
+        return $data;
     }
 
     public function submenus(int $idmenu)

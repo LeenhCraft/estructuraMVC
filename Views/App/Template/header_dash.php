@@ -24,7 +24,7 @@
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="">
 
-    <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>">
+    <!-- <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>"> -->
     <link rel="stylesheet" href="<?php echo media() . 'css/main.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/font.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">

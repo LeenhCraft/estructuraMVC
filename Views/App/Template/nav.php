@@ -1,7 +1,8 @@
 <?php
 $url = !empty($_GET['url']) ? $_GET['url'] : 'web/web';
 $arrUrl = explode("/", $url);
-$ctrl = $arrUrl[0];
+// $ctrl = $arrUrl[0];
+$ctrl = (isset($arrUrl[1])) ? $arrUrl[0] . '/' . $arrUrl[1] : $arrUrl[0];
 $expand = $active = '';
 ?>
 <!-- Navbar-->
