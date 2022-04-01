@@ -36,7 +36,7 @@ $expand = $active = '';
                 if ($row['men_url_si'] == 1) {
         ?>
                     <li>
-                        <a class="app-menu__item" href="<?= $row['men_url']; ?>">
+                        <a class="app-menu__item" href="<?= BASE_URL . $row['men_url']; ?>">
                             <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
                             <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
                         </a>

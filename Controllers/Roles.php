@@ -48,11 +48,11 @@ class Roles extends Controllers
 
     public function buscar($parametros)
     {
-        if (strtoupper($_SERVER['REQUEST_METHOD']) === "GET" && $this->permisos['perm_r'] == 1) {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "GET") {
             $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No cuenta con los permisos necesarios.');
             $id = (!empty($parametros)) ? intval($parametros) : 0;
             if ($id != 0) {
-                if ($this->permisos['perm_u'] == 1) {
+                if ($this->permisos['perm_r'] == 1) {
                     $response = $this->model->buscar($id);
                     if (!empty($response)) {
                         $arrResponse = array("status" => true, 'icon' => '', 'title' => '', "data" => $response);

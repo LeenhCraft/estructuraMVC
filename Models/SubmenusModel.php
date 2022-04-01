@@ -1,4 +1,4 @@
-<?php 
+<?php
 class SubmenusModel extends Mysql
 {
     public function __construct()
@@ -8,11 +8,14 @@ class SubmenusModel extends Mysql
 
     public function listar()
     {
-        $sql = "SELECT * FROM sis_submenus";
+        $sql = "SELECT a.idsubmenu as id, a.sub_nombre as submenu, a.sub_url as url, a.sub_orden as orden,a.sub_visible as ver, b.men_nombre as menu, a.sub_icono as icono, b.men_icono as icono2 FROM sis_submenus a 
+        INNER JOIN 
+        sis_menus b ON b.idmenu=a.idmenu
+        ORDER BY a.idsubmenu desc";
         $request = $this->select_all($sql);
         return $request;
     }
-    
+
     public function buscar($id)
     {
         $sql = "SELECT * FROM sis_submenus WHERE idsubmenu = '$id'";
@@ -20,15 +23,15 @@ class SubmenusModel extends Mysql
         return $request;
     }
 
-    public function insertar($idmenu,$sub_nombre,$sub_url,$sub_controlador,$sub_icono,$sub_orden,$sub_visible,$sub_fecha)
+    public function insertar($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
     {
-        $return =$request= [];
+        $return = $request = [];
         //$sql = "SELECT * FROM sis_submenus WHERE idsubmenu = 'idsubmenu'";
         //$request = $this->select_all($sql);
 
         if (empty($request)) {
-            $sql = "INSERT INTO sis_submenus(idmenu,sub_nombre,sub_url,sub_controlador,sub_icono,sub_orden,sub_visible,sub_fecha) VALUES (?,?,?,?,?,?,?,?)";
-            $arrData = array($idmenu,$sub_nombre,$sub_url,$sub_controlador,$sub_icono,$sub_orden,$sub_visible,$sub_fecha);
+            $sql = "INSERT INTO sis_submenus(idmenu,sub_nombre,sub_url,sub_controlador,sub_icono,sub_orden,sub_visible) VALUES (?,?,?,?,?,?,?)";
+            $arrData = array($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
             $response = $this->insert($sql, $arrData);
             if ($response > 0) {
                 $return['status'] = true;
@@ -44,29 +47,31 @@ class SubmenusModel extends Mysql
         return $return;
     }
 
-    public function actualizar($idsubmenu,$idmenu,$sub_nombre,$sub_url,$sub_controlador,$sub_icono,$sub_orden,$sub_visible,$sub_fecha)
+    public function actualizar($idsubmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
     {
-        $request= [];
-        //$sql = "SELECT * FROM bib_personal WHERE per_nombre LIKE'{$nombre}' AND idpersona != $id";
-        //$request = $this->select_all($sql);
+        $request = [];
+        $sql = "SELECT * FROM sis_submenus WHERE sub_nombre LIKE'{$sub_nombre}' AND idsubmenu != $idsubmenu";
+        $request = $this->select_all($sql);
 
         if (empty($request)) {
-            $sql = "UPDATE sis_submenus SET idmenu=?,sub_nombre=?,sub_url=?,sub_controlador=?,sub_icono=?,sub_orden=?,sub_visible=?,sub_fecha=? WHERE idsubmenu =$idsubmenu";
-            $arrData = array($idmenu,$sub_nombre,$sub_url,$sub_controlador,$sub_icono,$sub_orden,$sub_visible,$sub_fecha);
+            $sql = "UPDATE sis_submenus SET sub_nombre=?,sub_url=?,sub_controlador=?,sub_icono=?,sub_orden=?,sub_visible=? WHERE idsubmenu =$idsubmenu";
+            $arrData = array($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
             $request = $this->update($sql, $arrData);
+            $return['status'] = $request;
+            $return['data'] = '';
         } else {
             $return['status'] = false;
             $return['data'] = 'El nombre que esta ingresando ya esta registrado.';
         }
-        return $request;
+        return $return;
     }
 
     public function eliminar($idsubmenu)
     {
-        $request= [];
-        //$sql = "SELECT * FROM bib_personal WHERE idpersona = $id";
-        //$request = $this->select($sql);
-        if (!empty($request)) {
+        $request = [];
+        $sql = "SELECT * FROM sis_permisos WHERE idsubmenu = $idsubmenu";
+        $request = $this->select($sql);
+        if (empty($request)) {
             $sql = "DELETE FROM sis_submenus WHERE idsubmenu = $idsubmenu";
             $arrData = array(0);
             $request = $this->delete($sql, $arrData);
@@ -79,10 +84,8 @@ class SubmenusModel extends Mysql
             }
         } else {
             $return['status'] = false;
-            $return['data'] = 'No se encontraron registros.';
+            $return['data'] = 'No se puede eliminar un registro asociados a otros.';
         }
         return $return;
     }
 }
-
-?>

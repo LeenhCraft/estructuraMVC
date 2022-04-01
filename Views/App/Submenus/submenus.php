@@ -7,7 +7,7 @@
                 if ($data['permisos']['perm_w'] == 1) {
                 ?>
                     <button class="btn btn-primary ft-b" type="button" onclick="openModal();">
-                        <i class="fas fa-plus-circle"></i> Nuevo Submenus
+                        <i class="fas fa-plus-circle"></i> Nuevo
                     </button>
                 <?php
                 }
@@ -19,7 +19,15 @@
                 <div class="table-responsive p-1">
                     <table id="sis_submenus" class="table table-hover" width="100%">
                         <thead>
-                            <tr><th>idsubmenu</th><th>idmenu</th><th>sub_nombre</th><th>sub_url</th><th>sub_controlador</th><th>sub_icono</th><th>sub_orden</th><th>sub_visible</th><th>sub_fecha</th><th></th></tr>
+                            <tr>
+                                <th width="5%">N°</th>
+                                <th width="20%">Menu</th>
+                                <th width="20%">Sub menu</th>
+                                <th>Url</th>
+                                <th>Orden</th>
+                                <th>Visible</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>

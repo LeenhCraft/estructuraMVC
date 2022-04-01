@@ -22,7 +22,7 @@ class NivelesModel extends Mysql
                 'men_nombre' => (!empty($request[$i]['men_nombre'])) ? ucfirst($request[$i]['men_nombre']) : ucfirst('sin nombre'),
                 'men_icono' => (!empty($request[$i]['men_icono'])) ? $request[$i]['men_icono'] : 'fa-solid fa-circle-notch',
                 'men_url_si' => (!empty($request[$i]['men_url_si'])) ? $request[$i]['men_url_si'] : 0,
-                'men_url' => (!empty($request[$i]['sub_icono'])) ? $request[$i]['sub_icono'] : 'fa-solid fa-circle-notch'
+                'men_url' => (!empty($request[$i]['men_url'])) ? $request[$i]['men_url'] : '#'
             ];
         }
         return $data;

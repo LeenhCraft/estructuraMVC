@@ -9,6 +9,7 @@
 <script src="<?php echo media() . 'js/plugins/pace.min.js'; ?>"></script>
 <script src="<?php echo media() . 'js/plugins/jquery.dataTables.min.js'; ?>"></script>
 <script src="<?php echo media() . 'js/plugins/dataTables.bootstrap.min.js'; ?>"></script>
+<script src="<?php echo media() . 'js/app/general.js'; ?>"></script>
 
 <?php
 if (isset($data['js']) && !empty($data['js'])) {

@@ -19,7 +19,15 @@
                 <div class="table-responsive p-1">
                     <table id="sis_rol" class="table table-hover" width="100%">
                         <thead>
-                            <tr><th>idrol</th><th>rol_nombre</th><th>rol_cod</th><th>rol_descripcion</th><th>rol_estado</th><th>rol_fecha</th><th></th></tr>
+                            <tr>
+                                <th>idrol</th>
+                                <th>rol_nombre</th>
+                                <th>rol_cod</th>
+                                <th>rol_descripcion</th>
+                                <th>rol_estado</th>
+                                <th>rol_fecha</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -30,8 +38,6 @@
     </div>
 </main>
 <?php
-if ($data['permisos']['perm_w'] == 1 || $data['permisos']['perm_u'] == 1) {
-    getModal('mdlRol');
-}
+getModal('mdlRol', $data);
 footerApp('Template/footer_dash', $data);
 ?>

@@ -19,7 +19,17 @@
                 <div class="table-responsive p-1">
                     <table id="sis_permisos" class="table table-hover" width="100%">
                         <thead>
-                            <tr><th>idpermisos</th><th>idrol</th><th>idsubmenu</th><th>perm_r</th><th>perm_w</th><th>perm_u</th><th>perm_d</th><th></th></tr>
+                            <tr>
+                                <th>N°</th>
+                                <th>Rol</th>
+                                <th>Menu</th>
+                                <th>Sub Menu</th>
+                                <th>Leer</th>
+                                <th>Escribir</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>

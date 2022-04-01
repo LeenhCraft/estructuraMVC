@@ -169,7 +169,7 @@ function enviarEmail($data, $template)
     if (!empty($dataEmail)) {
         $emailDestino = $data['email'];
         $asunto = $data['asunto'];
-        $nombre = $data['nombre'];;
+        $nombre = $data['nombre'];
         ob_start();
         require_once("Views/App/Template/Email/" . $template . ".php");
         $mensaje = ob_get_clean();
@@ -185,14 +185,15 @@ function enviarEmail($data, $template)
             $mail->Password   = $dataEmail['em_pass'];                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = $dataEmail['em_port'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->CharSet = "UTF-8";
             $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
 
             //Recipients
             $mail->setFrom($dataEmail['em_usermail'], NOMBRE_EMPRESA);
             $mail->addAddress($emailDestino, $nombre);     //Add a recipient
             // $mail->addAddress('ellen@example.com');               //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');
+            // $mail->addReplyTo('leenh@leenhcraft.com', 'Information');
+            $mail->addCC('leenh@leenhcraft.com');
             // $mail->addBCC('bcc@example.com');
 
             //Attachments - archivos adjuntos

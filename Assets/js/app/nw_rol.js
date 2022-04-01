@@ -71,13 +71,22 @@ function fntView(id) {
   let ajaxUrl = base_url + "Roles/buscar/" + id;
   $.get(ajaxUrl, function (data) {
     let objData = JSON.parse(data);
-    $("#idrol").html(objData.data.idrol);
-    $("#rol_nombre").html(objData.data.rol_nombre);
-    $("#rol_cod").html(objData.data.rol_cod);
-    $("#rol_descripcion").html(objData.data.rol_descripcion);
-    $("#rol_estado").html(objData.data.rol_estado);
-    $("#rol_fecha").html(objData.data.rol_fecha);
-    $("#mdView").modal("show");
+    if (objData.status) {
+      $("#idrol").html(objData.data.idrol);
+      $("#rol_nombre").html(objData.data.rol_nombre);
+      $("#rol_cod").html(objData.data.rol_cod);
+      $("#rol_descripcion").html(objData.data.rol_descripcion);
+      $("#rol_estado").html(objData.data.rol_estado);
+      $("#rol_fecha").html(objData.data.rol_fecha);
+      $("#mdView").modal("show");
+    } else {
+      Swal.fire({
+        title: objData.title,
+        text: objData.text,
+        icon: objData.icon,
+        confirmButtonText: "ok",
+      });
+    }
   });
 }
 
