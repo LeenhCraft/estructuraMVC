@@ -15,6 +15,14 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6 col-12">
+                            <label for="txtIdmenu">Menu</label>
+                            <select class="form-control text-capitalize" id="txtIdmenu" name="txtIdmenu">
+                                <option value="0">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-12">
                             <label for="txtSub_nombre">Sub Menu</label>
                             <input type="text" class="form-control" id="txtSub_nombre" name="txtSub_nombre">
                         </div>

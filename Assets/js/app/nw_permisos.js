@@ -228,7 +228,7 @@ function fntActv(elem, id, ac) {
           // }).then((result) => {
           //   tb.api().ajax.reload();
           // });
-          tb.api().ajax.reload();
+          // tb.api().ajax.reload();
           Toast.fire({
             icon: objData.icon,
             title: objData.title,

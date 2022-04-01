@@ -34,9 +34,10 @@ $expand = $active = '';
         if (!empty(menus())) {
             foreach (menus() as $row) {
                 if ($row['men_url_si'] == 1) {
+                    $active = ($row['men_url'] == $ctrl) ? 'active' : '';
         ?>
                     <li>
-                        <a class="app-menu__item" href="<?= BASE_URL . $row['men_url']; ?>">
+                        <a class="app-menu__item <?= $active; ?>" href="<?= BASE_URL . $row['men_url']; ?>">
                             <i class="app-menu__icon <?= $row['men_icono']; ?>"></i>
                             <span class="app-menu__label"><?= $row['men_nombre']; ?></span>
                         </a>

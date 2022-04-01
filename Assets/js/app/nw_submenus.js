@@ -1,7 +1,7 @@
 let divLoading = $("#divLoading");
 let tb;
-
 $(document).ready(function () {
+  lstMenus();
   tb = $("#sis_submenus").dataTable({
     aProcessing: true,
     aServerSide: true,
@@ -102,6 +102,7 @@ function fntEdit(id) {
     let objData = JSON.parse(data);
     if (objData.status) {
       $("#item").val(objData.data.idsubmenu);
+      $("#txtIdmenu").val(objData.data.idmenu);
       $("#txtIdsubmenu").val(objData.data.idsubmenu);
       $("#txtSub_nombre").val(objData.data.sub_nombre);
       $("#txtSub_url").val(objData.data.sub_url);
@@ -168,4 +169,26 @@ function openModal() {
   $(".div_id").addClass("d-none");
   $("#formsubmenus").trigger("reset");
   $("#modalsubmenus").modal("show");
+}
+
+function lstMenus() {
+  let ajaxUrl = base_url + "submenus/menus/";
+  $.post(ajaxUrl, function (data) {
+    let objData = JSON.parse(data);
+    if (objData.status) {
+      $("#txtIdmenu").empty();
+      $.each(objData.text, function (index, value) {
+        $("#txtIdmenu").append(
+          "<option value=" + value.id + ">" + value.nombre + "</option>"
+        );
+      });
+    } else {
+      Swal.fire({
+        title: objData.title,
+        text: objData.text,
+        icon: objData.icon,
+        confirmButtonText: "ok",
+      });
+    }
+  });
 }

@@ -1,4 +1,7 @@
-<?php headerApp('Template/header_dash', $data); ?>
+<?php 
+headerApp('Template/header_dash', $data); 
+getModal('mdlUsuarios', $data);
+?>
 
 <main class="app-content">
     <div class="row">

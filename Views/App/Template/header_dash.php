@@ -45,4 +45,6 @@
             <img src="<?php echo media() . 'img/loading.svg' ?>" alt="Loading">
         </div>
     </div>
-    <?php require_once "nav.php"; ?>
+    <?php
+    require_once "nav.php";
+    ?>

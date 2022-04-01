@@ -207,34 +207,35 @@ class Usuarios extends Controllers
 
     public function lst()
     {
-        // strtoupper($_SERVER['REQUEST_METHOD']) === "POST" && 
-        if ($this->permisos['perm_r'] == 1) {
-            $arrData = $this->model->lstUser();
-            $nmr = 1;
-            for ($i = 0; $i < count($arrData); $i++) {
-                $arrData[$i]['nmr'] = $nmr;
-                $nmr++;
-                $btnEdit = '';
-                $btnDelete = '';
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            if ($this->permisos['perm_r'] == 1) {
+                $arrData = $this->model->lstUser();
+                $nmr = 1;
+                for ($i = 0; $i < count($arrData); $i++) {
+                    $arrData[$i]['nmr'] = $nmr;
+                    $nmr++;
+                    $btnEdit = '';
+                    $btnDelete = '';
 
-                if ($arrData[$i]['estado'] == 1) {
-                    $arrData[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                } else {
-                    $arrData[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+                    if ($arrData[$i]['estado'] == 1) {
+                        $arrData[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+                    } else {
+                        $arrData[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+                    }
+                    if ($this->permisos['perm_u'] == '1') {
+                        $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['id'] . ')" title="Editar Autor"><i class="fas fa-pencil-alt"></i></button>';
+                    } else {
+                        $btnEdit = '<button class="btn btn-success btn-sm" title="Editar Autor" disabled><i class="fas fa-pencil-alt"></i></button>';
+                    }
+                    if ($this->permisos['perm_d'] == '1') {
+                        $btnDelete = '<button class="btn btn-danger btn-sm" onclick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Autor"><i class="far fa-trash-alt"></i></button>';
+                    } else {
+                        $btnDelete = '<button class="btn btn-danger btn-sm" title="Eliminar Autor" disabled><i class="far fa-trash-alt"></i></button>';
+                    }
+                    $arrData[$i]['opciones'] = '<div class="btn-group" role="group" aria-label="Basic example">' . $btnEdit . ' ' . $btnDelete . '</div>';
                 }
-                if ($this->permisos['perm_u'] == '1') {
-                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['id'] . ')" title="Editar Autor"><i class="fas fa-pencil-alt"></i></button>';
-                } else {
-                    $btnEdit = '<button class="btn btn-success btn-sm" title="Editar Autor" disabled><i class="fas fa-pencil-alt"></i></button>';
-                }
-                if ($this->permisos['perm_d'] == '1') {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onclick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Autor"><i class="far fa-trash-alt"></i></button>';
-                } else {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" title="Eliminar Autor" disabled><i class="far fa-trash-alt"></i></button>';
-                }
-                $arrData[$i]['opciones'] = '<div class="btn-group" role="group" aria-label="Basic example">' . $btnEdit . ' ' . $btnDelete . '</div>';
+                echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
             }
-            echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
         }
         die();
     }

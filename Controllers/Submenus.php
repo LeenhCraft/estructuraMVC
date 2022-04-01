@@ -57,9 +57,9 @@ class Submenus extends Controllers
                     </div>';
                 }
                 $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
-                $arrData[$i]['menu'] = '<i class="app-menu__icon '.$arrData[$i]['icono2'].'"></i> '.ucwords($arrData[$i]['menu']);
+                $arrData[$i]['menu'] = '<i class="app-menu__icon ' . $arrData[$i]['icono2'] . '"></i> ' . ucwords($arrData[$i]['menu']);
                 $arrData[$i]['url'] = strtolower($arrData[$i]['submenu']);
-                $arrData[$i]['submenu'] = '<i class="app-menu__icon '.$arrData[$i]['icono'].'"></i> '.ucfirst($arrData[$i]['submenu']);
+                $arrData[$i]['submenu'] = '<i class="app-menu__icon ' . $arrData[$i]['icono'] . '"></i> ' . ucfirst($arrData[$i]['submenu']);
                 $arrData[$i]['nmr'] = $nmr;
             }
 
@@ -93,9 +93,10 @@ class Submenus extends Controllers
     public function acc()
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
-            if (empty($_POST['item']) || empty($_POST['txtSub_nombre']) || empty($_POST['txtSub_url'])) {
+            if (empty($_POST['txtSub_nombre']) || empty($_POST['txtSub_url'])) {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
             } else {
+                $idmenu = (isset($_POST['txtIdmenu']) && !empty($_POST['txtIdmenu'])) ? strClean($_POST['txtIdmenu']) : '0';
                 $idsubmenu = (isset($_POST['item']) && !empty($_POST['item'])) ? strClean($_POST['item']) : 0;
                 $sub_nombre = (isset($_POST['txtSub_nombre']) && !empty($_POST['txtSub_nombre'])) ? strClean($_POST['txtSub_nombre']) : '';
                 $sub_url = (isset($_POST['txtSub_url']) && !empty($_POST['txtSub_url'])) ? strClean($_POST['txtSub_url']) : '#';
@@ -108,6 +109,7 @@ class Submenus extends Controllers
                 if ($idsubmenu == 0) {
                     if ($this->permisos['perm_w'] == 1) {
                         $response = $this->model->insertar(
+                            $idmenu,
                             $sub_nombre,
                             $sub_url,
                             $sub_controlador,
@@ -171,5 +173,22 @@ class Submenus extends Controllers
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         exit();
+    }
+
+    public function menus()
+    {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No cuenta con los permisos necesarios.');
+            if ($this->permisos['perm_r']) {
+                $arrData = $this->model->menus();
+                if (empty($arrData)) {
+                    $arrData['id'] = 0;
+                    $arrData['nombre'] = 'Sin información';
+                }
+                $arrResponse = array("status" => true, 'icon' => 'success', 'title' => '', "text" => $arrData);
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
     }
 }

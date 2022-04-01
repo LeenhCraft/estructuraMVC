@@ -23,7 +23,7 @@ class SubmenusModel extends Mysql
         return $request;
     }
 
-    public function insertar($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
+    public function insertar($idmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
     {
         $return = $request = [];
         //$sql = "SELECT * FROM sis_submenus WHERE idsubmenu = 'idsubmenu'";
@@ -31,7 +31,7 @@ class SubmenusModel extends Mysql
 
         if (empty($request)) {
             $sql = "INSERT INTO sis_submenus(idmenu,sub_nombre,sub_url,sub_controlador,sub_icono,sub_orden,sub_visible) VALUES (?,?,?,?,?,?,?)";
-            $arrData = array($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
+            $arrData = array($idmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
             $response = $this->insert($sql, $arrData);
             if ($response > 0) {
                 $return['status'] = true;
@@ -87,5 +87,12 @@ class SubmenusModel extends Mysql
             $return['data'] = 'No se puede eliminar un registro asociados a otros.';
         }
         return $return;
+    }
+
+    public function menus()
+    {
+        $sql = "SELECT idmenu as id, men_nombre as nombre FROM sis_menus ORDER BY men_orden ASC";
+        $request = $this->select_all($sql);
+        return $request;
     }
 }
