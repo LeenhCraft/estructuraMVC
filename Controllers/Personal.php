@@ -6,7 +6,7 @@ class Personal extends Controllers
     public function __construct()
     {
         parent::__construct();
-        session_start();
+        // session_start();
         $this->permisos = getPermisos(get_class($this));
         if (!isset($_SESSION['login']) || $this->permisos['perm_r'] != 1) {
             header('Location: ' . base_url() . 'login');

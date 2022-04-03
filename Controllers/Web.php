@@ -3,7 +3,7 @@ class Web extends Controllers
 {
 	public function __construct()
 	{
-		session_start();
+		// session_start();
 		parent::__construct();
 	}
 

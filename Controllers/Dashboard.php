@@ -5,7 +5,7 @@ class Dashboard extends Controllers
 
     public function __construct()
     {
-        session_start();
+        // session_start();
         if (!isset($_SESSION['login'])) {
             header('Location: ' . base_url() . 'login');
         }
@@ -31,6 +31,6 @@ class Dashboard extends Controllers
         // dep(password_hash(321321, PASSWORD_DEFAULT));
         // dep(getPermisos(get_class($this)));
         // dep($_SESSION);     
-        $this->views->getView('Errors', "404");   
+        $this->views->getView('Errors', "404");
     }
 }

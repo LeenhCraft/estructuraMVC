@@ -5,7 +5,7 @@ class Login extends Controllers
 
     public function __construct()
     {
-        session_start();
+        // session_start();
         if (isset($_SESSION['login'])) {
             header('Location: ' . base_url() . 'dashboard');
         }
@@ -268,7 +268,7 @@ class Login extends Controllers
     {
         // dep([exec('getmac'), strtok(exec('getmac'), ''), exec('whoami'), substr(php_uname(), 0, 7)]);
         // $pasword = 'DJ-leenh-1';
-        // dep($pasword);
+        // dep(password_hash('321321', PASSWORD_DEFAULT));
         // $error_encontrado = "";
         // dep(validar_clave($pasword, $error_encontrado));
         // dep($error_encontrado);
