@@ -16,4 +16,14 @@ class Controllers
 			$this->model = new $model();
 		}
 	}
+
+	public function otro($modelo)
+	{
+		$model = ucwords($modelo) . "Model";
+		$routClass = "Models/" . $model . ".php";
+		if (file_exists($routClass)) {
+			require_once($routClass);
+			$this->other = new $model();
+		}
+	}
 }

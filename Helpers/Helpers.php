@@ -12,13 +12,25 @@ function media()
 
 function headerWeb($view, $data = "")
 {
-    $view_header = "Views/Template/$view.php";
+    $view_header = "Views/Web/Template/$view.php";
     require_once $view_header;
 }
 
 function footerWeb($view, $data = "")
 {
-    $view_footer = "Views/Template/$view.php";
+    $view_footer = "Views/Web/Template/$view.php";
+    require_once $view_footer;
+}
+
+function headerApp($view, $data = "")
+{
+    $view_header = "Views/App/$view.php";
+    require_once $view_header;
+}
+
+function footerApp($view, $data = "")
+{
+    $view_footer = "Views/App/$view.php";
     require_once $view_footer;
 }
 
@@ -157,9 +169,9 @@ function enviarEmail($data, $template)
     if (!empty($dataEmail)) {
         $emailDestino = $data['email'];
         $asunto = $data['asunto'];
-        $nombre = $data['nombre'];;
+        $nombre = $data['nombre'];
         ob_start();
-        require_once("Views/Template/Email/" . $template . ".php");
+        require_once("Views/App/Template/Email/" . $template . ".php");
         $mensaje = ob_get_clean();
         try {
             //Server settings
@@ -173,14 +185,15 @@ function enviarEmail($data, $template)
             $mail->Password   = $dataEmail['em_pass'];                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = $dataEmail['em_port'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->CharSet = "UTF-8";
             $mail->setLanguage('es', 'vendor/phpmailer/phpmailer/language/');      //To load the French version
 
             //Recipients
             $mail->setFrom($dataEmail['em_usermail'], NOMBRE_EMPRESA);
             $mail->addAddress($emailDestino, $nombre);     //Add a recipient
             // $mail->addAddress('ellen@example.com');               //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');
+            // $mail->addReplyTo('leenh@leenhcraft.com', 'Information');
+            $mail->addCC('leenh@leenhcraft.com');
             // $mail->addBCC('bcc@example.com');
 
             //Attachments - archivos adjuntos
@@ -205,16 +218,8 @@ function enviarEmail($data, $template)
     } else {
         $msg['status'] = false;
         $msg['text'] = "No se a configurado un servidor de email";
-
     }
     return $msg;
-}
-
-function getPermisos($idmod)
-{
-    // require_once 'Models/NivelesModel.php';
-    // $obj = new NivelesModel();
-    // return $obj->getPermisosMod($idmod);
 }
 
 function menus()
@@ -231,4 +236,83 @@ function submenus(int $idmenu)
     $nivel = new NivelesModel();
     $data = $nivel->submenus($idmenu);
     return $data;
+}
+
+function getPermisos($idmod)
+{
+    require_once 'Models/NivelesModel.php';
+    $obj = new NivelesModel();
+    return $obj->getPermisosMod(strtolower($idmod));
+}
+
+function pertenece($submen, $menu)
+{
+    require_once 'Models/NivelesModel.php';
+    $obj = new NivelesModel();
+    $request = $obj->pertenece($submen, $menu);
+    return (!empty($request)) ? true : false;
+}
+
+function validar_clave($clave, &$error_clave)
+{
+    if (strlen($clave) < 6) {
+        $error_clave = "La clave debe tener al menos 6 caracteres";
+        return false;
+    }
+    if (strlen($clave) > 16) {
+        $error_clave = "La clave no puede tener más de 16 caracteres";
+        return false;
+    }
+    if (!preg_match('`[a-z]`', $clave)) {
+        $error_clave = "La clave debe tener al menos una letra minúscula";
+        return false;
+    }
+    if (!preg_match('`[A-Z]`', $clave)) {
+        $error_clave = "La clave debe tener al menos una letra mayúscula";
+        return false;
+    }
+    if (!preg_match('`[0-9]`', $clave)) {
+        $error_clave = "La clave debe tener al menos un caracter numérico";
+        return false;
+    }
+    if (!preg_match('/[@#$%&;*]/', $clave)) {
+        $error_clave = "La clave debe tener al menos un caracter especial del tipo @, #, $, %, &, *";
+        return false;
+    }
+    if (preg_match('/([0-9]+).*\1{1}/', $clave)) {
+        $error_clave = "La clave no debe tener un número que se repita más de una vez.";
+        return false;
+    }
+    // [@#$%&;*]
+    $error_clave = "";
+    return true;
+}
+
+function getModal($ruta, $data = "")
+{
+    $view_modal = "Views/App/Template/Modals/{$ruta}.php";
+    require_once $view_modal;
+}
+
+function consultaDNI($dni)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://apiperu.dev/api/dni/$dni",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_POSTFIELDS => "",
+        CURLOPT_HTTPHEADER => [
+            "Authorization: Bearer 3fe97dac2bd89bddf396d1b284801fbb5a4c4d628e964fc9b64145635578848d"
+        ],
+    ]);
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    return $response;
 }

@@ -24,7 +24,7 @@
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="">
 
-    <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>">
+    <!-- <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>"> -->
     <link rel="stylesheet" href="<?php echo media() . 'css/main.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/font.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
@@ -40,4 +40,11 @@
 </head>
 
 <body class="app sidebar-mini">
-    <?php require_once "nav.php"; ?>
+    <div id="divLoading">
+        <div>
+            <img src="<?php echo media() . 'img/loading.svg' ?>" alt="Loading">
+        </div>
+    </div>
+    <?php
+    require_once "nav.php";
+    ?>

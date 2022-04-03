@@ -60,4 +60,17 @@ class Mysql extends Conexion
 		$del = $result->execute();
 		return $del;
 	}
+
+	//Crear Tabla
+	public function crear(string $query)
+	{
+		$this->strquery = $query;
+		$result = $this->conexion->prepare($this->strquery);
+		try {
+			$del = $result->execute();
+		} catch (Exception $e) {
+			return false;
+		}
+		return $del;
+	}
 }
