@@ -11,15 +11,17 @@ $(document).ready(function () {
       if (objData["status"]) {
         Swal.fire({
           title: objData.title,
-          text: objData.text,
           icon: objData.icon,
-          confirmButtonText: "ok",
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            window.location.reload();
+          }
         });
-        // .then((result) => {
-        //   if (result.isConfirmed) {
-        //     window.location.reload();
-        //   }
-        // });
       } else {
         Swal.fire({
           title: "Advertencia!",
@@ -29,7 +31,7 @@ $(document).ready(function () {
         });
       }
       divLoading.css("display", "none");
-      $("#frm").trigger("reset");
+      // $("#frm").trigger("reset");
     });
   });
 });

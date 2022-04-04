@@ -126,6 +126,7 @@ class Submenus extends Controllers
                 } else {
                     if ($this->permisos['perm_u'] == 1) {
                         $response = $this->model->actualizar(
+                            $idmenu,
                             $idsubmenu,
                             $sub_nombre,
                             $sub_url,

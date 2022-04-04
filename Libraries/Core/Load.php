@@ -19,10 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$method = 'primeraves';
 		$params = '';
 	}
-}// else if ($_SERVER['REQUEST_METHOD'] == 'POST') {}
-
-
-
+} // else if ($_SERVER['REQUEST_METHOD'] == 'POST') {}
 // dep($_SERVER['REQUEST_METHOD']);
 // dep([$controller,$method],1);
 

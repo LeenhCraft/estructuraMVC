@@ -60,7 +60,7 @@ class Menus extends Controllers
 
                 $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
                 $arrData[$i]['nmr'] = $nmr;
-                $arrData[$i]['men_nombre'] = '<i class="app-menu__icon '.$arrData[$i]['men_icono'].'"></i>' . ucwords($arrData[$i]['men_nombre']);
+                $arrData[$i]['men_nombre'] = '<i class="app-menu__icon ' . $arrData[$i]['men_icono'] . '"></i>' . ucwords($arrData[$i]['men_nombre']);
             }
 
             echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
@@ -109,6 +109,7 @@ class Menus extends Controllers
                 $men_orden = ($men_orden < 0) ? $men_orden * -1 : $men_orden;
                 $men_visible = (isset($_POST['txtMen_visible'])) ? intval($_POST['txtMen_visible']) : 1;
                 $response = '';
+
                 if ($idmenu == 0) {
                     if ($this->permisos['perm_w'] == 1) {
                         $response = $this->model->insertar(
@@ -121,6 +122,16 @@ class Menus extends Controllers
                             $men_visible
                         );
                         if ($response['status']) {
+                            if ($men_url_si == '1') {
+                                parent::otro('Submenus');
+                                $idmenu = $response['data'];
+                                $sub_nombre = $men_nombre;
+                                $sub_url = $men_url;
+                                $sub_controlador = $men_controlador;
+                                $sub_icono = $men_icono;
+                                $sub_orden = $sub_visible = '1';
+                                $response = $this->other->insertar($idmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
+                            }
                             $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Excelente!!', "text" => $response['data']);
                         } else {
                             $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);

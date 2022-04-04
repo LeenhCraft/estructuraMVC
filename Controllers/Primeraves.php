@@ -25,7 +25,7 @@ class Primeraves extends Controllers
                         if (!empty($arrData)) {
                             $request = $this->model->upd_pass(password_hash($pass, PASSWORD_DEFAULT));
                             if ($request['status']) {
-                                $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Excelente!!', "text" => 'Contraseña actualizada correctamente.');
+                                $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Contraseña actualizada correctamente!!', "text" => 'Contraseña actualizada correctamente.');
                             } else {
                                 $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Excelente!!', "text" => 'Ocurrio un error al actualizar');
                             }

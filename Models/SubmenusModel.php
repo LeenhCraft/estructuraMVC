@@ -47,15 +47,15 @@ class SubmenusModel extends Mysql
         return $return;
     }
 
-    public function actualizar($idsubmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
+    public function actualizar($idmenu, $idsubmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible)
     {
         $request = [];
         $sql = "SELECT * FROM sis_submenus WHERE sub_nombre LIKE'{$sub_nombre}' AND idsubmenu != $idsubmenu";
         $request = $this->select_all($sql);
 
         if (empty($request)) {
-            $sql = "UPDATE sis_submenus SET sub_nombre=?,sub_url=?,sub_controlador=?,sub_icono=?,sub_orden=?,sub_visible=? WHERE idsubmenu =$idsubmenu";
-            $arrData = array($sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
+            $sql = "UPDATE sis_submenus SET idmenu=?,sub_nombre=?,sub_url=?,sub_controlador=?,sub_icono=?,sub_orden=?,sub_visible=? WHERE idsubmenu =$idsubmenu";
+            $arrData = array($idmenu, $sub_nombre, $sub_url, $sub_controlador, $sub_icono, $sub_orden, $sub_visible);
             $request = $this->update($sql, $arrData);
             $return['status'] = $request;
             $return['data'] = '';
