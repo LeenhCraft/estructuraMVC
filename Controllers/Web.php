@@ -11,7 +11,7 @@ class Web extends Controllers
 	{
 		$data['titulo_web'] = "LEENHCRAFT | WEB";
 		$data['meta_content'] = "sistemas, nueva cajamarca, pagina web, leenh";
-		// $data['css'] = ['css/bootstrap.css'];
+		$data['css'] = ['css/styles.css'];
 		// $data['js'] = ['js/jquery.min.js', 'js/bootstrap.min.js'];
 		$this->views->getView('Web', "web", $data);
 	}
