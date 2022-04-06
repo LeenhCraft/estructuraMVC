@@ -15,14 +15,4 @@ class sys extends Controllers
         }
         return $requestUser;
     }
-
-    public function demo()
-    {
-        // $this->views->getView('Errors', "404");
-        if (isset($_SESSION)) {
-            dep("dentro");
-        } else {
-            dep("fuera");
-        }
-    }
 }

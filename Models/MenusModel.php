@@ -23,8 +23,8 @@ class MenusModel extends Mysql
     public function insertar($men_nombre, $men_icono, $men_url_si, $men_url, $men_controlador, $men_orden, $men_visible)
     {
         $return = $request = [];
-        //$sql = "SELECT * FROM sis_menus WHERE idmenu = 'idmenu'";
-        //$request = $this->select_all($sql);
+        $sql = "SELECT * FROM sis_menus WHERE men_nombre LIKE '$men_nombre'";
+        $request = $this->select($sql);
 
         if (empty($request)) {
             $sql = "INSERT INTO sis_menus(men_nombre,men_icono,men_url_si,men_url,men_controlador,men_orden,men_visible) VALUES (?,?,?,?,?,?,?)";
@@ -32,14 +32,14 @@ class MenusModel extends Mysql
             $response = $this->insert($sql, $arrData);
             if ($response > 0) {
                 $return['status'] = true;
-                $return['data'] = '';
+                $return['data'] = $response;
             } else {
                 $return['status'] = false;
                 $return['data'] = 'Ocurrio un error al intentar registrar el personal.';
             }
         } else {
             $return['status'] = false;
-            $return['data'] = 'El DNI que esta tratando de ingresar ya esta registrado.';
+            $return['data'] = 'El menu que esta tratando de ingresar ya esta registrado.';
         }
         return $return;
     }

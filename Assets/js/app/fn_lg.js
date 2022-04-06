@@ -16,12 +16,16 @@ $(document).ready(function () {
       if (objData["status"]) {
         Swal.fire({
           title: objData.title,
-          text: objData.text,
           icon: objData.icon,
-          confirmButtonText: "ok",
+          text: objData.text,
+          // toast: true,
+          // position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
         }).then((result) => {
-          if (result.isConfirmed) {
-            window.location = base_url + "dashboard";
+          if (result.dismiss === Swal.DismissReason.timer) {
+            window.location.reload();
           }
         });
       } else {
@@ -95,21 +99,6 @@ $(document).ready(function () {
       divLoading.css("display", "none");
       $("#frmreset").trigger("reset");
     });
-  });
-
-  let ajaxUrl = base_url + "login/patrones";
-  $.post(ajaxUrl, function (data) {
-    objPatron = JSON.parse(data);
-    if (objPatron["status"]) {
-      console.log(objPatron);
-    } else {
-      Swal.fire({
-        title: objPatron.title,
-        text: objPatron.text,
-        icon: objPatron.icon,
-        confirmButtonText: "ok",
-      });
-    }
   });
 
   $('.login-content [data-toggle="flip"]').click(function () {
@@ -196,5 +185,5 @@ function mostrarForca(forca, a) {
 function verAyuda(elem) {
   let selector = "#" + elem;
   let div = $(selector);
-  div.show('swing');
+  div.show("swing");
 }
