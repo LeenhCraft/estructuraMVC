@@ -3,6 +3,7 @@
 require_once 'Controllers/sys.php';
 $primera = new sys();
 $data = $primera->first_time();
+$pe_u = $primera->publi_first();
 
 $controller = ucwords($controller);
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -14,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 	}
 
-	if ($data['primera'] == '1' && $controller != 'Web' && $controller != 'Logout') {
+	if (isset($_SESSION['lnh_id']) && $data['primera'] == '1' && $controller != 'Web' && $controller != 'Logout' && $method != 'web') {
 		$controller = ucwords('Primeraves');
 		$method = 'primeraves';
 		$params = '';

@@ -11,7 +11,18 @@ class sys extends Controllers
     {
         $requestUser['primera'] = 0;
         if (isset($_SESSION['lnh_id'])) {
-            $requestUser = $this->model->first_time();
+            $id = intval($_SESSION['lnh_id']);
+            $requestUser = $this->model->first_time($id);
+        }
+        return $requestUser;
+    }
+
+    public function publi_first()
+    {
+        $requestUser['primera'] = 0;
+        if (isset($_SESSION['pe_u'])) {
+            $id = intval($_SESSION['pe_u']);
+            $requestUser = $this->model->public_first_time($id);
         }
         return $requestUser;
     }

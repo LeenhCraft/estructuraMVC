@@ -279,7 +279,7 @@ function validar_clave($clave, &$error_clave)
         $error_clave = "La clave debe tener al menos un caracter especial del tipo @, #, $, %, &, *";
         return false;
     }
-    if (preg_match('/([0-9]+).*\1{1}/', $clave)) {
+    if (preg_match('/([0-9]+).*\1{2}/', $clave)) {
         $error_clave = "La clave no debe tener un número que se repita más de una vez.";
         return false;
     }
