@@ -14,10 +14,10 @@
                         <button type="button" class="btn1" data-toggle="modal" data-target="#exampleModal1">
                             INICIA SESIÓN
                         </button>
+                        <button type="button" class="btn2" data-toggle="modal" data-target="#exampleModal2">
+                            REGISTRATE
+                        </button>
                     <?php } ?>
-                    <button type="button" class="btn2" data-toggle="modal" data-target="#exampleModal2">
-                        REGISTRATE
-                    </button>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <p class="h6 mb-2"><a href="#"  onclick="flop()"><i class="fa fa-angle-left fa-fw"></i> Iniciar sesión</a></p>
+                            <p class="h6 mb-2"><a href="#" onclick="flop()"><i class="fa fa-angle-left fa-fw"></i> Iniciar sesión</a></p>
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->

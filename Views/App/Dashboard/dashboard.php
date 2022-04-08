@@ -1,5 +1,5 @@
 <?php headerApp('Template/header_dash', $data); ?>
-<main class="app-content">
+<main class="app-content" style="background-image: url(/assets/img/dash.png); background-repeat: no-repeat;background-attachment: fixed;background-position: center center; ">
     <div class="mt-4">
         <div class="row">
             <div class="col-md-6 col-lg-3">

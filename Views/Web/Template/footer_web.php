@@ -2,6 +2,7 @@
     <div class="contenedor-footer">
         <div class="content-foo">
             <h4>Contáctanos</h4>
+            <p><a class="text-white font-weight-light text-capitalize" target="_blank" href="/login">intranet</a></p>
         </div>
         <div class="content-foo">
             <h4>Resolvemos tus consultas en</h4>
