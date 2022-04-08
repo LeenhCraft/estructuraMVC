@@ -316,3 +316,20 @@ function consultaDNI($dni)
     curl_close($curl);
     return $response;
 }
+
+
+// Obtener nomnre de usuario
+function getName(int $id)
+{
+    require_once("Models/PermisosModel.php");
+    $objPermisos = new PermisosModel();
+    $arrPermisos = $objPermisos->bscUsu($id);
+    if ($arrPermisos['rol'] == 'Root') {
+        $arrPermisos['rol'] = '<span class="badge badge-danger">' . $arrPermisos['rol'] . '</span>';
+    } else if ($arrPermisos['rol'] == 'Administrador') {
+        $arrPermisos['rol'] = '<span class="badge badge-success">' . $arrPermisos['rol'] . '</span>';
+    } else {
+        $arrPermisos['rol'] = '<span class="badge badge-info">' . $arrPermisos['rol'] . '</span>';
+    }
+    return $arrPermisos;
+}

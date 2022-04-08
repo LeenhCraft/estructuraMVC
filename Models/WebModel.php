@@ -263,4 +263,20 @@ class WebModel extends Mysql
         }
         return $return;
     }
+
+    public function estado_recu($email)
+    {
+        $return = $request = [];
+        $sql = "SELECT * FROM web_usuarios WHERE usu_activo = 1 AND usu_estado = 1 AND usu_usuario like '$email'";
+        $request1 = $this->select($sql);
+
+        if (!empty($request1)) {
+            $return['status'] = true;
+            $return['data'] = $request1;
+        } else {
+            $return['status'] = false;
+            $return['data'] = 'No existe usuario.';
+        }
+        return $return;
+    }
 }

@@ -219,23 +219,31 @@ class Web extends Controllers
 		if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
 			$usu = (isset($_POST['txtusu']) && !empty($_POST['txtusu'])) ? strClean($_POST['txtusu']) : '';
 			if (!empty($usu)) {
-				$token = generar_letras(20);
-				$response = $this->model->recuperar($usu, $token);
-
+				$response = $this->model->estado_recu($usu);
 				if ($response['status']) {
-					$url_recovery = base_url() . 'web/recuperar/' . $usu . '/' . $token . '==';
-					$dataUsuario = array(
-						'nombre' => $response['data']['usu_nombre'],
-						'nombreUsuario' => $response['data']['usu_nombre'],
-						'email' => $usu,
-						'asunto' => NOMBRE_EMPRESA . ' - Recuperar Contraseña',
-						'url_recovery' => $url_recovery
-					);
-					$response = enviarEmail($dataUsuario, 'email_cambioPassword');
-					if ($response['status']) {
-						$arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se ha enviado un correo con las instrucciones para recuperar su contraseña.');
+					if ($response['data']['usu_token'] == '') {
+						$token = generar_letras(20);
+						$response = $this->model->recuperar($usu, $token);
+						if ($response['status']) {
+							$url_recovery = base_url() . 'web/recuperar/' . $usu . '/' . $token . '==';
+							$dataUsuario = array(
+								'nombre' => $response['data']['usu_nombre'],
+								'nombreUsuario' => $response['data']['usu_nombre'],
+								'email' => $usu,
+								'asunto' => NOMBRE_EMPRESA . ' - Recuperar Contraseña',
+								'url_recovery' => $url_recovery
+							);
+							$response = enviarEmail($dataUsuario, 'email_cambioPassword');
+							if ($response['status']) {
+								$arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se ha enviado un correo con las instrucciones para recuperar su contraseña.');
+							} else {
+								$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+							}
+						} else {
+							$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+						}
 					} else {
-						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'El usuario ya ha recuperado su contraseña.');
 					}
 				} else {
 					$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
@@ -256,8 +264,8 @@ class Web extends Controllers
 			$strEmail = strClean($arrParams[0]);
 			$strToken = strClean($arrParams[1]);
 			$response = $this->model->validar2($strEmail, $strToken);
-			$preguntas = $this->model->getPreguntas($response['data']['idwebusuario']);
 			if ($response['status']) {
+				$preguntas = $this->model->getPreguntas($response['data']['idwebusuario']);
 				// $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se valido su registro, por favor inicie sesión.');
 				$data['titulo_web'] = "LEENHCRAFT | WEB";
 				$data['css'] = ['css/styles.css', 'css/web/styles.css'];
