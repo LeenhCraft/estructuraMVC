@@ -226,27 +226,27 @@ class Web extends Controllers
 						$response = $this->model->recuperar($usu, $token);
 						if ($response['status']) {
 							$url_recovery = base_url() . 'web/recuperar/' . $usu . '/' . $token . '==';
-							$dataUsuario = array(
-								'nombre' => $response['data']['usu_nombre'],
-								'nombreUsuario' => $response['data']['usu_nombre'],
-								'email' => $usu,
-								'asunto' => NOMBRE_EMPRESA . ' - Recuperar Contraseña',
-								'url_recovery' => $url_recovery
-							);
-							$response = enviarEmail($dataUsuario, 'email_cambioPassword');
-							if ($response['status']) {
-								$arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se ha enviado un correo con las instrucciones para recuperar su contraseña.');
-							} else {
-								$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
-							}
+							// $dataUsuario = array(
+							// 	'nombre' => $response['data']['usu_nombre'],
+							// 	'nombreUsuario' => $response['data']['usu_nombre'],
+							// 	'email' => $usu,
+							// 	'asunto' => NOMBRE_EMPRESA . ' - Recuperar Contraseña',
+							// 	'url_recovery' => $url_recovery
+							// );
+							// $response = enviarEmail($dataUsuario, 'email_cambioPassword');
+							// if ($response['status']) {
+							$arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => '', 'url' => $url_recovery);
+							// } else {
+							// 	$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+							// }
 						} else {
 							$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
 						}
 					} else {
-						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'El usuario ya ha recuperado su contraseña.');
+						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Este usuario ya tiene un proceso de recuperación activo.', 'url' => base_url() . 'web/recuperar/' . $usu . '/' . $response['data']['usu_token'] . '==');
 					}
 				} else {
-					$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+					$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data'], 'url' => base_url());
 				}
 			} else {
 				$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Por favor complete los campos.');
@@ -317,15 +317,22 @@ class Web extends Controllers
 							$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
 						}
 					} else {
-						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
+						if ($response['limite_superado'] == '1') {
+							$url = BASE_URL;
+						} else {
+							$url = '';
+						}
+						$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data'], 'url' => $url);
 					}
 				} else {
 					$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => $response['data']);
 				}
 			} else {
-				$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Por favor complete los campos.');
+				$arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Por favor complete los campos.', 'url' => '');
 			}
 			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+		} else {
+			header('Location: ' . base_url());
 		}
 	}
 }

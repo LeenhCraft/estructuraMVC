@@ -99,22 +99,30 @@ $(document).ready(function () {
       if (objData.status) {
         Swal.fire({
           title: objData.title,
-          icon: objData.icon,
           text: objData.text,
-          // toast: true,
-          // position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
+          icon: objData.icon,
+          showCloseButton: false,
+          confirmButtonText: "Recuperar contraseña",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = objData.url;
+          }
         });
       } else {
         Swal.fire({
           title: objData.title,
           text: objData.text,
           icon: objData.icon,
-          confirmButtonText: "ok",
+          showCancelButton: false,
+          cancelButtonText: "Ok, Cerrar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = objData.url;
+          }
         });
       }
+      $("#usulog").trigger("reset");
+      $("#usureset").trigger("reset");
       divLoading.css("display", "none");
       // $("#usulog").trigger("reset");
     });

@@ -150,8 +150,9 @@ class WebModel extends Mysql
         $request1 = $this->select($sql);
 
         if (!empty($request1)) {
-            $sql = "UPDATE web_usuarios SET usu_token=?,usu_primera=? WHERE usu_usuario like '$email'";
-            $arrData = array($token, 1);
+            // $sql = "UPDATE web_usuarios SET usu_token=?,usu_primera=? WHERE usu_usuario like '$email'";
+            $sql = "UPDATE web_usuarios SET usu_token=? WHERE usu_usuario like '$email'";
+            $arrData = array($token);
             $request = $this->update($sql, $arrData);
             if ($request) {
                 $return['status'] = true;
@@ -162,7 +163,7 @@ class WebModel extends Mysql
             }
         } else {
             $return['status'] = false;
-            $return['data'] = 'No existe usuario.';
+            $return['data'] = 'Usuario incorrecto.';
         }
         return $return;
     }
@@ -178,7 +179,7 @@ class WebModel extends Mysql
             $return['data'] = $request;
         } else {
             $return['status'] = false;
-            $return['data'] = 'No existe usuario.';
+            $return['data'] = 'Usuario incorrecto.';
         }
         return $return;
     }
@@ -233,8 +234,61 @@ class WebModel extends Mysql
             $return['status'] = true;
             $return['data'] = '';
         } else {
-            $return['status'] = false;
-            $return['data'] = 'No podemos corroborar su información, por favor verifique sus respuestas.';
+            $sql = "SELECT * FROM sis_intentos WHERE idwebusuario = '$idwebusuario' AND int_delete = 0 ORDER BY idintento DESC LIMIT 1";
+            $request = $this->select($sql);
+            if (!empty($request)) {
+                if ($request['int_veces'] == '3') {
+
+                    switch ($request['int_intento']) {
+                        case '1':
+                            $h = 0;
+                            $m = 15;
+                            $sql = "UPDATE sis_intentos SET  int_veces = 0,int_timeHrs = ?,int_timeMin=?,int_intento = 2,int_fechahora=? WHERE idintento = ?";
+                            break;
+                        case '2':
+                            $h = 24;
+                            $m = 0;
+                            $sql = "UPDATE sis_intentos SET  int_veces = 0,int_timeHrs = ?,int_timeMin=?,int_intento = 3,int_fechahora=? WHERE idintento = ?";
+                            break;
+                        case '3':
+                            $h = 0;
+                            $m = 0;
+                            $sql = "UPDATE sis_intentos SET  int_veces = 0,int_timeHrs = ?,int_timeMin=?,int_intento = 0,int_fechahora=? WHERE idintento = ?";
+                            break;
+                        default:
+                            $h = 0;
+                            $m = 5;
+                            $sql = "UPDATE sis_intentos SET  int_veces = 0,int_timeHrs = ?,int_timeMin=?,int_intento = 1,int_fechahora=? WHERE idintento = ?";
+                            break;
+                    }
+                    // dep($sql, 1);
+                    // $sql = "UPDATE sis_intentos SET int_timeHrs = ?,int_timeMin=? WHERE idintento = ?";
+                    $arrData = array($h, $m, date('Y-m-d H:i:s'), $request['idintento']);
+                    $request = $this->update($sql, $arrData);
+
+
+                    $return['status'] = false;
+                    $return['limite_superado'] = '1';
+                    $return['data'] = 'Ha superado el número de intentos permitidos.';
+                } else {
+                    $intentos = $request['int_veces'] + 1;
+                    $sql = "UPDATE sis_intentos SET int_veces = ?,int_fechahora=? WHERE idwebusuario = ?";
+                    $arrData = array($intentos, date('Y-m-d H:i:s'), $idwebusuario);
+                    $request = $this->update($sql, $arrData);
+
+                    $return['status'] = false;
+                    $return['limite_superado'] = '0';
+                    $return['data'] = 'No podemos corroborar su información, por favor verifique sus respuestas.';
+                }
+            } else {
+                $sql = "INSERT INTO sis_intentos (idwebusuario, int_veces) VALUES (?,?)";
+                $arrData = array($idwebusuario, 1);
+                $request = $this->insert($sql, $arrData);
+
+                $return['status'] = false;
+                $return['limite_superado'] = '0';
+                $return['data'] = 'No podemos corroborar su información, por favor verifique sus respuestas.';
+            }
         }
         return $return;
     }
@@ -251,6 +305,13 @@ class WebModel extends Mysql
             $arrData = array($pass, '', 1);
             $request = $this->update($sql, $arrData);
             if ($request) {
+                $sql = "SELECT * FROM sis_intentos WHERE idwebusuario = '$idwebusuario' AND int_delete = 0 ORDER BY idintento DESC LIMIT 1";
+                $request = $this->select($sql);
+                if (!empty($request)) {
+                    $sql = "UPDATE sis_intentos SET int_delete=? WHERE idwebusuario = ?";
+                    $arrData = array(1, $idwebusuario);
+                    $request = $this->update($sql, $arrData);
+                }
                 $return['status'] = true;
                 $return['data'] = $request1;
             } else {
@@ -267,16 +328,56 @@ class WebModel extends Mysql
     public function estado_recu($email)
     {
         $return = $request = [];
-        $sql = "SELECT * FROM web_usuarios WHERE usu_activo = 1 AND usu_estado = 1 AND usu_usuario like '$email'";
-        $request1 = $this->select($sql);
+        $h = $m = $id = 0;
+        $estado = false;
+        $sql = "SELECT b.idwebusuario AS id,a.int_timeHrs as 'H', a.int_timeMin as 'M' FROM sis_intentos a
+        INNER JOIN web_usuarios b ON b.idwebusuario=a.idwebusuario
+        WHERE b.usu_usuario = '$email' AND a.int_delete = 0 AND a.int_veces <= 3 AND a.int_intento <=3 ORDER BY a.idintento DESC LIMIT 1";
+        $request = $this->select($sql);
 
-        if (!empty($request1)) {
-            $return['status'] = true;
-            $return['data'] = $request1;
+        if (!empty($request)) {
+            $id = $request['id'];
+            $h = $request['H'];
+            $m = $request['M'];
+            $sql = "SELECT
+                        b.*
+                    FROM
+                        sis_intentos a
+                    INNER JOIN web_usuarios b ON
+                        a.idwebusuario = b.idwebusuario
+                    WHERE
+                        a.idwebusuario = '$id' AND a.int_fechahora >= DATE_SUB(
+                            NOW(), INTERVAL '$h:$m' HOUR_MINUTE) AND a.int_delete = 0
+                        ORDER BY
+                            a.idintento
+                        DESC
+                    LIMIT 1";
+            $request = $this->select($sql);
+            if (empty($request)) {
+                //desbloquear
+                $estado = true;
+            }
+        } else {
+            $estado = true;
+        }
+
+        if ($estado) {
+            $sql = "SELECT * FROM web_usuarios WHERE usu_activo = 1 AND usu_estado = 1 AND usu_usuario like '$email'";
+            $request1 = $this->select($sql);
+
+            if (!empty($request1)) {
+                $return['status'] = true;
+                $return['data'] = $request1;
+            } else {
+                $return['status'] = false;
+                $return['data'] = 'Usuario incorrecto.';
+            }
         } else {
             $return['status'] = false;
-            $return['data'] = 'No existe usuario.';
+            $return['data'] = 'Este usuario se encuentra temporalmente bloqueado, para recuperar su contraseña por favor intente más tarde.';
         }
+
+
         return $return;
     }
 }
