@@ -136,4 +136,11 @@ class PermisosModel extends Mysql
         }
         return $return;
     }
+
+    public function bscUsu($id)
+    {
+        $sql = "SELECT b.per_nombre as nombre, c.rol_nombre as rol FROM sis_usuarios a INNER JOIN bib_personal b ON a.idpersona=b.idpersona INNER JOIN sis_rol c ON c.idrol=a.idrol  WHERE a.usu_id='{$id}'";
+        $request = $this->select($sql);
+        return empty($request) ? 'sin datos' : $request;
+    }
 }

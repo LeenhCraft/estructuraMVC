@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
 
 
@@ -166,3 +167,421 @@ footer{
     }
 }
 
+=======
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Niconne);
+
+:root {
+    --font-family-sans-serif: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%
+}
+
+body {
+    margin: 0;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+main {
+    display: block
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible
+}
+
+pre {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+a {
+    background-color: transparent
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration: underline dotted
+}
+
+b, strong {
+    font-weight: bolder
+}
+
+code, kbd, samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+small {
+    font-size: 80%
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+sub {
+    bottom: -.25em
+}
+
+sup {
+    top: -.5em
+}
+
+img {
+    border-style: none
+}
+
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0
+}
+
+button, input {
+    overflow: visible
+}
+
+button, select {
+    text-transform: none
+}
+
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: button
+}
+
+[type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner, button::-moz-focus-inner {
+    border-style: none;
+    padding: 0
+}
+
+[type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring, button:-moz-focusring {
+    outline: 1px dotted ButtonText
+}
+
+fieldset {
+    padding: .35em .75em .625em
+}
+
+legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal
+}
+
+progress {
+    vertical-align: baseline
+}
+
+textarea {
+    overflow: auto
+}
+
+[type=checkbox], [type=radio] {
+    box-sizing: border-box;
+    padding: 0
+}
+
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
+}
+
+[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit
+}
+
+details {
+    display: block
+}
+
+summary {
+    display: list-item
+}
+
+template {
+    display: none
+}
+
+[hidden] {
+    display: none
+}
+
+
+
+.contenedor {
+    display: flex;
+    /*flexibilizar las cajas o div*/
+    max-width: 100%;
+    /*ancho*/
+    height: calc(100vh - 208px);
+    /*en cada pantalla va a ocupar el 80 percent de esa pantalla*/
+    background-image: url(../img/book1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*para que la imagen ocupe todo nuestro contenedor*/
+    background-position: center;
+    /*imagen alineado a la izquierda*/
+}
+
+.wrap {
+    max-width: 1000px;
+    /*esto e spara q no ocupe de ancho a ancho*/
+    margin: 0 auto;
+    /*para que el contenido se centre*/
+    height: 100%;
+    /*lo que el texto nos de de alto*/
+    display: flex;
+    flex-flow: row wrap;
+    /*para q sea flexible cuando el tamao de las pantallas sean chicas*/
+    justify-content: center;
+    /*alineado a la izquierda*/
+}
+
+.box {
+    flex-basis: 50%;
+    /*el tamaño que va ocupar esta caja*/
+    color: white;
+    /*o fff*/
+    text-align: center;
+    align-self: center;
+
+}
+
+span {
+    font-size: 18px;
+    /*tamaño d eletra*/
+    letter-spacing: 2px;
+    /*para q las letras se separen*/
+    font-weight: 300;
+
+}
+
+h1 {
+    /*o puede ser así también .contenedor .warp .box .h1*/
+    font-size: 50px;
+    /*tamaño d eletra*/
+    line-height: .9;
+    /*alto entre linea desde 0 hasta 1 punto y algo*/
+    padding-bottom: 10px;
+    /*para q se separe abajo de lo que va a ver del h1*/
+
+}
+
+p {
+    font-size: 25px;
+    line-height: 1.2;
+
+}
+
+.botones {
+    display: flex;
+    margin-top: 40px;
+    /*para que los botones se despeguen de lo dearriba*/
+    flex-flow: row wrap;
+    font-family: 'Open Sans';
+}
+
+.btn1 {
+    flex-basis: 40%;
+    background-color: #f4eb9b;
+    border: none;
+    border-radius: 10px;
+    /*para q los bordes queden resondeados*/
+    /*padding: 10px 40px 10px 40px;arriba - derecha - abajo - izquierda*/
+    padding: 10px 20px;
+    margin-left: 5px;
+    text-align: center;
+    text-decoration: none;
+    /*para q se le quiten las rayitas que tiene debajo*/
+    color: black;
+    cursor: pointer;
+    transition: .3s ease;
+    width: 160px;
+    height: 40px;
+
+}
+
+.btn1:hover {
+    /*para efectos en el botón*/
+    /* background-color: rgb(255, 255,255, .3);transparencia de 3*/
+    background-color: #fff;
+}
+
+.btn2 {
+    flex-basis: 40%;
+    background-color: #f2c583;
+    border-radius: 10px;
+    /*para q los bordes queden resondeados*/
+    /*padding: 10px 30px 10px 30px;arriba - derecha - abajo - izquierda*/
+    padding: 10px 20px;
+    margin-left: 60px;
+    text-align: center;
+    text-decoration: none;
+    /*para q se le quiten las rayitas que tiene debajo*/
+    color: black;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.btn2:hover {
+    /*para efectos en el botón*/
+    background-color: rgb(156, 255, 255, .6);
+    /*transparencia de 3*/
+
+}
+
+/* footer */
+
+footer {
+    height: 150px;
+    background: #383434;
+    padding: 20px 0 10px 0;
+    margin: auto;
+    overflow: hidden;
+}
+
+.contenedor-footer {
+    display: flex;
+    width: 90%;
+    justify-content: space-evenly;
+    margin: auto;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+.content-foo {
+    text-align: center;
+}
+
+.content-foo h4 {
+    color: #fff;
+    font-size: 18px;
+    border-bottom: 3px solid #edd963;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.content-foo p {
+    color: #ccc;
+    font-size: 18px;
+}
+
+.titulo-final {
+    text-align: center;
+    font-size: 15px;
+    margin: 10px 0 0 0;
+    color: #9e9797;
+}
+
+.font-logo {
+    font-family: "Niconne";
+    font-size: 52px;
+    font-weight: 400;
+
+}
+
+.form-control {
+    background: transparent;
+    font-weight: 400;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.bg-blur {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+}
+
+.bg-main {
+    background-image: url(/assets/img/1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.btn-blur {
+    background: transparent;
+    backdrop-filter: blur(15px);
+    border: 1px solid white;
+    color: white;
+    font-weight: 600;
+}
+
+.full-height {
+    height: calc(100vh - 208px);
+}
+
+#divLoading {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(254, 254, 255, 0.65);
+    z-index: 9999;
+    display: none;
+}
+
+@media screen and (max-width:500px) {
+
+
+    /* Footer */
+
+    .contenedor-footer {
+        flex-direction: column;
+        border: none;
+    }
+
+    .content-foo {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .content-foo h4 {
+        border: none;
+    }
+
+    .content-foo p {
+        color: #ccc;
+        border-bottom: 1px solid #f2f2f2;
+        padding-bottom: 20px;
+    }
+
+    .titulo-final {
+        font-size: 18px;
+    }
+}
+>>>>>>> d7cd809a11b92021b976c13ad8e249fb01fe43ea

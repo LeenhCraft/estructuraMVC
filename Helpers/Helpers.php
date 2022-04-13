@@ -279,7 +279,7 @@ function validar_clave($clave, &$error_clave)
         $error_clave = "La clave debe tener al menos un caracter especial del tipo @, #, $, %, &, *";
         return false;
     }
-    if (preg_match('/([0-9]+).*\1{1}/', $clave)) {
+    if (preg_match('/([0-9]+).*\1{2}/', $clave)) {
         $error_clave = "La clave no debe tener un número que se repita más de una vez.";
         return false;
     }
@@ -315,4 +315,21 @@ function consultaDNI($dni)
     $err = curl_error($curl);
     curl_close($curl);
     return $response;
+}
+
+
+// Obtener nomnre de usuario
+function getName(int $id)
+{
+    require_once("Models/PermisosModel.php");
+    $objPermisos = new PermisosModel();
+    $arrPermisos = $objPermisos->bscUsu($id);
+    if ($arrPermisos['rol'] == 'Root') {
+        $arrPermisos['rol'] = '<span class="badge bg-danger">' . $arrPermisos['rol'] . '</span>';
+    } else if ($arrPermisos['rol'] == 'Administrador') {
+        $arrPermisos['rol'] = '<span class="badge bg-success">' . $arrPermisos['rol'] . '</span>';
+    } else {
+        $arrPermisos['rol'] = '<span class="badge bg-info">' . $arrPermisos['rol'] . '</span>';
+    }
+    return $arrPermisos;
 }

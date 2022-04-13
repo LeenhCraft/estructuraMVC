@@ -15901,7 +15901,7 @@ be a descendant of the grid when it is being dragged.
   background-image: url('/Assets/img/1.png');
   background-color: #009688;
   background-size: cover;
-  height: 50vh;
+  height: 100vh;
 }
 
 .m-loader {
