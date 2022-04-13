@@ -325,11 +325,11 @@ function getName(int $id)
     $objPermisos = new PermisosModel();
     $arrPermisos = $objPermisos->bscUsu($id);
     if ($arrPermisos['rol'] == 'Root') {
-        $arrPermisos['rol'] = '<span class="badge badge-danger">' . $arrPermisos['rol'] . '</span>';
+        $arrPermisos['rol'] = '<span class="badge bg-danger">' . $arrPermisos['rol'] . '</span>';
     } else if ($arrPermisos['rol'] == 'Administrador') {
-        $arrPermisos['rol'] = '<span class="badge badge-success">' . $arrPermisos['rol'] . '</span>';
+        $arrPermisos['rol'] = '<span class="badge bg-success">' . $arrPermisos['rol'] . '</span>';
     } else {
-        $arrPermisos['rol'] = '<span class="badge badge-info">' . $arrPermisos['rol'] . '</span>';
+        $arrPermisos['rol'] = '<span class="badge bg-info">' . $arrPermisos['rol'] . '</span>';
     }
     return $arrPermisos;
 }
