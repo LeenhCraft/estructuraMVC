@@ -24,7 +24,6 @@ class Menus extends Controllers
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST" && $this->permisos['perm_r'] == 1) {
             $arrData = $this->model->listar();
-            // dep($arrData);exit;
             $nmr = 0;
             for ($i = 0; $i < count($arrData); $i++) {
                 $btnView = "";
@@ -32,37 +31,37 @@ class Menus extends Controllers
                 $btnDelete = "";
                 $nmr++;
                 if ($this->permisos['perm_r'] == 1) {
-                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idmenu'] . ')" title="Ver Menus"><i class="far fa-eye"></i></button>';
+                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idmenu'] . ')" title="Ver Menus"><i class="bx bx-show-alt"></i></button>';
                 }
                 if ($this->permisos['perm_u'] == 1) {
-                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idmenu'] . ')" title="Editar Menus"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idmenu'] . ')" title="Editar Menus"><i class="bx bxs-edit-alt"></i></button>';
                 }
                 if ($this->permisos['perm_d'] == 1) {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idmenu'] . ')" title="Eliminar Menus"><i class="far fa-trash-alt"></i></button>';
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idmenu'] . ')" title="Eliminar Menus"><i class="bx bxs-trash-alt" ></i></i></button>';
                 }
                 if ($arrData[$i]['men_visible'] == 1) {
                     // $arrData[$i]['ver'] = '<span class="badge badge-success px-2 p-y1">Si</span>';
                     $arrData[$i]['ver'] = '
-                    <div class="toggle-flip">
-                        <label>
-                        <input type="checkbox" checked><span class="flip-indecator" data-toggle-on="Si" data-toggle-off="No"></span>
-                        </label>
-                    </div>';
+                    <div class="border-0 d-flex justify-content-center">
+                        <div class="input-group-text border-0">
+                            <input class="form-check-input mt-0" type="checkbox" checked>
+                        </div>
+                    </div>
+                    ';
                 } else {
                     // $arrData[$i]['ver'] = '<span class="badge badge-danger px-2 py-1">No</span>';
                     $arrData[$i]['ver'] = '
-                    <div class="toggle-flip">
-                        <label>
-                        <input type="checkbox"><span class="flip-indecator" data-toggle-on="Si" data-toggle-off="No"></span>
-                        </label>
+                    <div class="border-0 d-flex justify-content-center">
+                        <div class="input-group-text border-0">
+                            <input class="form-check-input mt-0" type="checkbox">
+                        </div>
                     </div>';
                 }
 
-                $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
+                $arrData[$i]['options'] = '<div class="btn-group" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
                 $arrData[$i]['nmr'] = $nmr;
                 $arrData[$i]['men_nombre'] = '<i class="app-menu__icon ' . $arrData[$i]['men_icono'] . '"></i>' . ucwords($arrData[$i]['men_nombre']);
             }
-
             echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
         }
         die();
