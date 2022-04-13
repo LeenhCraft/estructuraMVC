@@ -24,7 +24,6 @@ class Menus extends Controllers
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST" && $this->permisos['perm_r'] == 1) {
             $arrData = $this->model->listar();
-            // dep($arrData);exit;
             $nmr = 0;
             for ($i = 0; $i < count($arrData); $i++) {
                 $btnView = "";
@@ -62,7 +61,6 @@ class Menus extends Controllers
                 $arrData[$i]['nmr'] = $nmr;
                 $arrData[$i]['men_nombre'] = '<i class="app-menu__icon ' . $arrData[$i]['men_icono'] . '"></i>' . ucwords($arrData[$i]['men_nombre']);
             }
-
             echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
         }
         die();

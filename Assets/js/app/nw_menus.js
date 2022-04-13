@@ -2,6 +2,10 @@ let divLoading = $("#divLoading");
 let tb;
 
 $(document).ready(function () {
+  // $.post(base_url + "menus/listar", { as: 'a' }, function (data) {
+  //   // let objData = JSON.parse(data);
+  //   console.log(data);
+  // });
   tb = $("#sis_menus").dataTable({
     aProcessing: true,
     aServerSide: true,
