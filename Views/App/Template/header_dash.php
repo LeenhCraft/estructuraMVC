@@ -14,7 +14,7 @@
     <!-- <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" /> -->
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="/Assets/css/webfonts/template_web.css">
+    <link rel="stylesheet" href="/assets/css/webfonts/template_web.css">
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
@@ -119,7 +119,7 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
+                                        <a class="dropdown-item" href="/logout">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>

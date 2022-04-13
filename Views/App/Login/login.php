@@ -53,7 +53,7 @@
                         <!-- Logo -->
                         <div class="app-brand justify-content-center">
                             <a href="/" class="app-brand-link gap-2">
-                                <span class="app-brand-text demo text-body fw-bolder">
+                                <span class="demo text-body fw-bolder logo">
                                     Biblio Web
                                 </span>
                             </a>

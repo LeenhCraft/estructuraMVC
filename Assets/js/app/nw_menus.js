@@ -22,7 +22,7 @@ $(document).ready(function () {
       { data: "men_nombre" },
       { data: "ver", class: "text-center" },
       { data: "men_orden", class: "text-center" },
-      { data: "options" },
+      { data: "options", class: "text-end" },
     ],
     resonsieve: "true",
     bDestroy: true,

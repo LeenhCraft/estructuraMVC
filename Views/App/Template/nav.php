@@ -8,7 +8,7 @@ $expand = $active = '';
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="/dashboard" class="app-brand-link">
-            <span class="app-brand-text demo menu-text fw-bolder ms-2"><?php echo NOMBRE_EMPRESA; ?></span>
+            <span class=" demo menu-text fw-bolder ms-2 app-header__logo"><?php echo NOMBRE_EMPRESA; ?></span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
