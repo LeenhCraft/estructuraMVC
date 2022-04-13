@@ -60,7 +60,7 @@ class Menus extends Controllers
 
                 $arrData[$i]['options'] = '<div class="btn-group" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
                 $arrData[$i]['nmr'] = $nmr;
-                $arrData[$i]['men_nombre'] = '<i class="app-menu__icon ' . $arrData[$i]['men_icono'] . '"></i>' . ucwords($arrData[$i]['men_nombre']);
+                $arrData[$i]['men_nombre'] = '<i class="me-1 bx ' . $arrData[$i]['men_icono'] . '"></i>' . ucwords($arrData[$i]['men_nombre']);
             }
             echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
         }
@@ -99,7 +99,7 @@ class Menus extends Controllers
             } else {
                 $idmenu = (isset($_POST['idIdmenu']) && !empty($_POST['idIdmenu'])) ? strClean($_POST['idIdmenu']) : 0;
                 $men_nombre = (isset($_POST['txtMen_nombre']) && !empty($_POST['txtMen_nombre'])) ? strClean($_POST['txtMen_nombre']) : '';
-                $men_icono = (isset($_POST['txtMen_icono']) && !empty($_POST['txtMen_icono'])) ? strClean($_POST['txtMen_icono']) : 'fa-solid fa-circle-notch';
+                $men_icono = (isset($_POST['txtMen_icono']) && !empty($_POST['txtMen_icono'])) ? strClean($_POST['txtMen_icono']) : 'bx-circle';
                 $men_url_si = (isset($_POST['txtMen_url_si']) && !empty($_POST['txtMen_url_si'])) ? strClean($_POST['txtMen_url_si']) : '';
                 $men_url_si = ($men_url_si === 'on') ? 1 : 0;
                 $men_url = (isset($_POST['txtMen_url']) && !empty($_POST['txtMen_url'])) ? strClean($_POST['txtMen_url']) : '#';

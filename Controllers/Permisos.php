@@ -48,7 +48,7 @@ class Permisos extends Controllers
                 $arrData[$i]['d'] = $this->toggle($arrData[$i]['d'], $arrData[$i]['id'], 23);
 
                 if ($this->permisos['perm_d'] == 1) {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Permisos"><i class="far fa-trash-alt"></i></button>';
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Permisos"><i class="bx bx-minus-circle"></i></button>';
                 }
 
                 $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
@@ -246,8 +246,12 @@ class Permisos extends Controllers
     private function toggle($arr, $id, $acc)
     {
         $activo = '';
-        $toggle = '<div class="toggle-flip"><label><input type="checkbox" ';
-        $end_toggle = ' onclick="fntActv(this,' . $id . ',' . $acc . ')" ><span class="flip-indecator" data-toggle-on="Si" data-toggle-off="No"></span></label></div>';
+        /*<div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+        </div> */
+        $toggle = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox"';
+        $end_toggle = ' onclick="fntActv(this,' . $id . ',' . $acc . ')" ></div>';
         if ($arr == 1) {
             $activo = 'checked';
             $arr =  $toggle . $activo . $end_toggle;

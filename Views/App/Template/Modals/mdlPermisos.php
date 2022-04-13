@@ -29,7 +29,7 @@
                             <i class="fa fa-fw fa-lg fa-check-circle ft-b"></i>
                             <span id="btnText">Guardar</span>
                         </button>
-                        <button class="btn btn-danger ft-b text-capitalize ml-2" type="button" data-dismiss="modal">
+                        <button class="btn btn-danger ft-b text-capitalize ml-2" type="button" data-bs-dismiss="modal">
                             <i class="fa fa-lg fa-times-circle ft-b"></i>
                             <span class="text-capitalize">cerrar</span>
                         </button>

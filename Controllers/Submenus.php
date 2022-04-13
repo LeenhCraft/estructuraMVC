@@ -31,35 +31,35 @@ class Submenus extends Controllers
                 $btnDelete = "";
                 $nmr++;
                 if ($this->permisos['perm_r'] == 1) {
-                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['id'] . ')" title="Ver Submenus"><i class="far fa-eye"></i></button>';
+                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['id'] . ')" title="Ver Submenus"><i class="bx bx-show-alt"></i></button>';
                 }
                 if ($this->permisos['perm_u'] == 1) {
-                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['id'] . ')" title="Editar Submenus"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['id'] . ')" title="Editar Submenus"><i class="bx bxs-edit-alt"></i></button>';
                 }
                 if ($this->permisos['perm_d'] == 1) {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Submenus"><i class="far fa-trash-alt"></i></button>';
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['id'] . ')" title="Eliminar Submenus"><i class="bx bxs-trash-alt" ></i></button>';
                 }
                 if ($arrData[$i]['ver'] == 1) {
                     // $arrData[$i]['ver'] = '<span class="badge badge-success px-3 p-y2">Si</span>';
                     $arrData[$i]['ver'] = '
-                    <div class="toggle-flip">
-                        <label>
-                        <input type="checkbox" checked><span class="flip-indecator" data-toggle-on="Si" data-toggle-off="No"></span>
-                        </label>
+                    <div class="border-0 d-flex justify-content-center">
+                        <div class="input-group-text border-0">
+                            <input class="form-check-input mt-0" type="checkbox" checked>
+                        </div>
                     </div>';
                 } else {
                     // $arrData[$i]['ver'] = '<span class="badge badge-danger px-3 py-2">No</span>';
                     $arrData[$i]['ver'] = '
-                    <div class="toggle-flip">
-                        <label>
-                        <input type="checkbox"><span class="flip-indecator" data-toggle-on="Si" data-toggle-off="No"></span>
-                        </label>
+                    <div class="border-0 d-flex justify-content-center">
+                        <div class="input-group-text border-0">
+                            <input class="form-check-input mt-0" type="checkbox">
+                        </div>
                     </div>';
                 }
                 $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
-                $arrData[$i]['menu'] = '<i class="app-menu__icon ' . $arrData[$i]['icono2'] . '"></i> ' . ucwords($arrData[$i]['menu']);
+                $arrData[$i]['menu'] = '<i class="bx ' . $arrData[$i]['icono2'] . '"></i> ' . ucwords($arrData[$i]['menu']);
                 $arrData[$i]['url'] = strtolower($arrData[$i]['submenu']);
-                $arrData[$i]['submenu'] = '<i class="app-menu__icon ' . $arrData[$i]['icono'] . '"></i> ' . ucfirst($arrData[$i]['submenu']);
+                $arrData[$i]['submenu'] = '<i class="bx ' . $arrData[$i]['icono'] . '"></i> ' . ucfirst($arrData[$i]['submenu']);
                 $arrData[$i]['nmr'] = $nmr;
             }
 
@@ -101,7 +101,7 @@ class Submenus extends Controllers
                 $sub_nombre = (isset($_POST['txtSub_nombre']) && !empty($_POST['txtSub_nombre'])) ? strClean($_POST['txtSub_nombre']) : '';
                 $sub_url = (isset($_POST['txtSub_url']) && !empty($_POST['txtSub_url'])) ? strClean($_POST['txtSub_url']) : '#';
                 $sub_controlador = (isset($_POST['txtSub_controlador']) && !empty($_POST['txtSub_controlador'])) ? strClean($_POST['txtSub_controlador']) : '';
-                $sub_icono = (isset($_POST['txtSub_icono']) && !empty($_POST['txtSub_icono'])) ? strClean($_POST['txtSub_icono']) : 'fa-solid fa-circle-notch';
+                $sub_icono = (isset($_POST['txtSub_icono']) && !empty($_POST['txtSub_icono'])) ? strClean($_POST['txtSub_icono']) : 'bx-circle';
                 $sub_orden = (isset($_POST['txtSub_orden']) && !empty($_POST['txtSub_orden'])) ? strClean($_POST['txtSub_orden']) : '0';
                 $sub_visible = (isset($_POST['txtSub_visible'])) ? strClean($_POST['txtSub_visible']) : '1';
                 $response = '';

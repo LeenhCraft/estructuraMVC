@@ -10,10 +10,6 @@ $expand = $active = '';
         <a href="/dashboard" class="app-brand-link">
             <span class=" demo menu-text fw-bolder ms-2 app-header__logo"><?php echo NOMBRE_EMPRESA; ?></span>
         </a>
-
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
     </div>
 
     <div class="menu-inner-shadow"></div>

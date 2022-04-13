@@ -1,12 +1,11 @@
 <?php headerApp('Template/header_dash', $data); ?>
-
 <div class="card">
     <div class="card-header">
         <?php
         if ($data['permisos']['perm_w'] == 1) {
         ?>
             <button class="btn btn-primary ft-b" type="button" onclick="openModal();">
-                <i class="fas fa-plus-circle"></i> Nuevo Menus
+            <i class='bx bx-plus-circle' ></i> Nuevo Menus
             </button>
         <?php
         }
@@ -28,7 +27,6 @@
         </table>
     </div>
 </div>
-
 <?php
 if ($data['permisos']['perm_w'] == 1 || $data['permisos']['perm_u'] == 1) {
     getModal('mdlMenus');

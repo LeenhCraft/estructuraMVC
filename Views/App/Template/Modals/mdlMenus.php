@@ -1,6 +1,6 @@
 <div class="modal fade" id="modalmenus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content">
+        <form id="formmenus" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalmenusTitle">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -25,7 +25,7 @@
                 <div class="row my-3">
                     <div class="col-md-4">
                         <div class="input-group border-0 d-flex align-items-center">
-                            <div class="input-group-text border-0">
+                            <div class="input-group-text border-0 ps-0">
                                 <input class="form-check-input mt-0" id="txtMen_url_si" name="txtMen_url_si" type="checkbox">
                             </div>
                             <label class="p-0 m-0 form-label" for="txtMen_url_si">Nivel 1</label>
@@ -65,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </form>
     </div>
@@ -123,7 +123,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
