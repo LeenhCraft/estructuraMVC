@@ -28,7 +28,7 @@ $expand = $active = '';
                     <!-- Dashboard -->
                     <li class="menu-item <?= $active; ?>">
                         <a href="<?= '/' . $row['men_url']; ?>" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <i class="menu-icon tf-icons bx <?= $row['men_icono']; ?>"></i>
                             <div data-i18n="Analytics"><?= $row['men_nombre']; ?></div>
                         </a>
                     </li>
@@ -39,7 +39,7 @@ $expand = $active = '';
                 ?>
                     <li class="menu-item <?= $expand; ?>">
                         <a href="javascript:void(0);" class="menu-link menu-toggle" href="#">
-                            <i class="menu-icon tf-icons bx bx-layout"></i>
+                            <i class="menu-icon tf-icons bx <?= $row['men_icono']; ?>"></i>
                             <div data-i18n="Layouts"><?= $row['men_nombre']; ?></div>
                         </a>
 
@@ -50,7 +50,10 @@ $expand = $active = '';
                             ?>
                                 <li class="menu-item <?= $active; ?>">
                                     <a href="<?= '/' . $key['sub_url']; ?>" class="menu-link">
-                                        <div data-i18n="<?= $key['sub_nombre']; ?>"><?= $key['sub_nombre']; ?></div>
+                                        <div data-i18n="<?= $key['sub_nombre']; ?>">
+                                            <i class="menu-icon tf-icons bx <?= $key['sub_icono']; ?>"></i>
+                                            <?= $key['sub_nombre']; ?>
+                                        </div>
                                     </a>
                                 </li>
                             <?php
