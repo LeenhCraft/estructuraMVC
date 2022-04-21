@@ -34,9 +34,9 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <!-- <script src="/assets/vendor/libs/jquery/jquery.js"></script> -->
-<script src="<?php echo media() . 'js/plugins/jquery.min.js'; ?>"></script>
+<script src="/assets/js/plugins/jquery.min.js"></script>
 <!-- <script src="/assets/vendor/libs/popper/popper.js"></script> -->
-<script src="<?php echo media() . 'js/plugins/popper.min.js'; ?>"></script>
+<script src="/assets/js/plugins/popper.min.js"></script>
 
 <script src="/assets/vendor/js/bootstrap.js"></script>
 
@@ -55,11 +55,11 @@
 <script src="/assets/js/plugins/template_web/dashboards-analytics.js"></script>
 <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
 
-<script src="<?php echo media() . 'js/plugins/jquery.dataTables.min.js'; ?>"></script>
-<script type="text/javascript" src="<?= media() . 'js/plugins/dataTables.bootstrap.min.js'; ?>"></script>
+<script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/plugins/dataTables.bootstrap.min.js"></script>
 
-<script src="<?php echo media() . 'js/plugins/sweetalert2.all.min.js'; ?>"></script>
-<script src="<?php echo media() . 'js/app/general.js'; ?>"></script>
+<script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
+<script src="/assets/js/app/general.js"></script>
 <?php
 if (isset($data['js']) && !empty($data['js'])) {
     for ($i = 0; $i < count($data['js']); $i++) {

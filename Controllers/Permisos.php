@@ -91,6 +91,7 @@ class Permisos extends Controllers
             $idpermisos = (isset($_POST['idIdpermisos']) && !empty($_POST['idIdpermisos'])) ? intval($_POST['idIdpermisos']) : '0';
             $idrol = (isset($_POST['txtIdrol']) && !empty($_POST['txtIdrol'])) ? intval($_POST['txtIdrol']) : '0';
             $idsubmenu = (isset($_POST['txtIdsubmenu']) && !empty($_POST['txtIdsubmenu'])) ? strClean($_POST['txtIdsubmenu']) : '0';
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No cuenta con los permisos necesarios.');
             if ($idrol == '0' || $idsubmenu == '0') {
                 $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Datos incorrectos!');
             } else {
