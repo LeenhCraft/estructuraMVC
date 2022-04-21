@@ -10,7 +10,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="<?php echo media(); ?>img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/img/logo.png">
     <!-- <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" /> -->
 
     <!-- Fonts -->
@@ -22,7 +22,7 @@
     <!-- Core CSS -->
     <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -35,9 +35,9 @@
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/assets/js/plugins/template_web/config.js"></script>
+    <script src="/assets/js/plugins/template_app/config.js"></script>
 
-    <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
+    <link rel="stylesheet" href="/assets/css/plugins/sweetalert2.min.css'; ?>">
 
 </head>
 
@@ -87,6 +87,7 @@
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Ingresar</button>
                             </div>
+                            <p><a class="a-web" href="/"><i class='bx bx-chevrons-right'></i>web</a></p>
                         </form>
 
                         <p class="text-center d-none">
@@ -109,9 +110,9 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="<?php echo media() . 'js/plugins/jquery.min.js'; ?>"></script>
-    <script src="<?php echo media() . 'js/plugins/popper.min.js'; ?>"></script>
-    <script src="<?php echo media() . 'js/plugins/bootstrap.min.js'; ?>"></script>
+    <script src="/assets/js/plugins/jquery.min.js"></script>
+    <script src="/assets/js/plugins/popper.min.js"></script>
+    <script src="/assets/js/plugins/bootstrap.min.js"></script>
     
     <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
@@ -119,13 +120,13 @@
     <!-- endbuild -->
 
     <!-- Main JS -->
-    <script src="/assets/js/plugins/template_web/main.js"></script>
+    <script src="/assets/js/plugins/template_app/main.js"></script>
 
     <!-- Page JS -->
     <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
 
-    <script src="<?php echo media() . 'js/plugins/sweetalert2.all.min.js'; ?>"></script>
-    <script src="<?php echo media() . 'js/app/general.js'; ?>"></script>
+    <script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
+    <script src="/assets/js/app/general.js"></script>
     <script>
         function verpass(e, input) {
             let selector = "#" + input;

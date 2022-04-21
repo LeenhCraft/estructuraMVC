@@ -1,130 +1,474 @@
 <?php headerWeb('header_web', $data); ?>
-<main>
-    <div class="contenedor">
-        <div class="wrap">
-            <div class="box">
-                <!--<span>BIENVENIDO...</span>-->
-                <h1>BIENVENIDO</h1>
-                <p>
-                    Sistema de información administrado por la Biblioteca Municipal de
-                    Nueva Cajamarca
-                </p>
-                <div class="botones">
-                    <?php if (!isset($_SESSION['pe_u'])) {    ?>
-                        <button type="button" class="btn1" data-toggle="modal" data-target="#exampleModal1">
-                            INICIA SESIÓN
-                        </button>
-                        <button type="button" class="btn2" data-toggle="modal" data-target="#exampleModal2">
-                            REGISTRATE
-                        </button>
-                    <?php } ?>
+<!-- banner part start-->
+<section class="banner_part">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="banner_slider owl-carousel">
+                    <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>1 Wood & Cloth
+                                            Sofa</h1>
+                                        <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                            suspendisse ultrices gravida. Risus commodo viverra</p>
+                                        <a href="#" class="btn_2">buy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>2 Cloth & Wood
+                                            Sofa</h1>
+                                        <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                            suspendisse ultrices gravida. Risus commodo viverra</p>
+                                        <a href="#" class="btn_2">buy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>3 Wood & Cloth
+                                            Sofa</h1>
+                                        <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                            suspendisse ultrices gravida. Risus commodo viverra</p>
+                                        <a href="#" class="btn_2">buy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>Cloth $ Wood Sofa</h1>
+                                        <p>Incididunt ut labore et dolore magna aliqua quis ipsum
+                                            suspendisse ultrices gravida. Risus commodo viverra</p>
+                                        <a href="#" class="btn_2">buy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
+                <div class="slider-counter"></div>
             </div>
         </div>
     </div>
-    <!--MODAL 1-->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">
-                        Ininicar Sesión
-                    </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span class="font-weight-bold h4" aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="usulog">
-                        <div class="form-row">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtusu">Usuario</label>
-                                <input type="text" class="form-control" id="txtusu" name="txtusu" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtpas">Contraseña</label>
-                                <input type="password" class="form-control" id="txtpas" name="txtpas" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="utility">
-                                <p class="h6 mb-2 text-primary"><a href="#" onclick="flip()">Olvide mi contraseña</a></p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
-                            <button type="submit" class="btn btn-outline-primary">Ingresar</button>
-                        </div>
-                    </form>
-                    <form id="usureset" class="fmr_none" style="display: none;">
-                        <div class="form-row">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtusu">Correo</label>
-                                <input type="email" class="form-control" id="txtusu" name="txtusu" required>
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <p class="h6 mb-2"><a href="#" onclick="flop()"><i class="fa fa-angle-left fa-fw"></i> Iniciar sesión</a></p>
-                        </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
-                            <button type="submit" class="btn btn-outline-primary">Recuperar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--MODAL 2-->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">
-                        Registraté por primera vez
-                    </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="regusu" name="regusu" class="form-horizontal">
-                        <div class="form-row">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtdni">DNI:</label>
-                                <input type="number" class="form-control" id="txtdni" name="txtdni" onKeyUp="return limitar(event,this.value,8)" onKeyDown="return limitar(event,this.value,8)" required>
-                            </div>
-                        </div>
+</section>
+<!-- banner part start-->
 
-                        <div class="form-row div_nom" style="display: none;">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtnombre">Nombre:</label>
-                                <input type="text" class="form-control" id="txtnombre" name="txtnombre" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12 ft-b">
-                                <label for="txtemail">Correo:</label>
-                                <input type="email" class="form-control" id="txtemail" name="txtemail" required>
-                            </div>
-                        </div>
-                        <div class="tile-footer mt-4">
-                            <button class="btn btn-primary ft-b" id="btnActionForm" type="submit" disabled>
-                                <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                                <span id="btnText">Verificar</span>
-                            </button>
-                            <button class="btn btn-danger ft-b text-capitalize ml-2" type="button" data-dismiss="modal">
-                                <i class="fa fa-lg fa-times-circle"></i>
-                                <span class="text-capitalize">cerrar</span>
-                            </button>
-                        </div>
-                    </form>
+<!-- feature_part start-->
+<section class="feature_part padding_top">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section_tittle text-center">
+                    <h2>Featured Category</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-7 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_1.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-5 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_2.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-5 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_3.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-7 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_4.png" alt="">
                 </div>
             </div>
         </div>
     </div>
-</main>
+</section>
+<!-- upcoming_event part start-->
+
+<!-- product_list start-->
+<section class="product_list section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>awesome <span>shop</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product_list_slider owl-carousel">
+                    <div class="single_product_list_slider">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_1.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_2.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_3.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_4.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_5.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_6.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_7.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_8.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single_product_list_slider">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_1.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_2.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_3.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_4.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_5.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_6.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_7.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="img/product/product_8.png" alt="">
+                                    <div class="single_product_text">
+                                        <h4>Quartz Belt Watch</h4>
+                                        <h3>$150.00</h3>
+                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product_list part start-->
+
+<!-- awesome_shop start-->
+<section class="our_offer section_padding">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-6 col-md-6">
+                <div class="offer_img">
+                    <img src="img/offer_img.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="offer_text">
+                    <h2>Weekly Sale on
+                        60% Off All Products</h2>
+                    <div class="date_countdown">
+                        <div id="timer">
+                            <div id="days" class="date"></div>
+                            <div id="hours" class="date"></div>
+                            <div id="minutes" class="date"></div>
+                            <div id="seconds" class="date"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="enter email address" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <a href="#" class="input-group-text btn_2" id="basic-addon2">book now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- awesome_shop part start-->
+
+<!-- product_list part start-->
+<section class="product_list best_seller section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>Best Sellers <span>shop</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="best_product_slider owl-carousel">
+                    <div class="single_product_item">
+                        <img src="img/product/product_1.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_2.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_3.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_4.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_5.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product_list part end-->
+
+<!-- subscribe_area part start-->
+<section class="subscribe_area section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="subscribe_area_text text-center">
+                    <h5>Join Our Newsletter</h5>
+                    <h2>Subscribe to get Updated
+                        with new offers</h2>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="enter email address" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <a href="#" class="input-group-text btn_2" id="basic-addon2">subscribe now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--::subscribe_area part end::-->
+
+<!-- subscribe_area part start-->
+<section class="client_logo padding_top">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_1.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_2.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_3.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_4.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_5.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_3.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_1.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_2.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_3.png" alt="">
+                </div>
+                <div class="single_client_logo">
+                    <img src="img/client_logo/client_logo_4.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--::subscribe_area part end::-->
 <?php footerWeb('footer_web', $data); ?>

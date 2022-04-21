@@ -1,5 +1,5 @@
 <?php headerWeb('header_web', $data); ?>
-<main class="full-height">
+<section class="feature_part padding_top">
     <div class="container mt-5">
         <div class="alert alert-primary" role="alert">
             Por motivos de seguridad le pedimos que primero cambie su contraseña.
@@ -36,5 +36,5 @@
         </div>
 
     </div>
-</main>
+</section>
 <?php footerWeb('footer_web', $data); ?>

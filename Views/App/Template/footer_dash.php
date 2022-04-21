@@ -49,10 +49,10 @@
 <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="/assets/js/plugins/template_web/main.js"></script>
+<script src="/assets/js/plugins/template_app/main.js"></script>
 
 <!-- Page JS -->
-<script src="/assets/js/plugins/template_web/dashboards-analytics.js"></script>
+<script src="/assets/js/plugins/template_app/dashboards-analytics.js"></script>
 <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
 
 <script src="/assets/js/plugins/jquery.dataTables.min.js"></script>

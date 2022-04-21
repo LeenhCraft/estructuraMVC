@@ -1,5 +1,5 @@
 <?php headerWeb('header_web', $data); ?>
-<main class="full-height pt-5">
+<section class="feature_part padding_top">
     <div class="container">
         <div class="alert alert-primary" role="alert">
             Responde a las preguntas de seguridad para recuperar tu contraseña.
@@ -35,5 +35,5 @@
         </div>
 
     </div>
-</main>
+</section>
 <?php footerWeb('footer_web', $data); ?>

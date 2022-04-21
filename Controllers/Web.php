@@ -17,8 +17,8 @@ class Web extends Controllers
 		}
 		$data['titulo_web'] = "LEENHCRAFT | WEB";
 		$data['meta_content'] = "sistemas, nueva cajamarca, pagina web, leenh";
-		$data['css'] = ['css/styles.css'];
 		$data['js'] = ['js/web/fn_lg.js'];
+		$data['mostrar_lg'] = 'si';
 		$this->views->getView('Web', "web", $data);
 	}
 
@@ -174,7 +174,7 @@ class Web extends Controllers
 	{
 		if (isset($_SESSION['pe_u']) && $_SESSION['pe_u'] != 0 && $this->primera['primera'] == 1) {
 			$data['titulo_web'] = "LEENHCRAFT | WEB";
-			$data['css'] = ['css/styles.css'];
+			// $data['css'] = ['css/styles.css'];
 			$data['js'] = ['js/web/fn_pasupd.js'];
 			$this->views->getView('Web/Usuarios', "cambiar_clave", $data);
 		} else {
@@ -268,7 +268,7 @@ class Web extends Controllers
 				$preguntas = $this->model->getPreguntas($response['data']['idwebusuario']);
 				// $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se valido su registro, por favor inicie sesión.');
 				$data['titulo_web'] = "LEENHCRAFT | WEB";
-				$data['css'] = ['css/styles.css', 'css/web/styles.css'];
+				// $data['css'] = ['css/styles.css', 'css/web/styles.css'];
 				$data['js'] = ['js/web/fn_recuperar.js'];
 				$data['url'] = [$strEmail, $strToken];
 				$data['preguntas'] = $preguntas;
