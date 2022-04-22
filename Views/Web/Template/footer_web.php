@@ -111,7 +111,7 @@
     const base_url = "<?php echo base_url(); ?>";
 </script>
 <!-- jquery plugins here-->
-<script src="/assets/js/plugins/template_web/jquery-1.12.1.min.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery-1.12.1.min.js"></script>
 <!-- popper js -->
 <!-- <script src="/assets/js/plugins/template_web/popper.min.js"></script> -->
 <script src="<?php echo media() . 'js/plugins/popper.min.js'; ?>"></script>
@@ -119,25 +119,25 @@
 <!-- <script src="/assets/js/plugins/template_web/bootstrap.min.js"></script> -->
 <script src="<?php echo media() . 'js/plugins/bootstrap.min.js'; ?>"></script>
 <!-- easing js -->
-<script src="/assets/js/plugins/template_web/jquery.magnific-popup.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.magnific-popup.js"></script>
 <!-- swiper js -->
-<script src="/assets/js/plugins/template_web/swiper.min.js"></script>
+<script src="/Assets/js/plugins/template_web/swiper.min.js"></script>
 <!-- swiper js -->
-<script src="/assets/js/plugins/template_web/masonry.pkgd.js"></script>
+<script src="/Assets/js/plugins/template_web/masonry.pkgd.js"></script>
 <!-- particles js -->
-<script src="/assets/js/plugins/template_web/owl.carousel.min.js"></script>
-<script src="/assets/js/plugins/template_web/jquery.nice-select.min.js"></script>
+<script src="/Assets/js/plugins/template_web/owl.carousel.min.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.nice-select.min.js"></script>
 <!-- slick js -->
-<script src="/assets/js/plugins/template_web/slick.min.js"></script>
-<script src="/assets/js/plugins/template_web/jquery.counterup.min.js"></script>
-<script src="/assets/js/plugins/template_web/waypoints.min.js"></script>
-<script src="/assets/js/plugins/template_web/contact.js"></script>
-<script src="/assets/js/plugins/template_web/jquery.ajaxchimp.min.js"></script>
-<script src="/assets/js/plugins/template_web/jquery.form.js"></script>
-<script src="/assets/js/plugins/template_web/jquery.validate.min.js"></script>
-<script src="/assets/js/plugins/template_web/mail-script.js"></script>
+<script src="/Assets/js/plugins/template_web/slick.min.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.counterup.min.js"></script>
+<script src="/Assets/js/plugins/template_web/waypoints.min.js"></script>
+<script src="/Assets/js/plugins/template_web/contact.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.ajaxchimp.min.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.form.js"></script>
+<script src="/Assets/js/plugins/template_web/jquery.validate.min.js"></script>
+<script src="/Assets/js/plugins/template_web/mail-script.js"></script>
 <!-- custom js -->
-<script src="/assets/js/plugins/template_web/custom.js"></script>
+<script src="/Assets/js/plugins/template_web/custom.js"></script>
 
 <!-- <script src="<?php echo media() . 'js/plugins/jquery.min.js'; ?>"></script> -->
 <script src="<?php echo media() . 'js/plugins/sweetalert2.all.min.js'; ?>"></script>

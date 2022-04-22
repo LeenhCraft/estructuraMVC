@@ -28,15 +28,15 @@
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/font.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
 
-    <link rel="stylesheet" href="/assets/css/web/animate.css">
-    <link rel="stylesheet" href="/assets/css/web/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/web/all.css">
-    <link rel="stylesheet" href="/assets/css/web/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/web/themify-icons.css">
-    <link rel="stylesheet" href="/assets/css/web/magnific-popup.css">
-    <link rel="stylesheet" href="/assets/css/web/slick.css">
-    <link rel="stylesheet" href="/assets/css/web/style.css">
-    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/Assets/css/web/animate.css">
+    <link rel="stylesheet" href="/Assets/css/web/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Assets/css/web/all.css">
+    <link rel="stylesheet" href="/Assets/css/web/flaticon.css">
+    <link rel="stylesheet" href="/Assets/css/web/themify-icons.css">
+    <link rel="stylesheet" href="/Assets/css/web/magnific-popup.css">
+    <link rel="stylesheet" href="/Assets/css/web/slick.css">
+    <link rel="stylesheet" href="/Assets/css/web/style.css">
+    <link rel="stylesheet" href="/Assets/css/custom.css">
 
     <?php
     if (isset($data['css']) && !empty($data['css'])) {

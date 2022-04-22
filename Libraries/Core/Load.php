@@ -1,9 +1,13 @@
 <?php
-
-require_once 'Controllers/sys.php';
-$primera = new sys();
-$data = $primera->first_time();
-$pe_u = $primera->publi_first();
+$pe_u = $data = [];
+if (file_exists("Controllers/Sys.php")) {
+	require_once("Controllers/Sys.php");
+	$bp = new Sys();
+	$data = $bp->first_time();
+	$pe_u = $bp->publi_first();
+} else {
+	require_once("Controllers/Error.php");
+}
 
 $controller = ucwords($controller);
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -22,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 } // else if ($_SERVER['REQUEST_METHOD'] == 'POST') {}
 // dep($_SERVER['REQUEST_METHOD']);
-// dep([$controller,$method],1);
+// dep([$controller, $method], 1);
 
 $controllerFile = "Controllers/" . $controller . ".php";
 

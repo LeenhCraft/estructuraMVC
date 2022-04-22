@@ -20,8 +20,8 @@
 
 .app-header__logo {
   -webkit-box-flex: 1;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
   color: #fff;
   text-align: center;
   font-family: 'Niconne';
@@ -31,7 +31,7 @@
   line-height: 50px;
 }
 
-.logo-web{
+.logo-web {
   font-family: "Niconne";
   font-size: 52px;
 }
@@ -47,10 +47,17 @@
   font-weight: 400;
 }
 
-.a-web{
+.a-web {
   color: #777777;
   text-align: right;
   float: right;
   text-transform: capitalize;
   padding: 0px 10px;
+}
+
+@media (max-width: 991px) {
+  .navbar-brand.logo-web {
+    font-size: 35px;
+    margin: 0 auto;
+  }
 }

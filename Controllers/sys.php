@@ -1,5 +1,5 @@
 <?php
-class sys extends Controllers
+class Sys extends Controllers
 {
     public function __construct()
     {

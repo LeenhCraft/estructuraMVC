@@ -34,32 +34,32 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <!-- <script src="/assets/vendor/libs/jquery/jquery.js"></script> -->
-<script src="/assets/js/plugins/jquery.min.js"></script>
-<!-- <script src="/assets/vendor/libs/popper/popper.js"></script> -->
-<script src="/assets/js/plugins/popper.min.js"></script>
+<script src="/Assets/js/plugins/jquery.min.js"></script>
+<!-- <script src="/Assets/vendor/libs/popper/popper.js"></script> -->
+<script src="/Assets/js/plugins/popper.min.js"></script>
 
-<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/Assets/vendor/js/bootstrap.js"></script>
 
-<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/Assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="/assets/vendor/js/menu.js"></script>
+<script src="/Assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/Assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="/assets/js/plugins/template_app/main.js"></script>
+<script src="/Assets/js/plugins/template_app/main.js"></script>
 
 <!-- Page JS -->
-<script src="/assets/js/plugins/template_app/dashboards-analytics.js"></script>
+<script src="/Assets/js/plugins/template_app/dashboards-analytics.js"></script>
 <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
 
-<script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/assets/js/plugins/dataTables.bootstrap.min.js"></script>
+<script src="/Assets/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/Assets/js/plugins/dataTables.bootstrap.min.js"></script>
 
-<script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
-<script src="/assets/js/app/general.js"></script>
+<script src="/Assets/js/plugins/sweetalert2.all.min.js"></script>
+<script src="/Assets/js/app/general.js"></script>
 <?php
 if (isset($data['js']) && !empty($data['js'])) {
     for ($i = 0; $i < count($data['js']); $i++) {
