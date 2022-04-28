@@ -38,11 +38,18 @@
     <script src="/Assets/js/plugins/template_app/config.js"></script>
 
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
+    <link rel="stylesheet" href="/Assets/css/demo.css">
+
 
 </head>
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
+        <div id="divLoading">
+            <div>
+                <img src="<?php echo media() . 'img/loading.svg' ?>" alt="Loading">
+            </div>
+        </div>
         <div class="layout-container">
             <?php
             require_once "nav.php";

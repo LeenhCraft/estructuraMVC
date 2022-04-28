@@ -37,7 +37,7 @@ class Menus extends Controllers
                     $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idmenu'] . ')" title="Editar Menus"><i class="bx bxs-edit-alt"></i></button>';
                 }
                 if ($this->permisos['perm_d'] == 1) {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idmenu'] . ')" title="Eliminar Menus"><i class="bx bxs-trash-alt" ></i></i></button>';
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idmenu'] . ')" title="Eliminar Menus"><i class="bx bxs-trash-alt" ></i></button>';
                 }
                 if ($arrData[$i]['men_visible'] == 1) {
                     // $arrData[$i]['ver'] = '<span class="badge badge-success px-2 p-y1">Si</span>';

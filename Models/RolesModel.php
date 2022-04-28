@@ -20,15 +20,15 @@ class RolesModel extends Mysql
         return $request;
     }
 
-    public function insertar($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado,$rol_fecha)
+    public function insertar($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado)
     {
         $return =$request= [];
         //$sql = "SELECT * FROM sis_rol WHERE idrol = 'idrol'";
         //$request = $this->select_all($sql);
 
         if (empty($request)) {
-            $sql = "INSERT INTO sis_rol(rol_nombre,rol_cod,rol_descripcion,rol_estado,rol_fecha) VALUES (?,?,?,?,?)";
-            $arrData = array($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado,$rol_fecha);
+            $sql = "INSERT INTO sis_rol(rol_nombre,rol_cod,rol_descripcion,rol_estado) VALUES (?,?,?,?)";
+            $arrData = array($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado);
             $response = $this->insert($sql, $arrData);
             if ($response > 0) {
                 $return['status'] = true;
@@ -44,15 +44,15 @@ class RolesModel extends Mysql
         return $return;
     }
 
-    public function actualizar($idrol,$rol_nombre,$rol_cod,$rol_descripcion,$rol_estado,$rol_fecha)
+    public function actualizar($idrol,$rol_nombre,$rol_cod,$rol_descripcion,$rol_estado)
     {
         $request= [];
         //$sql = "SELECT * FROM bib_personal WHERE per_nombre LIKE'{$nombre}' AND idpersona != $id";
         //$request = $this->select_all($sql);
 
         if (empty($request)) {
-            $sql = "UPDATE sis_rol SET rol_nombre=?,rol_cod=?,rol_descripcion=?,rol_estado=?,rol_fecha=? WHERE idrol =$idrol";
-            $arrData = array($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado,$rol_fecha);
+            $sql = "UPDATE sis_rol SET rol_nombre=?,rol_cod=?,rol_descripcion=?,rol_estado=? WHERE idrol =$idrol";
+            $arrData = array($rol_nombre,$rol_cod,$rol_descripcion,$rol_estado);
             $request = $this->update($sql, $arrData);
         } else {
             $return['status'] = false;
@@ -64,8 +64,8 @@ class RolesModel extends Mysql
     public function eliminar($idrol)
     {
         $request= [];
-        //$sql = "SELECT * FROM bib_personal WHERE idpersona = $id";
-        //$request = $this->select($sql);
+        $sql = "SELECT * FROM sis_rol WHERE idrol = $idrol";
+        $request = $this->select($sql);
         if (!empty($request)) {
             $sql = "DELETE FROM sis_rol WHERE idrol = $idrol";
             $arrData = array(0);
@@ -84,5 +84,3 @@ class RolesModel extends Mysql
         return $return;
     }
 }
-
-?>

@@ -29,13 +29,28 @@ class Roles extends Controllers
                 $btnEdit = "";
                 $btnDelete = "";
                 if ($this->permisos['perm_r'] == 1) {
-                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idrol'] . ')" title="Ver Rol"><i class="far fa-eye"></i></button>';
+                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idrol'] . ')" title="Ver Rol"><i class="bx bx-show-alt"></i></button>';
                 }
                 if ($this->permisos['perm_u'] == 1) {
-                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idrol'] . ')" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idrol'] . ')" title="Editar Rol"><i class="bx bxs-edit-alt"></i></button>';
                 }
                 if ($this->permisos['perm_d'] == 1) {
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idrol'] . ')" title="Eliminar Rol"><i class="far fa-trash-alt"></i></button>';
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDel(' . $arrData[$i]['idrol'] . ')" title="Eliminar Rol"><i class="bx bxs-trash-alt" ></i></button>';
+                }
+                if ($arrData[$i]['rol_estado'] == 1) {
+                    // $arrData[$i]['ver'] = '<span class="badge badge-success px-2 p-y1">Si</span>';
+                    $arrData[$i]['rol_estado'] = '
+                    <div class="text-center">
+                        <span class="badge bg-success">Activo</span>
+                    </div>
+                    ';
+                } else {
+                    // $arrData[$i]['ver'] = '<span class="badge badge-danger px-2 py-1">No</span>';
+                    $arrData[$i]['rol_estado'] = '
+                    <div class="text-center">
+                        <span class="badge bg-danger">Inactivo</span>
+                    </div>
+                    ';
                 }
 
                 $arrData[$i]['options'] = '<div class="btn-group text-center" role="group" aria-label="Basic example">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
@@ -71,15 +86,14 @@ class Roles extends Controllers
     public function acc()
     {
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
-            if (empty($_POST['rol_nombre'])) {
-                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            if (empty($_POST['txtRol_nombre'])) {
+                $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Debe ingresar un nombre de rol.');
             } else {
-                $idrol = (isset($_POST['idrol']) && !empty($_POST['idrol'])) ? strClean($_POST['idrol']) : '';
-                $rol_nombre = (isset($_POST['rol_nombre']) && !empty($_POST['rol_nombre'])) ? strClean($_POST['rol_nombre']) : '';
-                $rol_cod = (isset($_POST['rol_cod']) && !empty($_POST['rol_cod'])) ? strClean($_POST['rol_cod']) : '';
-                $rol_descripcion = (isset($_POST['rol_descripcion']) && !empty($_POST['rol_descripcion'])) ? strClean($_POST['rol_descripcion']) : '';
-                $rol_estado = (isset($_POST['rol_estado']) && !empty($_POST['rol_estado'])) ? strClean($_POST['rol_estado']) : '';
-                $rol_fecha = (isset($_POST['rol_fecha']) && !empty($_POST['rol_fecha'])) ? strClean($_POST['rol_fecha']) : '';
+                $idrol = (isset($_POST['idIdrol']) && !empty($_POST['idIdrol'])) ? intval($_POST['idIdrol']) : 0;
+                $rol_nombre = (isset($_POST['txtRol_nombre']) && !empty($_POST['txtRol_nombre'])) ? strClean($_POST['txtRol_nombre']) : '';
+                $rol_cod = (isset($_POST['txtRol_cod']) && !empty($_POST['txtRol_cod'])) ? strClean($_POST['txtRol_cod']) : '';
+                $rol_descripcion = (isset($_POST['txtRol_descripcion']) && !empty($_POST['txtRol_descripcion'])) ? strClean($_POST['txtRol_descripcion']) : '';
+                $rol_estado = (isset($_POST['txtRol_estado'])) ? intval($_POST['txtRol_estado']) : 1;
                 $response = '';
 
                 if (empty($idrol)) {
@@ -88,8 +102,7 @@ class Roles extends Controllers
                             $rol_nombre,
                             $rol_cod,
                             $rol_descripcion,
-                            $rol_estado,
-                            $rol_fecha
+                            $rol_estado
                         );
                         if ($response['status']) {
                             $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Excelente!!', "text" => $response['data']);
@@ -104,8 +117,7 @@ class Roles extends Controllers
                             $rol_nombre,
                             $rol_cod,
                             $rol_descripcion,
-                            $rol_estado,
-                            $rol_fecha
+                            $rol_estado
                         );
                         if ($response) {
                             $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Excelente!!', "text" => 'Registro actualizado.');

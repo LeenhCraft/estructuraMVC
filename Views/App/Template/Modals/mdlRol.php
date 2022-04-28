@@ -1,71 +1,56 @@
 <?php
 if ($data['permisos']['perm_u'] == 1) {
 ?>
-    <div class="modal fade" id="modalRol" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modalRol" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header headerRegister">
-                    <h5 class="modal-title" id="titleModal">Nuevo Rol</h5>
+            <form action="" class="modal-content" id="formRol">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo rol</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formRol" name="formRol" class="form-horizontal">
-                        <input type="hidden" id="idIdrol" name="idIdrol" value="">
+                    <input type="hidden" id="idIdrol" name="idIdrol" value="">
 
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtIdrol">Idrol</label>
-                                <input type="text" class="form-control" id="txtIdrol" name="txtIdrol">
-                            </div>
+                    <div class="mb-3 col-md-3 col-12 d-none _hiden">
+                        <label class="form-label txtIdmenu text-caputalize" for="txtIdrol">Idrol</label>
+                        <input type="text" class="form-control" id="txtIdrol" name="txtIdrol" disabled>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="txtRol_cod">Cod.</label>
+                            <input type="text" class="form-control" id="txtRol_cod" name="txtRol_cod">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="txtRol_nombre">Nombre</label>
+                            <input type="text" class="form-control" id="txtRol_nombre" name="txtRol_nombre">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="fom-label" for="txtRol_descripcion">Descripción</label>
+                        <textarea class="form-control" name="txtRol_descripcion" id="txtRol_descripcion" rows="3"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="txtRol_estado">Estado</label>
+                            <select class="form-control" id="txtRol_estado" name="txtRol_estado">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtRol_nombre">Rol_nombre</label>
-                                <input type="text" class="form-control" id="txtRol_nombre" name="txtRol_nombre">
-                            </div>
+                        <div class="col-12 col-md-6 d-none _hiden">
+                            <label class="form-label" for="txtRol_fecha">Fecha</label>
+                            <input type="text" class="form-control" id="txtRol_fecha" name="txtRol_fecha" disabled>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtRol_cod">Rol_cod</label>
-                                <input type="text" class="form-control" id="txtRol_cod" name="txtRol_cod">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtRol_descripcion">Rol_descripcion</label>
-                                <input type="text" class="form-control" id="txtRol_descripcion" name="txtRol_descripcion">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtRol_estado">Rol_estado</label>
-                                <input type="text" class="form-control" id="txtRol_estado" name="txtRol_estado">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="txtRol_fecha">Rol_fecha</label>
-                                <input type="text" class="form-control" id="txtRol_fecha" name="txtRol_fecha">
-                            </div>
-                        </div>
-
-                        <div class="tile-footer mt-4">
-                            <button class="btn btn-primary ft-b" id="btnActionForm" type="submit">
-                                <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                                <span id="btnText">Guardar</span>
-                            </button>
-                            <button class="btn btn-danger ft-b text-capitalize ml-2" type="button" data-dismiss="modal">
-                                <i class="fa fa-lg fa-times-circle"></i>
-                                <span class="text-capitalize">cerrar</span>
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 <?php
@@ -80,7 +65,6 @@ if ($data['permisos']['perm_r'] == 1) {
                     <h5 class="modal-title" id="titleModal">Datos del Rol</h5>
                 </div>
                 <div class="modal-body">
-
                     <table class="table table-bordered">
                         <tbody>
 
@@ -110,10 +94,9 @@ if ($data['permisos']['perm_r'] == 1) {
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

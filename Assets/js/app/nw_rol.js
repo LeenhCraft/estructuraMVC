@@ -17,53 +17,33 @@ $(document).ready(function () {
       { data: "idrol" },
       { data: "rol_nombre" },
       { data: "rol_cod" },
-      { data: "rol_descripcion" },
-      { data: "rol_estado" },
-      { data: "rol_fecha" },
-      { data: "options" },
+      
+      { data: "rol_estado",class:"text-center" },
+      
+      { data: "options" ,class:"text-end"},
     ],
     resonsieve: "true",
     bDestroy: true,
     iDisplayLength: 10,
-    order: [[0, "desc"]],
   });
 
   $("#formRol").submit(function (event) {
     event.preventDefault();
-    let idrol = $("#txtIdrol").val();
-    let rol_nombre = $("#txtRol_nombre").val();
-    let rol_cod = $("#txtRol_cod").val();
-    let rol_descripcion = $("#txtRol_descripcion").val();
-    let rol_estado = $("#txtRol_estado").val();
-    let rol_fecha = $("#txtRol_fecha").val();
-    if (rol_nombre == "") {
-      Swal.fire("Atención", "El ´rol_nombre´ es necesario.", "warning");
-      return false;
-    }
+    let form = $("#formRol").serialize();
+    $('button[type="submit"]').attr("disabled", true);
     divLoading.css("display", "flex");
     let ajaxUrl = base_url + "Roles/acc";
-    $.post(
-      ajaxUrl,
-      {
-        idrol: idrol,
-        rol_nombre: rol_nombre,
-        rol_cod: rol_cod,
-        rol_descripcion: rol_descripcion,
-        rol_estado: rol_estado,
-        rol_fecha: rol_fecha,
-      },
-      function (data) {
-        let objData = JSON.parse(data);
-        $("#modalRol").modal("hide");
-        if (objData.status) {
-          Swal.fire("Rol", objData.text, "success");
-          tb.api().ajax.reload();
-        } else {
-          Swal.fire("Error", objData.text, "warning");
-        }
-        divLoading.css("display", "none");
-      }
-    );
+    $.post(ajaxUrl, form, function (data) {
+      let objData = JSON.parse(data);
+      // if (objData.status) {
+      Swal.fire(objData.title, objData.text, objData.icon);
+      tb.api().ajax.reload();
+      // }
+      divLoading.css("display", "none");
+      $('button[type="submit"]').attr("disabled", false);
+      $("#formRol").trigger("reset");
+      $("#modalRol").modal("hide");
+    });
   });
 });
 
@@ -78,6 +58,7 @@ function fntView(id) {
       $("#rol_descripcion").html(objData.data.rol_descripcion);
       $("#rol_estado").html(objData.data.rol_estado);
       $("#rol_fecha").html(objData.data.rol_fecha);
+
       $("#mdView").modal("show");
     } else {
       Swal.fire({
@@ -103,12 +84,14 @@ function fntEdit(id) {
   $.get(ajaxUrl, function (data) {
     let objData = JSON.parse(data);
     if (objData.status) {
+      $("#idIdrol").val(objData.data.idrol);
       $("#txtIdrol").val(objData.data.idrol);
       $("#txtRol_nombre").val(objData.data.rol_nombre);
       $("#txtRol_cod").val(objData.data.rol_cod);
       $("#txtRol_descripcion").val(objData.data.rol_descripcion);
       $("#txtRol_estado").val(objData.data.rol_estado);
       $("#txtRol_fecha").val(objData.data.rol_fecha);
+      $("._hiden").removeClass("d-none");
     } else {
       Swal.fire({
         title: objData.title,
@@ -158,6 +141,8 @@ function fntDel(idp) {
 }
 
 function openModal() {
+  $("#txtRol_nombre").focus();
+  $('button[type="submit"]').attr("disabled", false);
   $(".modal-header").removeClass("headerUpdate");
   $(".modal-header").addClass("headerRegister");
   $("#btnActionForm").removeClass("btn-info");
