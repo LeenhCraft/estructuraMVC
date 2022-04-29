@@ -5,6 +5,7 @@ lnhcrud.php
 LnhcrudModel.php
 fun_lnh.js
 plantillas
-lnh.txt.lnh
-error.log
+*.log
 Config.php
+*.architect~
+*.architect~~
