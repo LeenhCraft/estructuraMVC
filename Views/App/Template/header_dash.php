@@ -66,12 +66,15 @@
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- Search -->
-                        <div class="navbar-nav align-items-center">
-                            <div class="nav-item d-flex align-items-center">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
+                        <form class="w-100" onsubmit="return buscar_book(this)">
+                            <div class="navbar-nav align-items-center w-100">
+                                <div class="nav-item d-flex align-items-center w-100">
+                                    <div id="ico-search" class="bx bx-search fs-4 lh-0" role="status">
+                                    </div>
+                                    <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar book..." aria-label="Search..." />
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">

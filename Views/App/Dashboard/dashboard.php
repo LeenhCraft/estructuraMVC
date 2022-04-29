@@ -69,4 +69,31 @@
         </div>
     </div>
 </div>
+<div class="row py-4 div_search" style="display: none;">
+    <div class="col-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row px-2">
+                    <div class="col-12 col-md-6">
+                        <span class="h4">Resultados de la búsqueda:</span>
+                        <span class="term_bus ms-2 h5 text-primary"></span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <span class="h4 ms-5">Resultados encontrados:</span>
+                        <span class="term_cant ms-2 h5 text-primary"></span>
+                        <button type="button" class="btn rounded-pill btn-icon btn-outline-primary btn-sm float-end" onclick="cerrar()">
+                            <span class="tf-icons bx bx-x"></span>
+                        </button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="card-body">
+                <div class="row cont_result">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php footerApp('Template/footer_dash', $data) ?>
