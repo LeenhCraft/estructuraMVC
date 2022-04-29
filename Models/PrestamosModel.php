@@ -60,6 +60,13 @@ class PrestamosModel extends Mysql
         return $request;
     }
 
+    public function lstlibros()
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE idtipoarticulo = 1 AND art_estado = 1";
+        $request = $this->select_all($sql);
+        return $request;
+    }
+
     public function insertar($dni, $nombre, $cel, $dir, $estado = 1)
     {
         $return = [];

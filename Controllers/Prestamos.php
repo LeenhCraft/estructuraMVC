@@ -24,12 +24,16 @@ class Prestamos extends Controllers
         $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
         if ($this->permisos['perm_r'] == 1) {
             if (!empty($param)) {
-                $request = $this->model->buscar(intval($param));
-                if (!empty($request)) {
-                    $request['usu_foto'] = !empty($request['usu_foto']) ? media() . '/img/usu_web/' . $request['usu_foto'] . '.jpg' : 'https://via.placeholder.com/180x270';
-                    $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => '', 'data' => $request);
+                if (is_numeric($param)) {
+                    $request = $this->model->buscar(intval($param));
+                    if (!empty($request)) {
+                        $request['usu_foto'] = !empty($request['usu_foto']) ? media() . '/img/usu_web/' . $request['usu_foto'] . '.jpg' : 'https://via.placeholder.com/180x270';
+                        $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => '', 'data' => $request);
+                    } else {
+                        $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'El DNI ingresado no esta registrado.');
+                    }
                 } else {
-                    $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'El DNI ingresado no esta registrado.');
+                    $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'El DNI ingresado no es un número.');
                 }
             } else {
                 $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'No deje campos vacios.');
@@ -80,6 +84,43 @@ class Prestamos extends Controllers
                 //todas las incidencias
                 $request = $this->model->lstincidentes($dni);
                 $arrResponse = $request;
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function first()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $arrResponse = [];
+            if ($this->permisos['perm_r'] == 1) {
+                $data['permisos']  = $this->permisos;
+                $arrResponse = $this->views->getView('App/Prestamos', "step1", $data);
+            }
+            echo $arrResponse;
+        }
+        die();
+    }
+
+    public function getServices($dni)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $arrResponse = [];
+            if ($this->permisos['perm_r'] == 1) {
+                $arrResponse = $this->views->getView('App/Prestamos', "step2");
+            }
+            echo $arrResponse;
+        }
+        die();
+    }
+
+    public function lstlibros()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $arrResponse = [];
+            if ($this->permisos['perm_r'] == 1) {
+                $arrResponse = $this->model->lstlibros();
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
