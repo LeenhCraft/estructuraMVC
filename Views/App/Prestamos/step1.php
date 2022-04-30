@@ -1,16 +1,18 @@
 <div id="spinner" class="divLoading">
     <div>
-        <img src="http://project.test/Assets/img/loading.svg" alt="Loading">
+        <img src="<?php echo media() . 'img/loading.svg' ?>" alt="Loading">
     </div>
 </div>
 <div class="card-header">
     <div class="row">
         <div class="col-12 col-md-3">
             <label class="form-label" for="txtCod">Código Lector</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="txtCod" placeholder="0123" aria-describedby="button-addon2" onkeyup="val_press(this)">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="bsc_lector(this);"><i class='bx bx-search-alt-2'></i></button>
-            </div>
+            <form onsubmit="return bsc_lector(this)">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtCod" placeholder="0123" aria-describedby="button-addon2" onkeyup="val_press(this)">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" ><i class='bx bx-search-alt-2'></i></button>
+                </div>
+            </form>
         </div>
         <div class="col-12 col-md-3 mt-auto">
             <?php
@@ -112,7 +114,7 @@
                             </div>
                         </div>
                         <div class="table-responsive text-nowrap">
-                            <table class="table w-100 p-1" id="tbreservas">
+                            <table class="table w-100 p-1 my-2" id="tbreservas">
                                 <thead>
                                     <tr>
                                         <th>#</th>

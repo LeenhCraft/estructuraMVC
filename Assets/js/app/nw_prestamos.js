@@ -1,5 +1,5 @@
 function bsc_lector(e) {
-  let btn = $(e);
+  let btn = $("#button-addon2");
   let txt = btn.html();
   let param = $("#txtCod").val();
   let ajaxUrl = base_url + "prestamos/buscar/" + param;
@@ -40,8 +40,10 @@ function bsc_lector(e) {
       $("#txtCod").val("");
       $("#txtCod").focus();
       $(".spinner-grow").addClass("d-none");
+      btn.html(txt);
     }
   });
+  return false;
 }
 
 function lstreservas(id) {

@@ -29,7 +29,7 @@ class Roles extends Controllers
                 $btnEdit = "";
                 $btnDelete = "";
                 if ($this->permisos['perm_r'] == 1) {
-                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idrol'] . ')" title="Ver Rol"><i class="bx bx-show-alt"></i></button>';
+                    $btnView = '<button class="btn btn-info btn-sm" onClick="fntView(' . $arrData[$i]['idrol'] . ')" title="Ver Rol"><i class="bx bx-dialpad-alt"></i></button>';
                 }
                 if ($this->permisos['perm_u'] == 1) {
                     $btnEdit = '<button class="btn btn-success btn-sm" onClick="fntEdit(' . $arrData[$i]['idrol'] . ')" title="Editar Rol"><i class="bx bxs-edit-alt"></i></button>';
