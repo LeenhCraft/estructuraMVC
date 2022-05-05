@@ -114,6 +114,6 @@ function isKeyExists(obj, key) {
   }
 }
 
-function cerrar(){
+function cerrar() {
   $(".div_search").hide("slow");
 }

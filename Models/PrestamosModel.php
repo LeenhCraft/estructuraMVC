@@ -114,24 +114,22 @@ class PrestamosModel extends Mysql
         return $request;
     }
 
-    public function eliminar(int $id)
+    public function registrar($idlector, $libros, $cant, $codPrestamo, $idusuario, $fpres, $fdev, $estado)
     {
-        $sql = "SELECT * FROM bib_personal WHERE idpersona = $id";
-        $request = $this->select($sql);
-        if (!empty($request)) {
-            $sql = "DELETE FROM bib_personal WHERE idpersona = $id";
-            $arrData = array(0);
-            $request = $this->delete($sql, $arrData);
-            if ($request) {
-                $return['status'] = true;
-                $return['data'] = 'El registro fue eliminado!';
-            } else {
-                $return['status'] = false;
-                $return['data'] = 'Ocurrio un error al tratar de eliminar el registro.';
+        $sql = "INSERT INTO bib_prestamos(pres_cod,usu_id,idwebusuario,pres_fprestamo,pres_fdevolucion,pres_estado) VALUES(?,?,?,?,?,?)";
+        $arrData = array($codPrestamo, $idusuario, $idlector, $fpres, $fdev, $estado);
+        $response = $this->insert($sql, $arrData);
+        if ($response > 0) {
+            for ($i = 0; $i < count($libros); $i++) {
+                $sql = "INSERT INTO bib_det_prestamos(idprestamo,idarticulo,det_cant) VALUES(?,?,?)";
+                $arrData = array($response, $libros[$i], $cant[$i]);
+                $response = $this->insert($sql, $arrData);
             }
+            $return['status'] = true;
+            $return['data'] = '';
         } else {
             $return['status'] = false;
-            $return['data'] = 'No se encontraron registros.';
+            $return['data'] = 'Ocurrio un error al intentar registrar el personal.';
         }
         return $return;
     }

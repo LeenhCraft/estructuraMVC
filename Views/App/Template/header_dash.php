@@ -39,7 +39,9 @@
 
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/sweetalert2.min.css'; ?>">
     <link rel="stylesheet" href="/Assets/css/demo.css">
-
+    <!-- <link rel="stylesheet" href="/Assets/css/plugins/bootstrap-select.min.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Assets/css/plugins/select2-bootstrap4.min.css">
 
 </head>
 

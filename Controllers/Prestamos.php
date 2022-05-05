@@ -119,8 +119,62 @@ class Prestamos extends Controllers
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $arrResponse = [];
+            $html = '<option value="">Seleccione</option>';
             if ($this->permisos['perm_r'] == 1) {
                 $arrResponse = $this->model->lstlibros();
+                foreach ($arrResponse as $key) {
+                    $html .= '<option value="' . $key['idarticulo'] . '">' . $key['art_nombre'] . '</option>';
+                }
+            }
+            echo $html;
+        }
+        die();
+    }
+
+    public function registrar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
+            if ($this->permisos['perm_w'] == 1) {
+                //asignar variables
+                $idlector = (isset($_POST['detlec'])) ? intval($_POST['detlec']) : 0;
+                $libros = (isset($_POST['libro'])) ? $_POST['libro'] : [];
+                $cant = (isset($_POST['cant'])) ? $_POST['cant'] : [];
+                $codPrestamo = generar_numeros(5);
+                $idusuario = $_SESSION['lnh_id'];
+                $fpres = (isset($_POST['fpres'])) ? $_POST['fpres'] : '';
+                $fdev = (isset($_POST['fdev'])) ? $_POST['fdev'] : '';
+                $estado = 0;
+
+                //sanitizar
+                for ($i = 0; $i < count($libros); $i++) {
+                    $libros[$i] = (!empty($libros[$i])) ? intval($libros[$i]) : exit(json_encode(["status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'Ocurrio un error con los libros seleccionados.'], JSON_UNESCAPED_UNICODE));
+                    $cant[$i] = (intval($cant[$i]) > 0) ? intval($cant[$i]) : exit(json_encode(["status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'La cantidad de libros es errónea.'], JSON_UNESCAPED_UNICODE));
+                }
+                //validar
+                if (!empty($idlector)) {
+                    if (!empty($libros)) {
+                        if (!empty($cant)) {
+                            if (!empty($fpres) && !empty($fdev) && $fpres == date('Y-m-d') && $fdev >= $fpres) {
+                                //registrar
+                                $request = $this->model->registrar($idlector, $libros, $cant, $codPrestamo, $idusuario, $fpres, $fdev, $estado);
+                                if ($request['status']) {
+                                    $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se registro el prestamo correctamente.');
+                                } else {
+                                    $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'Ocurrio un error al registrar el prestamo.');
+                                }
+                            } else {
+                                $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'Debe ingresar la fecha de prestamo valida.');
+                            }
+                        } else {
+                            $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'No selecciono ninguna cantidad.');
+                        }
+                    } else {
+                        $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'No selecciono ningun libro.');
+                    }
+                } else {
+                    $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Debe seleccionar a un lector.');
+                }
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }

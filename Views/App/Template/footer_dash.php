@@ -35,6 +35,7 @@
 <!-- build:js assets/vendor/js/core.js -->
 <!-- <script src="/assets/vendor/libs/jquery/jquery.js"></script> -->
 <script src="/Assets/js/plugins/jquery.min.js"></script>
+
 <!-- <script src="/Assets/vendor/libs/popper/popper.js"></script> -->
 <script src="/Assets/js/plugins/popper.min.js"></script>
 
@@ -57,9 +58,10 @@
 
 <script src="/Assets/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/Assets/js/plugins/dataTables.bootstrap.min.js"></script>
-
 <script src="/Assets/js/plugins/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/Assets/js/app/general.js"></script>
+
 <?php
 if (isset($data['js']) && !empty($data['js'])) {
     for ($i = 0; $i < count($data['js']); $i++) {
@@ -67,7 +69,6 @@ if (isset($data['js']) && !empty($data['js'])) {
     }
 }
 ?>
-
 </body>
 
 </html>
