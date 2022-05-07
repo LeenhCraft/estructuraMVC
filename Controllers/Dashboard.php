@@ -33,4 +33,28 @@ class Dashboard extends Controllers
         // dep($_SESSION);     
         $this->views->getView('Errors', "404");
     }
+
+    public function add()
+    {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
+            if ($this->permisos['perm_w'] == 1) {
+                $cod = (isset($_POST['cod'])) ? strClean($_POST['cod']) : '';
+                $title = (isset($_POST['title'])) ? strClean($_POST['title']) : '';
+                $des = (isset($_POST['des'])) ? strClean($_POST['des']) : '';
+                $stock = 3;
+                $idtipoart = 1;
+                $request = $this->model->add($cod, $title, $des, $stock, $idtipoart);
+                if ($request['status']) {
+                    $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se registro el articulo correctamente.');
+                } else {
+                    $arrResponse = array("status" => false, 'icon' => $request['icon'], 'title' => 'Atención!!', "text" => $request['data']);
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        } else {
+            header('Location: ' . base_url() . 'dashboard');
+        }
+        die();
+    }
 }

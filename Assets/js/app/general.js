@@ -58,62 +58,98 @@ function buscar_book(e) {
   input.attr("disabled", true);
   div.show("slow");
   contenido.empty().append(loading);
-  $.get(api + valor, function (data) {
-    spinner.removeAttr("class");
-    spinner.attr("class", clas);
-    input.attr("disabled", false);
-    $(".term_bus").html(valor);
-    $(".term_cant").html(data.items.length);
-    contenido.empty();
-    $.each(data.items, function (index, value) {
-      let des = "Sin descripción";
-      let titulo = "Sin título";
-      let autor = "Sin autor";
-      value.volumeInfo.description != undefined
-        ? (des = value.volumeInfo.description)
-        : (des = "Sin descripción");
-      value.volumeInfo.title != undefined
-        ? (titulo = value.volumeInfo.title)
-        : (titulo = "Sin título");
-      value.volumeInfo.authors != undefined
-        ? (autor = value.volumeInfo.authors)
-        : (autor = "Sin autor");
-      contenido.append(
-        `
-      <div class="col-12 col-md-4 ">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title text-truncate">` +
-          titulo +
-          `</h5>
-                <div class="card-subtitle text-muted mb-3 text-truncate">` +
-          autor +
-          `</div>
-                <p class="card-text text-truncate">
-                    ` +
-          des +
-          `
-                </p>
-                <a href="javascript:void(0)" class="card-link">Card link</a>
-                <a href="javascript:void(0)" class="card-link">Another link</a>
+  if (valor != "") {
+    $.get(api + valor, function (data, textStatus, jqXHR) {
+      spinner.removeAttr("class").attr("class", clas);
+      input.attr("disabled", false);
+      if (jqXHR.status == 200) {
+        $(".term_bus").html(valor);
+        $(".term_cant").html(data.items.length);
+        contenido.empty();
+        $.each(data.items, function (index, value) {
+          let cod = value.id;
+          let des = "Sin descripción";
+          let titulo = "Sin título";
+          let autor = "Sin autor";
+          value.volumeInfo.description != undefined
+            ? (des = value.volumeInfo.description.replace(/\s+/g, ' ').trim())
+            : (des = "Sin descripción");
+          value.volumeInfo.title != undefined
+            ? (titulo = value.volumeInfo.title)
+            : (titulo = "Sin título");
+          value.volumeInfo.authors != undefined
+            ? (autor = value.volumeInfo.authors)
+            : (autor = "Sin autor");
+          contenido.append(
+            `
+          <div class="col-12 col-md-4 ">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title text-truncate">` +
+              titulo +
+              `</h5>
+                    <div class="card-subtitle text-muted mb-3 text-truncate">` +
+              autor +
+              `</div>
+                    <p class="card-text text-truncate">
+                        ` +
+              des +
+              `
+                    </p>
+                    <button class="btn btn-primary btn-sm" onclick="add_db(this,'` +cod +`',` +"`" +titulo +"`" +`,` +"`" +des +"`" +`)">Agregar a la DB</button>
+                </div>
             </div>
-        </div>
-      </div>
-      `
-      );
+          </div>
+          `
+          );
+        });
+      } else {
+        contenido
+          .empty()
+          .html(
+            `<label class="text-center text-primary h4">No hay resultados</label>`
+          );
+      }
     });
-  });
-  return false;
-}
-
-function isKeyExists(obj, key) {
-  if (obj[key] == undefined) {
-    return false;
   } else {
-    return true;
+    spinner.removeAttr("class").attr("class", clas);
+    input.attr("disabled", false);
+    contenido
+      .empty()
+      .html(
+        `<label class="text-center text-primary h4">No hay resultados</label>`
+      );
   }
+
+  return false;
 }
 
 function cerrar() {
   $(".div_search").hide("slow");
+}
+
+function add_db(ths, cod, titulo, descr) {
+  let btn = $(ths);
+  let loading = `<div class="spinner-border spinner-border-sm text-white mx-auto" role="status"><span class="visually-hidden">Loading...</span></div>`;
+  btn.html(loading + "  Agregando");
+  let ajaxUrl = base_url + "dashboard/add";
+  $.post(ajaxUrl, { cod: cod, title: titulo, des: descr }, function (data) {
+    let objData = JSON.parse(data);
+    if (objData.status == true) {
+      console.log(objData.text);
+      btn
+        .html("<i class='bx bx-check me-2'></i>Agregado")
+        .removeAttr("class")
+        .attr("class", "btn btn-outline-primary btn-sm")
+        .attr("disabled", true);
+    } else {
+      console.log(objData.text);
+      let clas = "btn btn-outline-" + objData.icon + " btn-sm";
+      btn
+        .html("<i class='bx bx-error-alt me-2'></i>" + objData.text)
+        .removeAttr("class")
+        .attr("class", clas)
+        .attr("disabled", true);
+    }
+  });
 }
