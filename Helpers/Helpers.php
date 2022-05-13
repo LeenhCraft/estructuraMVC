@@ -318,7 +318,7 @@ function consultaDNI($dni)
 }
 
 
-// Obtener nomnre de usuario
+// Obtener nomnre de usuario app
 function getName(int $id)
 {
     require_once("Models/PermisosModel.php");
@@ -332,4 +332,48 @@ function getName(int $id)
         $arrPermisos['rol'] = '<span class="badge bg-info">' . $arrPermisos['rol'] . '</span>';
     }
     return $arrPermisos;
+}
+
+//nombre de usuario web
+function getName2($id2)
+{
+    require_once("Models/WebModel.php");
+    $objPermisos = new WebModel();
+    $id = (isset($_SESSION['pe_u'])) ? $_SESSION['pe_u'] : $id2;
+    $arrPermisos = $objPermisos->usu($id);
+    return $arrPermisos;
+}
+
+function can_carrito()
+{
+    require_once 'Models/WebModel.php';
+    $objWeb = new WebModel();
+    $b = (isset($_SESSION['vi'])) ? $_SESSION['vi'] : 0;
+    $a = $objWeb->car_art($b);
+    return $a;
+}
+
+function codigo_visita()
+{
+    require_once("Models/WebModel.php");
+    $objWeb = new WebModel();
+
+    if (!isset($_SESSION['vi'])) {
+        $vi = generar_numeros(4);
+        $_SESSION['vi'] = $vi;
+        $_SESSION['visita'] = 'Visista_' . $_SESSION['vi'];
+        $objWeb->rg_visita($_SESSION['vi']);
+    } else {
+        $vi = $_SESSION['vi'];
+        $response = $objWeb->chk_vi($vi);
+        while (!empty($response)) {
+            $vi = generar_numeros(4);
+            $response = $objWeb->chk_vi($vi);
+        }
+        if (!empty($response)) {
+            $_SESSION['vi'] = $vi;
+            $_SESSION['visita'] = 'Visista_' . $_SESSION['vi'];
+            $objWeb->rg_visita($_SESSION['vi']);
+        }
+    }
 }

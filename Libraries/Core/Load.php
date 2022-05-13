@@ -24,6 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$method = 'primeraves';
 		$params = '';
 	}
+
+	if (isset($_SESSION['pe_u']) && $pe_u['primera'] == '1' && $controller != 'Web' && $controller != 'Logout' && $method != 'web') {
+		$controller = ucwords('web');
+		$method = 'password';
+		$params = '';
+	}
 } // else if ($_SERVER['REQUEST_METHOD'] == 'POST') {}
 // dep($_SERVER['REQUEST_METHOD']);
 // dep([$controller, $method], 1);

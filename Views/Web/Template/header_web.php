@@ -1,3 +1,12 @@
+<?php
+$nombre = (isset($_SESSION['pe_u'])) ? getName2('')['usu_nombre'] : $_SESSION['visita'];
+$cant = 0;
+$dnone = 'style="display: none;"';
+if ($data['cant'] > 0) {
+    $cant = $data['cant'];
+    $dnone = '';
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,20 +18,6 @@
     <link rel="icon" type="image/png" href="<?php echo media(); ?>img/logo.png">
 
     <meta name="Author" lang="es" content="leenhcraft.com">
-
-    <!-- Facebook Opengraph integration: https://developers.facebook.com/docs/sharing/opengraph -->
-    <meta property="og:title" content="">
-    <meta property="og:image" content="">
-    <meta property="og:url" content="">
-    <meta property="og:site_name" content="">
-    <meta property="og:description" content="">
-
-    <!-- Twitter Cards integration: https://dev.twitter.com/cards/  -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
 
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/bootstrap.css'; ?>">
     <link rel="stylesheet" href="<?php echo media() . 'css/plugins/font.min.css'; ?>">
@@ -55,6 +50,15 @@
         </div>
     </div>
     <header class="main_menu home_menu">
+        <div class="header_top d-none d-md-inline" style="background-color: #ECFDFF;">
+            <div class="container">
+                <div class="row py-1">
+                    <div class="col-lg-6">
+                        <label class="form-label m-0">Hola, <b><?= $nombre ?></b></label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12">
@@ -108,21 +112,25 @@
                             </ul>
                         </div>
                         <div class="hearer_icon d-flex">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <a id="search_1" href="javascript:void(0)"><i class="ti-search m-0"></i></a>
                             <?php
-                            if (isset($data['mostrar_lg']) && $data['mostrar_lg'] === 'si') {
+                            if (isset($_SESSION['pe_u'])) {
                             ?>
-                                <a href="#" data-url="<?= base_url() . 'me/login'; ?>" data-toggle="modal" data-target="#exampleModal"><i class="ti-user"></i></a>
+                                <a href="/logout" class="mx-3"><i class='ti-arrow-circle-left m-0'></i></a>
+                            <?php
+                            } else {
+                            ?>
+                                <a href="#" data-url="<?= base_url() . 'me/login'; ?>" data-toggle="modal" data-target="#exampleModal" class="mx-3"><i class="ti-user m-0"></i></a>
                             <?php
                             }
                             ?>
-                            <div class="dropdown cart">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-cart-plus"></i>
+                            <div class="">
+                                <a class="" href="/carrito">
+                                    <i id="cantcar" class="fas fa-cart-plus m-0"><span class="cant_car" <?= $dnone ?>><?= $cant ?></span></i>
                                 </a>
                                 <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div class="single_product">
-    
+                                    <div class="single_product px-2">
+                                        <?php dep($_SESSION); ?>
                                     </div>
                                 </div> -->
 

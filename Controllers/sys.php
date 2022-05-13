@@ -5,6 +5,7 @@ class Sys extends Controllers
     {
         session_start();
         parent::__construct();
+        codigo_visita();
     }
 
     public function first_time()

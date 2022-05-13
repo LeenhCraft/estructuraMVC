@@ -6,10 +6,32 @@ class WebModel extends Mysql
         parent::__construct();
     }
 
+    public function chk_vi($vis_cod)
+    {
+        $sql = "SELECT * FROM sis_visitas WHERE vis_cod = $vis_cod AND idwebusuario !=0";
+        $request = $this->select($sql);
+        return $request;
+    }
+
+    public function usu($id)
+    {
+        $sql = "SELECT * FROM web_usuarios WHERE idwebusuario=$id";
+        $request = $this->select($sql);
+        return empty($request) ? 'sin datos' : $request;
+    }
+
+    public function rg_visita($idvisita)
+    {
+        $sql = "INSERT INTO sis_visitas(vis_cod) VALUES (?)";
+        $arrData = array($idvisita);
+        $response = $this->insert($sql, $arrData);
+        return $response;
+    }
+
     public function insertar($dni, $nombre, $email, $token)
     {
         $return = $request = [];
-        $sql = "SELECT * FROM web_usuarios WHERE usu_usuario like '$email'";
+        $sql = "SELECT * FROM web_usuarios WHERE usu_usuario like '$email' OR usu_dni = '$dni'";
         $request = $this->select_all($sql);
 
         if (empty($request)) {
@@ -18,14 +40,14 @@ class WebModel extends Mysql
             $response = $this->insert($sql, $arrData);
             if ($response > 0) {
                 $return['status'] = true;
-                $return['data'] = '';
+                $return['data'] = $response;
             } else {
                 $return['status'] = false;
                 $return['data'] = 'Ocurrio un error al intentar registrar el usuario.';
             }
         } else {
             $return['status'] = false;
-            $return['data'] = 'Ya existe una cuenta con este correo electronico. Por favor intente con otro.';
+            $return['data'] = 'Ya existe una cuenta con este correo electronico/dni. Por favor intente con otro.';
         }
         return $return;
     }
@@ -379,5 +401,101 @@ class WebModel extends Mysql
 
 
         return $return;
+    }
+
+    public function items($cant = 1)
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE art_estado = 1 ORDER BY idarticulo DESC LIMIT $cant";
+        $request = $this->select_all($sql);
+        if (!empty($request)) {
+            $return = array('status' => true, 'data' => $request);
+        } else {
+            $return = array('status' => false, 'data' => 'No hay datos.');
+        }
+        return $return;
+    }
+
+    public function existe($id)
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE idarticulo = $id AND art_estado = 1";
+        $request = $this->select($sql);
+        return $request;
+    }
+
+    public function stock($id, $cant)
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE idarticulo = $id AND art_estado = 1 AND art_stock >= $cant";
+        $request = $this->select($sql);
+        return $request;
+    }
+
+    public function add($idvisita, $id, $cant)
+    {
+        $sql = "INSERT INTO web_carritos(idvisita,idarticulo,car_cantidad) VALUES (?,?,?)";
+        $arrData = array($idvisita, $id, $cant);
+        $response = $this->insert($sql, $arrData);
+        if ($response > 0) {
+            $return['status'] = true;
+
+            $return['data'] = $this->car_art($idvisita);
+        } else {
+            $return['status'] = false;
+            $return['data'] = '';
+        }
+        return $return;
+    }
+
+    public function car_art($idvisita)
+    {
+        $sql = "SELECT SUM(car_cantidad) as car_cantidad FROM web_carritos WHERE idvisita = '$idvisita' AND car_anulado = 0 AND idreserva = 0";
+        $request = $this->select($sql);
+        return $request['car_cantidad'];
+    }
+
+    public function ya_add($id, $idvisita)
+    {
+        $sql = "SELECT * FROM web_carritos WHERE idarticulo = $id AND idvisita = $idvisita AND car_anulado = 0 AND idreserva = 0";
+        $request = $this->select($sql);
+        return $request;
+    }
+
+    public function upd_cant($id, $cant, $idvisita)
+    {
+        $sql = "UPDATE web_carritos SET car_cantidad = ? WHERE idarticulo = $id AND idvisita = $idvisita AND car_anulado = 0";
+        $arrData = array($cant);
+        $request = $this->update($sql, $arrData);
+        if ($request) {
+            $return['status'] = true;
+            $return['data'] = $this->car_art($idvisita);
+        } else {
+            $return['status'] = false;
+            $return['data'] = 'Ocurrio un error al tratar de actualizar el registro.';
+        }
+
+        return $return;
+    }
+
+    public function upd_carrito($idwebusuario)
+    {
+        $idvisita = $_SESSION['vi'];
+        $sql = "SELECT * FROM web_carritos WHERE idvisita='$idvisita' AND idreserva=0 AND car_anulado=0";
+        $request = $this->select_all($sql);
+        if (!empty($request)) {
+            $sql = "UPDATE web_carritos SET idwebusuario = ? WHERE idvisita = ? AND idreserva = 0 AND car_anulado = 0";
+            $arrData = array($idwebusuario, $idvisita);
+            $request = $this->update($sql, $arrData);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function upd_visita($idwebusuario)
+    {
+        $idvisita = $_SESSION['vi'];
+        $sql = "UPDATE sis_visitas SET idwebusuario = ? WHERE vis_cod = ?";
+        $arrData = array($idwebusuario, $idvisita);
+        $request = $this->update($sql, $arrData);
+        return $request;
     }
 }

@@ -2,6 +2,7 @@ const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
   showConfirmButton: false,
+  showCloseButton: true,
   timer: 3000,
   timerProgressBar: true,
   didOpen: (toast) => {
@@ -72,7 +73,7 @@ function buscar_book(e) {
           let titulo = "Sin título";
           let autor = "Sin autor";
           value.volumeInfo.description != undefined
-            ? (des = value.volumeInfo.description.replace(/\s+/g, ' ').trim())
+            ? (des = value.volumeInfo.description.replace(/\s+/g, " ").trim())
             : (des = "Sin descripción");
           value.volumeInfo.title != undefined
             ? (titulo = value.volumeInfo.title)
@@ -96,7 +97,17 @@ function buscar_book(e) {
               des +
               `
                     </p>
-                    <button class="btn btn-primary btn-sm" onclick="add_db(this,'` +cod +`',` +"`" +titulo +"`" +`,` +"`" +des +"`" +`)">Agregar a la DB</button>
+                    <button class="btn btn-primary btn-sm" onclick="add_db(this,'` +
+              cod +
+              `',` +
+              "`" +
+              titulo +
+              "`" +
+              `,` +
+              "`" +
+              des +
+              "`" +
+              `)">Agregar a la DB</button>
                 </div>
             </div>
           </div>
@@ -152,4 +163,32 @@ function add_db(ths, cod, titulo, descr) {
         .attr("disabled", true);
     }
   });
+}
+
+function add_carrito(e, id) {
+  let ajaxUrl = base_url + "web/add";
+  var canti = 1;
+  if ($("#quantity").length > 0) {
+    var input = $("#quantity").val();
+    canti = input != "" ? input : 1;
+  }
+
+  var datos = {
+    id: id,
+    cant: canti,
+  };
+  $.post(ajaxUrl, datos, function (data, textStatus, jqXHR) {
+    if (textStatus == "success") {
+      let objData = JSON.parse(data);
+      Toast.fire({
+        icon: objData.icon,
+        title: objData.text,
+      });
+      if (objData.status == true) {
+        $("#cantcar").find(".cant_car").show("slow").html(objData.data);
+      }
+    }
+  });
+
+  return false;
 }
