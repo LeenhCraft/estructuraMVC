@@ -80,6 +80,7 @@ function lstreservas(id) {
       { data: "id" },
       { data: "cantidad" },
       { data: "prestamo" },
+      { data: "devolucion" },
       { data: "estado", class: "text-center" },
       //   { data: "options", class: "text-end" },
     ],

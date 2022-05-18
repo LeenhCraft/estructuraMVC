@@ -107,6 +107,7 @@
                                         <th>#</th>
                                         <th>N° Libros</th>
                                         <th>F. Prestamo</th>
+                                        <th>F. Devolucion</th>
                                         <th>Estado</th>
                                         <!-- <th>   </th> -->
                                     </tr>
@@ -131,7 +132,8 @@
                     <div class="col-12 row p-0 m-0 mt-3 pt-2">
                         <label for="fpres" class="col-md-1 col-form-label text-end" title="Fecha del prestamos">Fecha:</label>
                         <div class="col-md-2">
-                            <input class="form-control" type="date" id="fpres" name="fpres" title="Fecha del prestamos">
+                            <!-- <input class="form-control" type="date" id="fpres" name="fpres" title="Fecha del prestamos"> -->
+                            <label class="form-control"><?= date('d/m/Y')?></label>
                         </div>
                         <label for="fdev" class="col-md-1 col-form-label text-end text-truncate" title="Fecha de devolución">F. Devolución:</label>
                         <div class="col-md-2">

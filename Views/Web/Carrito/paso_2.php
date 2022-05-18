@@ -113,7 +113,7 @@
                         timerProgressBar: true,
                     }).then((result) => {
                         if (result.dismiss === Swal.DismissReason.timer) {
-                            window.location.href = base_url + "web/carrito";
+                            window.location.href = base_url + "carrito";
                         }
                     });
                 } else {

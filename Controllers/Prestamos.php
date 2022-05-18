@@ -142,7 +142,8 @@ class Prestamos extends Controllers
                 $cant = (isset($_POST['cant'])) ? $_POST['cant'] : [];
                 $codPrestamo = generar_numeros(5);
                 $idusuario = $_SESSION['lnh_id'];
-                $fpres = (isset($_POST['fpres'])) ? $_POST['fpres'] : '';
+                // $fpres = (isset($_POST['fpres'])) ? $_POST['fpres'] : date('Y-m-d H:i:s');
+                $fpres = date('Y-m-d');
                 $fdev = (isset($_POST['fdev'])) ? $_POST['fdev'] : '';
                 $estado = 0;
 

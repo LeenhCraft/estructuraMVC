@@ -22,7 +22,8 @@ class PrestamosModel extends Mysql
 
     public function lstreservas($dni)
     {
-        $sql = "SELECT a.idprestamo as id, DATE_FORMAT(a.pres_fprestamo,'%e/%m/%Y') AS prestamo,a.pres_estado as estado FROM bib_prestamos a INNER JOIN web_usuarios b ON a.idwebusuario =b.idwebusuario WHERE b.usu_dni = '$dni'";
+        $sql = "SELECT a.idprestamo as id, DATE_FORMAT(a.pres_fprestamo,'%e/%m/%Y') AS prestamo,DATE_FORMAT(a.pres_fdevolucion,'%e/%m/%Y') AS devolucion,a.pres_estado as estado FROM bib_prestamos a INNER JOIN web_usuarios b ON a.idwebusuario =b.idwebusuario WHERE b.usu_dni = '$dni'";
+        // $sql="SELECT * FROM bib_reservas ";
         $request = $this->select_all($sql);
         return $request;
     }
