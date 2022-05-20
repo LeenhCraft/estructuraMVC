@@ -86,10 +86,17 @@ class CarritoModel extends Mysql
             $sql = "SELECT * FROM bib_reservas WHERE res_num = '$num_res'";
             $existe = $this->select($sql);
         } while (!empty($existe));
+        $idvisita = $_SESSION['vi'];
         $sql = "INSERT INTO bib_reservas (res_num, idwebusuario , usu_id, res_estado) VALUES (?, ?, ?, ?)";
         $arrData = array($num_res, $idwebusuario, $usu_id, $estado);
         $request = $this->insert($sql, $arrData);
-        $idvisita = $_SESSION['vi'];
+        $sql_art = "SELECT * FROM web_carritos WHERE idvisita='$idvisita' AND idwebusuario='$idwebusuario' AND car_anulado=0";
+        $articulos = $this->select_all($sql_art);
+        for ($i = 0; $i < count($articulos); $i++) {
+            $sql = "INSERT INTO bib_det_reserva(idreserva, idarticulo, det_cantidad) VALUES (?, ?, ?)";
+            $arrData = array($request, $articulos[$i]['idarticulo'], 1);
+            $rq_detre = $this->insert($sql, $arrData);
+        }
         if ($request > 0) {
             $sql = "UPDATE web_carritos SET idreserva=? WHERE idvisita=?  AND idwebusuario=? AND car_anulado=0";
             $arrData = array($num_res, $idvisita, $idwebusuario);

@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\Deprecated;
-
 class Carrito extends Controllers
 {
     public function _construct()
