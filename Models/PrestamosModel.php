@@ -22,7 +22,7 @@ class PrestamosModel extends Mysql
 
     public function lstreservas($dni)
     {
-        $sql = "SELECT a.idprestamo as id, DATE_FORMAT(a.pres_fprestamo,'%e/%m/%Y') AS prestamo,DATE_FORMAT(a.pres_fdevolucion,'%e/%m/%Y') AS devolucion,a.pres_estado as estado FROM bib_prestamos a INNER JOIN web_usuarios b ON a.idwebusuario =b.idwebusuario WHERE b.usu_dni = '$dni'";
+        $sql = "SELECT a.idreserva,a.res_num as cod_reserva,b.usu_nombre as nombre,a.res_fecha as fecha,a.res_estado as estado FROM bib_reservas a INNER JOIN web_usuarios b ON b.idwebusuario=a.idwebusuario WHERE b.usu_dni='$dni' ORDER BY a.idreserva DESC";
         // $sql="SELECT * FROM bib_reservas ";
         $request = $this->select_all($sql);
         return $request;
@@ -30,7 +30,7 @@ class PrestamosModel extends Mysql
 
     public function lst_detpres($id)
     {
-        $sql = "SELECT * FROM bib_det_prestamos WHERE idprestamo = '$id'";
+        $sql = "SELECT * FROM bib_det_reserva WHERE idreserva = '$id'";
         $request = $this->select_all($sql);
         return $request;
     }

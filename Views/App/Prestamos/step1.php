@@ -106,10 +106,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>N° Libros</th>
+                                        <th>Usuario</th>
                                         <th>F. Prestamo</th>
-                                        <th>F. Devolucion</th>
                                         <th>Estado</th>
-                                        <!-- <th>   </th> -->
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">

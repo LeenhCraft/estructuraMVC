@@ -50,23 +50,19 @@ class Prestamos extends Controllers
             if ($this->permisos['perm_r'] == 1) {
                 $request = $this->model->lstreservas($dni);
                 $arrResponse = $request;
+                $count = 0;
+                
                 for ($i = 0; $i < count($request); $i++) {
-                    $detpres = $this->model->lst_detpres($request[$i]['id']);
-                    $arrResponse[$i]['cantidad'] = count($detpres);
-                    switch ($arrResponse[$i]['estado']) {
-                        case 0:
-                            $arrResponse[$i]['estado'] = '<span class="badge bg-primary">Prestado</span>';
-                            break;
-                        case 1:
-                            $arrResponse[$i]['estado'] = '<span class="badge bg-success">Devuelto</span>';
-                            break;
-                        case 2:
-                            $arrResponse[$i]['estado'] = '<span class="badge bg-info">Reservado</span>';
-                            break;
-
-                        default:
-                            $arrResponse[$i]['estado'] = 'Pendiente';
-                            break;
+                    $detpres = $this->model->lst_detpres($request[$i]['idreserva']);
+                    $count++;
+                    $arrResponse[$i]['cant_libros'] = count($detpres);
+                    $arrResponse[$i]['numero'] = $count;
+                    if ($request[$i]['estado'] == 1) {
+                        $arrResponse[$i]['options'] = '';
+                        $arrResponse[$i]['estado'] = '<div class="h6 p-0 m-0"><span class="badge rounded-pill bg-dark" title="Esta reserva ya fue atendida">Atendido</span></div>';
+                    } else {
+                        $arrResponse[$i]['options'] = '<div class="btn-group" role="group"><button type="button" class="btn btn-sm btn-outline-success">Atender</button></div>';
+                        $arrResponse[$i]['estado'] = '<div class="h6 p-0 m-0"><span class="badge rounded-pill bg-success" title="listo para generar un prestamo">Reservado</span></div>';
                     }
                 }
             }

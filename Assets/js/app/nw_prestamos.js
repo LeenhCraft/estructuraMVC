@@ -65,7 +65,7 @@ function bsc_lector(e) {
 }
 
 function lstreservas(id) {
-  $("#tbreservas").dataTable({
+  $("#tbreservas").DataTable({
     aProcessing: true,
     aServerSide: true,
     language: {
@@ -77,16 +77,18 @@ function lstreservas(id) {
       dataSrc: "",
     },
     columns: [
-      { data: "id" },
-      { data: "cantidad" },
-      { data: "prestamo" },
-      { data: "devolucion" },
-      { data: "estado", class: "text-center" },
-      //   { data: "options", class: "text-end" },
+      { data: "numero" },
+      { data: "cant_libros" },
+      { data: "nombre" },
+      { data: "fecha" },
+        { data: "estado", class: "text-center" },
+      { data: "options",className:"text-end" },
     ],
-    resonsieve: "true",
+    responsive: "true",
     bDestroy: true,
     iDisplayLength: 10,
+    searching: false,
+    lengthChange: false,
   });
 }
 

@@ -59,7 +59,7 @@
 <script src="/Assets/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/Assets/js/plugins/dataTables.bootstrap.min.js"></script>
 <script src="/Assets/js/plugins/sweetalert2.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="/Assets/js/plugins/select2.min.js"></script>
 <script src="/Assets/js/app/general.js"></script>
 
 <?php
