@@ -26,4 +26,13 @@ class Controllers
 			$this->other = new $model();
 		}
 	}
+
+	public function otra_clase($ruta, $file)
+	{
+		$routClass = "Controllers/" . $ruta . "/" . $file . ".php";
+		if (file_exists($routClass)) {
+			require_once($routClass);
+			$this->oClass = new $file();
+		}
+	}
 }
