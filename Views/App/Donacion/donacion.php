@@ -2,7 +2,7 @@
 <div class="card">
     <div id="spinner" class="divLoading">
         <div>
-            <img src="http://project.test/Assets/img/loading.svg" alt="Loading">
+            <img src="<?= media().'img/loading.svg';?>" alt="Loading">
         </div>
     </div>
     <div class="card-header px-md-5">
