@@ -429,9 +429,4 @@ class Web extends Controllers
 			header('Location: ' . base_url());
 		}
 	}
-
-	public function lnh()
-	{
-		dep($_SESSION);
-	}
 }
