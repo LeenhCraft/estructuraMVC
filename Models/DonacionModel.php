@@ -56,4 +56,11 @@ class DonacionModel extends Mysql
         }
         return $return;
     }
+
+    public function lstlibros()
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE idtipoarticulo = 1 AND art_estado = 1";
+        $request = $this->select_all($sql);
+        return $request;
+    }
 }

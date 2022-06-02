@@ -106,4 +106,20 @@ class Donacion extends Controllers
             header('Location: ' . base_url());
         }
     }
+
+    public function lstlibros()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $arrResponse = [];
+            $html = '<option value="">Seleccione</option>';
+            if ($this->permisos['perm_r'] == 1) {
+                $arrResponse = $this->model->lstlibros();
+                foreach ($arrResponse as $key) {
+                    $html .= '<option value="' . $key['idarticulo'] . '">' . $key['art_nombre'] . '</option>';
+                }
+            }
+            echo $html;
+        }
+        die();
+    }
 }

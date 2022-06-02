@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 
 function lstlibros(param) {
-  let ajaxUrl = base_url + "prestamos/lstlibros";
+  let ajaxUrl = base_url + "donacion/lstlibros";
   $.get(ajaxUrl, function (data) {
     $("#libros").html(data);
   });
