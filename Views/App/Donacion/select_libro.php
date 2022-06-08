@@ -16,24 +16,7 @@
             <button type="button" onclick="agregarDetalle()" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar</button>
         </div>
     </div>
-    <div class="row px-md-2">
-        <div class="table-responsive">
-            <table id="tabledetalle" class="table table-bordered table-sm">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>Detalle de donación</th>
-                        <th width="10%">Cantidad</th>
-                        <th width="5%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-12 text-center mt-4">
-            <button class="btn btn-outline-primary text-capitalize" type="submit"><i class='bx bx-check-circle me-2'></i>guardar donación</button>
-        </div>
-    </div>
+    
 </form>
 <script>
     $("#libros").select2({

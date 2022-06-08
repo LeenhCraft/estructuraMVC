@@ -64,11 +64,12 @@ class Donacion extends Controllers
 
     public function registrar()
     {
+        // dep($_POST,1);
         if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
             $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
             if ($this->permisos['perm_w'] == 1) {
                 //asignar variables
-                $idproveedor = (isset($_POST['idprove'])) ? intval($_POST['idprove']) : 0;
+                $idDonante = (isset($_POST['donante'])) ? intval($_POST['donante']) : 0;
                 $libros = (isset($_POST['libro'])) ? $_POST['libro'] : [];
                 $cant = (isset($_POST['cant'])) ? $_POST['cant'] : [];
                 $codFicha = (isset($_POST['cod_ficha'])) ? intval($_POST['cod_ficha']) : generar_numeros(5);
@@ -81,11 +82,11 @@ class Donacion extends Controllers
                     $cant[$i] = (intval($cant[$i]) > 0) ? intval($cant[$i]) : exit(json_encode(["status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'La cantidad de libros es errónea.'], JSON_UNESCAPED_UNICODE));
                 }
                 //validar
-                if (!empty($idproveedor)) {
+                if (!empty($idDonante)) {
                     if (!empty($libros)) {
                         if (!empty($cant)) {
                             //registrar
-                            $request = $this->model->registrar($idproveedor, $idusuario, $libros, $cant, $codFicha, $estado);
+                            $request = $this->model->registrar($idDonante, $idusuario, $libros, $cant, $codFicha, $estado);
                             if ($request['status']) {
                                 $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se registro la donación correctamente.');
                             } else {
@@ -119,6 +120,23 @@ class Donacion extends Controllers
                 }
             }
             echo $html;
+        }
+        die();
+    }
+
+    public function libro($isbn)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
+            if ($this->permisos['perm_r'] == 1) {
+                $response = $this->model->libro($isbn);
+                if (empty($response)) {
+                    $arrResponse = array("status" => false, "icon" => "warning", "title" => "Atención!!", "text" => "No se encontraron resultados.");
+                } else {
+                    $arrResponse = array("status" => true, "icon" => "success", "title" => "Excelente!!", "text" => "", "data" => $response);
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         die();
     }

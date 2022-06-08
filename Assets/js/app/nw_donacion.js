@@ -1,16 +1,16 @@
 $(document).ready(function () {
-  $("#donante").select2({
-    theme: "bootstrap4",
-    width: $(this).data("width")
-      ? $(this).data("width")
-      : $(this).hasClass("w-100")
-      ? "100%"
-      : "style",
-    // placeholder: "Donante",
-    // allowClear: Boolean($(this).data("allow-clear")),
-    // closeOnSelect: !$(this).attr("multiple"),
-  });
-  select_libros($(".nav-link.active"));
+  // $("#donante").select2({
+  //   theme: "bootstrap4",
+  //   width: $(this).data("width")
+  //     ? $(this).data("width")
+  //     : $(this).hasClass("w-100")
+  //     ? "100%"
+  //     : "style",
+  //   // placeholder: "Donante",
+  //   // allowClear: Boolean($(this).data("allow-clear")),
+  //   // closeOnSelect: !$(this).attr("multiple"),
+  // });
+  // select_libros($(".nav-link.active"));
   load_cod($(".cod_ficha"));
 });
 
@@ -21,14 +21,14 @@ function lstlibros(param) {
   });
 }
 
-function agregarDetalle() {
-  var libro_id = $("#libros").find(":selected").val();
-  var libro_titulo = $("#libros").find(":selected").text();
-  var cantidad = $("#detll3").val();
+function agregarDetalle(e) {
+  var libro_id = $(e).attr("data-lib") != null ? $(e).attr("data-lib") : "";
+  var libro_titulo =
+    $(e).attr("data-title") != null ? $(e).attr("data-title") : "";
+  var cantidad = $("#stock_lib").val();
   var tabladet = $("#tabledetalle tbody");
-
-  if (cantidad != "") {
-    if (libro_id != "") {
+  if (libro_id != "") {
+    if (cantidad != "" && cantidad > 0) {
       var detalle = tabladet.find('tr[data-id="' + libro_id + '"]');
       if ($(detalle).length) {
         var inputcant = detalle.find("input.cant");
@@ -55,11 +55,21 @@ function agregarDetalle() {
               </tr>`);
         $('[data-id="' + libro_id + '"]').show("fast");
       }
-      $("#libros").val(null).trigger("change");
-      $("#detll3").val(1);
+      // $("#libros").val(null).trigger("change");
+      // $("#detll3").val(1);
+      $(e).removeAttr("data-lib").removeAttr("data-title");
+      limpiar($(".btn_cod"));
     } else {
-      $("#libros").select2("open");
+      Toast.fire({
+        icon: "warning",
+        title: "Ingrese una cantidad valida!!",
+      });
     }
+  } else {
+    Toast.fire({
+      icon: "warning",
+      title: "Seleccione un libro!!",
+    });
   }
 }
 
@@ -96,57 +106,57 @@ function load_cod(e) {
   });
 }
 
-function select_libros(e) {
-  let content = $(e).attr("data-bs-target");
-  let ajaxUrl = base_url + "donacion/ajax/op1";
-  if ($(content).html() == "") {
-    $(content)
-      .addClass("text-center")
-      .html(
-        `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
-      );
-    $.get(ajaxUrl, function (data, textStatus) {
-      if (textStatus == "success") {
-        let objData = JSON.parse(data);
-        if (objData["status"]) {
-          $(content).removeClass("text-center").html(objData["data"]);
-        } else {
-          Swal.fire({
-            title: objData.title,
-            text: objData.text,
-            icon: objData.icon,
-            confirmButtonText: "ok",
-          });
-        }
-      }
-    });
-  }
-}
+// function select_libros(e) {
+//   let content = $(e).attr("data-bs-target");
+//   let ajaxUrl = base_url + "donacion/ajax/op1";
+//   if ($(content).html() == "") {
+//     $(content)
+//       .addClass("text-center")
+//       .html(
+//         `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
+//       );
+//     $.get(ajaxUrl, function (data, textStatus) {
+//       if (textStatus == "success") {
+//         let objData = JSON.parse(data);
+//         if (objData["status"]) {
+//           $(content).removeClass("text-center").html(objData["data"]);
+//         } else {
+//           Swal.fire({
+//             title: objData.title,
+//             text: objData.text,
+//             icon: objData.icon,
+//             confirmButtonText: "ok",
+//           });
+//         }
+//       }
+//     });
+//   }
+// }
 
-function new_libro(e) {
-  let content = $(e).attr("data-bs-target");
-  let ajaxUrl = base_url + "donacion/ajax/op2";
-  $(content)
-    .addClass("text-center")
-    .html(
-      `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
-    );
-  $.get(ajaxUrl, function (data, textStatus) {
-    if (textStatus == "success") {
-      let objData = JSON.parse(data);
-      if (objData["status"]) {
-        $(content).removeClass("text-center").html(objData["data"]);
-      } else {
-        Swal.fire({
-          title: objData.title,
-          text: objData.text,
-          icon: objData.icon,
-          confirmButtonText: "ok",
-        });
-      }
-    }
-  });
-}
+// function new_libro(e) {
+//   let content = $(e).attr("data-bs-target");
+//   let ajaxUrl = base_url + "donacion/ajax/op2";
+//   $(content)
+//     .addClass("text-center")
+//     .html(
+//       `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
+//     );
+//   $.get(ajaxUrl, function (data, textStatus) {
+//     if (textStatus == "success") {
+//       let objData = JSON.parse(data);
+//       if (objData["status"]) {
+//         $(content).removeClass("text-center").html(objData["data"]);
+//       } else {
+//         Swal.fire({
+//           title: objData.title,
+//           text: objData.text,
+//           icon: objData.icon,
+//           confirmButtonText: "ok",
+//         });
+//       }
+//     }
+//   });
+// }
 
 function bsc_pro(e) {
   let btn = $("#button-addon2");
@@ -159,7 +169,7 @@ function bsc_pro(e) {
   $.get(ajaxUrl, { a: param }, function (data, textStatus, jqXHR) {
     let objData = JSON.parse(data);
     if (textStatus == "success" && objData.status == true) {
-      $("#idprove").val(objData.data.idprodon);
+      $("#donante").val(objData.data.idprodon);
       $(".lbldoc").html(objData.data.doc);
       $("#lblnombre")
         .html(objData.data.nombre)
@@ -195,6 +205,79 @@ function bsc_pro(e) {
   return false;
 }
 
+function bsc_libro(e) {
+  let btn = $(".btn_cod");
+  let txt = btn.html();
+  let param = $("#cod_isbn").val();
+  let ajaxUrl = base_url + "donacion/libro/" + param;
+  let buton = $("#btnInsert");
+  btn.html(
+    `<div class="spinner-border spinner-border-sm text-light" role="status"><span class="visually-hidden">Loading...</span></div>`
+  );
+  $.get(ajaxUrl, function (data, textStatus, jqXHR) {
+    let objData = JSON.parse(data);
+    if (textStatus == "success" && objData.status == true) {
+      $("#cod_isbn").attr("readonly", true);
+      $("#titulo_lib").val(objData.data.art_nombre).attr("readonly", true);
+      $("#Edic_lib").val(objData.data.art_estado).attr("readonly", true);
+      $("#isbn_10").val(objData.data.art_isbn).attr("readonly", true);
+      $("#det_lib").val(objData.data.art_descri).attr("readonly", true);
+      $("#edit_lib").attr("disabled", true);
+      $("#Edic_lib").attr("readonly", true);
+      $("#Form_lib").attr("disabled", true);
+      $("#autor_lib").attr("disabled", true);
+      $("#cat_lib").attr("readonly", true);
+      $("#pais_lib").attr("disabled", true);
+      $("#isbn_13").val("sin isbn de 13 digitos").attr("readonly", true);
+      btn
+        .removeClass("btn-outline-primary")
+        .addClass("btn-danger")
+        .html(`<i class='bx bx-trash'></i>`)
+        .attr("type", "button")
+        .attr("onclick", "limpiar(this)");
+      buton
+        .attr("data-lib", objData.data.idarticulo)
+        .attr("data-title", objData.data.art_nombre);
+    } else {
+      Swal.fire(objData.title, objData.text, objData.icon);
+      $("#lblnombre").html("");
+      $(".lbldoc").html("");
+      $("#lbldirec").html("");
+      $("#lblcel").html("");
+      $("#lblemail").html("");
+      $("#imgFoto").attr("src", "https://via.placeholder.com/180x270");
+      $("#txtdoc").focus();
+      btn.html(txt);
+      $(".div_hidden").hide("slow");
+    }
+  });
+  return false;
+}
+
+function limpiar(e) {
+  let btn = $(e);
+  $("#cod_isbn").attr("readonly", false).val("");
+  $("#titulo_lib").val("").attr("readonly", false);
+  $("#Edic_lib").val("").attr("readonly", false);
+  $("#isbn_10").val("").attr("readonly", false);
+  $("#det_lib").val("").attr("readonly", false);
+  $("#stock_lib").val("");
+  $("#edit_lib").attr("disabled", false);
+  $("#Edic_lib").attr("readonly", false);
+  $("#Form_lib").attr("disabled", false);
+  $("#autor_lib").attr("disabled", false);
+  $("#cat_lib").attr("readonly", false);
+  $("#pais_lib").attr("disabled", false);
+  $("#isbn_13").val("").attr("readonly", false);
+
+  btn
+    .addClass("btn-outline-primary")
+    .removeClass("btn-danger")
+    .html(`buscar`)
+    .removeAttr("onclick")
+    .attr("type", "submit");
+}
+
 function fn_submit_form(e) {
   let form = $(e);
   let data = new FormData(form[0]);
@@ -221,7 +304,7 @@ function fn_submit_form(e) {
       Swal.fire(objData.title, objData.text, objData.icon);
       if (objData.status == true) {
         form.trigger("reset");
-        $("#idprove").val("");
+        $("#donante").val("");
         $("#cod_ficha").val("");
         $("#tabledetalle tbody").html("");
         $(".div_hidden").hide("slow");

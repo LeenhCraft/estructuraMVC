@@ -37,15 +37,15 @@ class DonacionModel extends Mysql
         return $request;
     }
 
-    public function registrar($idproveedor, $idusuario, $libros, $cant, $codFicha, $estado)
+    public function registrar($idDonante, $idusuario, $libros, $cant, $codFicha, $estado)
     {
         $sql = "INSERT INTO bib_donaciones(don_cod,idprodon,usu_id,don_estado) VALUES(?,?,?,?)";
-        $arrData = array($codFicha, $idproveedor, $idusuario, $estado);
-        $response = $this->insert($sql, $arrData);
-        if ($response > 0) {
+        $arrData = array($codFicha, $idDonante, $idusuario, $estado);
+        $iddonacion = $this->insert($sql, $arrData);
+        if ($iddonacion > 0) {
             for ($i = 0; $i < count($libros); $i++) {
                 $sql = "INSERT INTO bib_detalle_donacion(iddonacion,idarticulo,detd_cantidad) VALUES(?,?,?)";
-                $arrData = array($response, $libros[$i], $cant[$i]);
+                $arrData = array($iddonacion, $libros[$i], $cant[$i]);
                 $response = $this->insert($sql, $arrData);
             }
             $return['status'] = true;
@@ -61,6 +61,13 @@ class DonacionModel extends Mysql
     {
         $sql = "SELECT * FROM bib_articulos WHERE idtipoarticulo = 1 AND art_estado = 1";
         $request = $this->select_all($sql);
+        return $request;
+    }
+
+    public function libro($isbn)
+    {
+        $sql = "SELECT * FROM bib_articulos WHERE idtipoarticulo = 1 AND art_estado = 1 AND art_isbn = '$isbn'";
+        $request = $this->select($sql);
         return $request;
     }
 }
