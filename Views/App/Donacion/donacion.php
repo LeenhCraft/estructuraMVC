@@ -12,7 +12,6 @@
             </div>
             <div class="col-md-10 mb-3 row align-items-center">
                 <label class="col-2 text-start">Código Ficha:</label><label class="col-9 h5 m-0 text-primary fw-bold cod_ficha"></label>
-
             </div>
             <div class="col-10 row align-items-center">
                 <label class="col-2 text-start" for="txtdoc">DNI/R.U.C.:</label>

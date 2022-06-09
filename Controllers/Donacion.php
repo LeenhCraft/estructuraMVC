@@ -72,7 +72,7 @@ class Donacion extends Controllers
                 $idDonante = (isset($_POST['donante'])) ? intval($_POST['donante']) : 0;
                 $libros = (isset($_POST['libro'])) ? $_POST['libro'] : [];
                 $cant = (isset($_POST['cant'])) ? $_POST['cant'] : [];
-                $codFicha = (isset($_POST['cod_ficha'])) ? intval($_POST['cod_ficha']) : generar_numeros(5);
+                $codFicha = (isset($_POST['cod_ficha'])) ? intval($_POST['cod_ficha']) : $this->model->codigo();
                 $idusuario = $_SESSION['lnh_id'];
                 $estado = 1;
 
