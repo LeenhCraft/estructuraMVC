@@ -42,9 +42,10 @@ class Dashboard extends Controllers
                 $cod = (isset($_POST['cod'])) ? strClean($_POST['cod']) : '';
                 $title = (isset($_POST['title'])) ? strClean($_POST['title']) : '';
                 $des = (isset($_POST['des'])) ? strClean($_POST['des']) : '';
+                $isbn = (isset($_POST['isbn'])) ? strClean($_POST['isbn']) : '';
                 $stock = 3;
                 $idtipoart = 1;
-                $request = $this->model->add($cod, $title, $des, $stock, $idtipoart);
+                $request = $this->model->add($cod, $title, $des, $stock, $idtipoart, $isbn);
                 if ($request['status']) {
                     $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se registro el articulo correctamente.');
                 } else {

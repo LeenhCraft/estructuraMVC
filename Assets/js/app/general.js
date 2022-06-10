@@ -69,11 +69,18 @@ function buscar_book(e) {
         contenido.empty();
         $.each(data.items, function (index, value) {
           let cod = value.id;
+          let isbn =
+            value.volumeInfo.industryIdentifiers != undefined
+              ? value.volumeInfo.industryIdentifiers[0].identifier
+              : "";
           let des = "Sin descripción";
           let titulo = "Sin título";
           let autor = "Sin autor";
           value.volumeInfo.description != undefined
-            ? (des = value.volumeInfo.description.replace(/\s+/g, " ").trim())
+            ? (des = value.volumeInfo.description
+                .replace(/['"]+/gm, " ")
+                .replace(/(\r\n|\n|\r)/gm, "")
+                .trim())
             : (des = "Sin descripción");
           value.volumeInfo.title != undefined
             ? (titulo = value.volumeInfo.title)
@@ -106,6 +113,8 @@ function buscar_book(e) {
               `,` +
               "`" +
               des +
+              "`,`" +
+              isbn +
               "`" +
               `)">Agregar a la DB</button>
                 </div>
@@ -139,30 +148,34 @@ function cerrar() {
   $(".div_search").hide("slow");
 }
 
-function add_db(ths, cod, titulo, descr) {
+function add_db(ths, cod, titulo, descr, isbn) {
   let btn = $(ths);
   let loading = `<div class="spinner-border spinner-border-sm text-white mx-auto" role="status"><span class="visually-hidden">Loading...</span></div>`;
   btn.html(loading + "  Agregando");
   let ajaxUrl = base_url + "dashboard/add";
-  $.post(ajaxUrl, { cod: cod, title: titulo, des: descr }, function (data) {
-    let objData = JSON.parse(data);
-    if (objData.status == true) {
-      console.log(objData.text);
-      btn
-        .html("<i class='bx bx-check me-2'></i>Agregado")
-        .removeAttr("class")
-        .attr("class", "btn btn-outline-primary btn-sm")
-        .attr("disabled", true);
-    } else {
-      console.log(objData.text);
-      let clas = "btn btn-outline-" + objData.icon + " btn-sm";
-      btn
-        .html("<i class='bx bx-error-alt me-2'></i>" + objData.text)
-        .removeAttr("class")
-        .attr("class", clas)
-        .attr("disabled", true);
+  $.post(
+    ajaxUrl,
+    { cod: cod, title: titulo, des: descr, isbn: isbn },
+    function (data) {
+      let objData = JSON.parse(data);
+      if (objData.status == true) {
+        console.log(objData.text);
+        btn
+          .html("<i class='bx bx-check me-2'></i>Agregado")
+          .removeAttr("class")
+          .attr("class", "btn btn-outline-primary btn-sm")
+          .attr("disabled", true);
+      } else {
+        console.log(objData.text);
+        let clas = "btn btn-outline-" + objData.icon + " btn-sm";
+        btn
+          .html("<i class='bx bx-error-alt me-2'></i>" + objData.text)
+          .removeAttr("class")
+          .attr("class", clas)
+          .attr("disabled", true);
+      }
     }
-  });
+  );
 }
 
 function add_carrito(e, id) {
