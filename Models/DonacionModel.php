@@ -70,4 +70,19 @@ class DonacionModel extends Mysql
         $request = $this->select($sql);
         return $request;
     }
+
+    public function reg_book($titulo, $codLib, $isbn, $detalle, $idtipoarticulo)
+    {
+        $sql = "INSERT INTO bib_articulos(art_cod,art_isbn,art_nombre,art_descri,idtipoarticulo) VALUES(?,?,?,?,?)";
+        $arrData = array($codLib, $isbn, $titulo, $detalle, $idtipoarticulo);
+        $response = $this->insert($sql, $arrData);
+        if($response>0){
+            $return['status'] = true;
+            $return['text'] = $response;
+        }else{
+            $return['status'] = true;
+            $return['text'] = 'Ocurrio un error al intentar registrar el libro, por favor vuelva a intentarlo.';
+        }
+        return $return;
+    }
 }

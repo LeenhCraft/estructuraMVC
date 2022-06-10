@@ -22,54 +22,75 @@ function lstlibros(param) {
 }
 
 function agregarDetalle(e) {
-  var libro_id = $(e).attr("data-lib") != null ? $(e).attr("data-lib") : "";
-  var libro_titulo =
-    $(e).attr("data-title") != null ? $(e).attr("data-title") : "";
-  var cantidad = $("#stock_lib").val();
-  var tabladet = $("#tabledetalle tbody");
-  if (libro_id != "") {
-    if (cantidad != "" && cantidad > 0) {
-      var detalle = tabladet.find('tr[data-id="' + libro_id + '"]');
-      if ($(detalle).length) {
-        var inputcant = detalle.find("input.cant");
-        var cantotal = parseInt(cantidad) + parseInt(inputcant.val());
-        inputcant.val(cantotal);
-      } else {
-        tabladet.prepend(`
-              <tr data-id="${libro_id}" style="display:none">
-                  <td scope="row">
-                      <input type="hidden" name="libro[]" value="${libro_id}">
-                      ${libro_titulo}
-                  </td>
-                  <td><input class="form-control form-control-sm cant text-center" name="cant[]" type="text" value="${cantidad}"></td>
-                  <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" onclick="mostrarInformacionDetalle(ths, evnt, ${libro_id})" class="btn btn-sm py-0 btn-warning d-none">
-                            <i class='bx bx-search-alt-2'></i>
-                          </button>
-                          <button type="button" onclick="eliminarDetalle(this, event, '${libro_id}')" class="btn btn-sm py-0 btn-danger">
-                            <i class='bx bx-trash'></i>
-                          </button>
-                      </div>
-                  </td>
-              </tr>`);
-        $('[data-id="' + libro_id + '"]').show("fast");
+  let btn = $(e);
+  if (btn.attr("lnh-op") == "new") {
+    let form = $(".frm_new_lib").serialize();
+    let ajaxUrl = base_url + "donacion/newbook";
+    $.post(ajaxUrl, form, function (data, textStatus, jqXHR) {
+      let objData = JSON.parse(data);
+      Toast.fire({
+        icon: objData.icon,
+        title: objData.text,
+      });
+      if (objData.status) {
+        let buton = $("#btnInsert");
+        buton
+          .attr("data-lib", objData.data)
+          .attr("data-title", $("#titulo_lib").val())
+          .removeAttr("lnh-op")
+          .trigger("click");
       }
-      // $("#libros").val(null).trigger("change");
-      // $("#detll3").val(1);
-      $(e).removeAttr("data-lib").removeAttr("data-title");
-      limpiar($(".btn_cod"));
+    });
+  } else {
+    var libro_id = btn.attr("data-lib") != null ? btn.attr("data-lib") : "";
+    var libro_titulo =
+      btn.attr("data-title") != null ? btn.attr("data-title") : "";
+    var cantidad = $("#stock_lib").val();
+    var tabladet = $("#tabledetalle tbody");
+    if (libro_id != "") {
+      if (cantidad != "" && cantidad > 0) {
+        var detalle = tabladet.find('tr[data-id="' + libro_id + '"]');
+        if ($(detalle).length) {
+          var inputcant = detalle.find("input.cant");
+          var cantotal = parseInt(cantidad) + parseInt(inputcant.val());
+          inputcant.val(cantotal);
+        } else {
+          tabladet.prepend(`
+                <tr data-id="${libro_id}" style="display:none">
+                    <td scope="row">
+                        <input type="hidden" name="libro[]" value="${libro_id}">
+                        ${libro_titulo}
+                    </td>
+                    <td><input class="form-control form-control-sm cant text-center" name="cant[]" type="text" value="${cantidad}"></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" onclick="mostrarInformacionDetalle(ths, evnt, ${libro_id})" class="btn btn-sm py-0 btn-warning d-none">
+                              <i class='bx bx-search-alt-2'></i>
+                            </button>
+                            <button type="button" onclick="eliminarDetalle(this, event, '${libro_id}')" class="btn btn-sm py-0 btn-danger">
+                              <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`);
+          $('[data-id="' + libro_id + '"]').show("fast");
+        }
+        // $("#libros").val(null).trigger("change");
+        // $("#detll3").val(1);
+        btn.removeAttr("data-lib").removeAttr("data-title");
+        limpiar($(".btn_cod"));
+      } else {
+        Toast.fire({
+          icon: "warning",
+          title: "Ingrese una cantidad valida!!",
+        });
+      }
     } else {
       Toast.fire({
         icon: "warning",
-        title: "Ingrese una cantidad valida!!",
+        title: "Seleccione un libro!!",
       });
     }
-  } else {
-    Toast.fire({
-      icon: "warning",
-      title: "Seleccione un libro!!",
-    });
   }
 }
 
@@ -105,58 +126,6 @@ function load_cod(e) {
     }
   });
 }
-
-// function select_libros(e) {
-//   let content = $(e).attr("data-bs-target");
-//   let ajaxUrl = base_url + "donacion/ajax/op1";
-//   if ($(content).html() == "") {
-//     $(content)
-//       .addClass("text-center")
-//       .html(
-//         `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
-//       );
-//     $.get(ajaxUrl, function (data, textStatus) {
-//       if (textStatus == "success") {
-//         let objData = JSON.parse(data);
-//         if (objData["status"]) {
-//           $(content).removeClass("text-center").html(objData["data"]);
-//         } else {
-//           Swal.fire({
-//             title: objData.title,
-//             text: objData.text,
-//             icon: objData.icon,
-//             confirmButtonText: "ok",
-//           });
-//         }
-//       }
-//     });
-//   }
-// }
-
-// function new_libro(e) {
-//   let content = $(e).attr("data-bs-target");
-//   let ajaxUrl = base_url + "donacion/ajax/op2";
-//   $(content)
-//     .addClass("text-center")
-//     .html(
-//       `<div class="spinner-border spinner-border-lg text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`
-//     );
-//   $.get(ajaxUrl, function (data, textStatus) {
-//     if (textStatus == "success") {
-//       let objData = JSON.parse(data);
-//       if (objData["status"]) {
-//         $(content).removeClass("text-center").html(objData["data"]);
-//       } else {
-//         Swal.fire({
-//           title: objData.title,
-//           text: objData.text,
-//           icon: objData.icon,
-//           confirmButtonText: "ok",
-//         });
-//       }
-//     }
-//   });
-// }
 
 function bsc_pro(e) {
   let btn = $("#button-addon2");
@@ -237,7 +206,8 @@ function bsc_libro(e) {
         .attr("onclick", "limpiar(this)");
       buton
         .attr("data-lib", objData.data.idarticulo)
-        .attr("data-title", objData.data.art_nombre);
+        .attr("data-title", objData.data.art_nombre)
+        .removeAttr("lnh-op");
     } else {
       Swal.fire(objData.title, objData.text, objData.icon);
       $("#lblnombre").html("");
@@ -256,6 +226,7 @@ function bsc_libro(e) {
 
 function limpiar(e) {
   let btn = $(e);
+  let buton = $("#btnInsert");
   $("#cod_isbn").attr("readonly", false).val("");
   $("#titulo_lib").val("").attr("readonly", false);
   $("#Edic_lib").val("").attr("readonly", false);
@@ -266,7 +237,7 @@ function limpiar(e) {
   $("#Edic_lib").attr("readonly", false);
   $("#Form_lib").attr("disabled", false);
   $("#autor_lib").attr("disabled", false);
-  $("#cat_lib").attr("readonly", false);
+  $("#cat_lib").val("").attr("readonly", false);
   $("#pais_lib").attr("disabled", false);
   $("#isbn_13").val("").attr("readonly", false);
 
@@ -276,6 +247,7 @@ function limpiar(e) {
     .html(`buscar`)
     .removeAttr("onclick")
     .attr("type", "submit");
+  buton.removeAttr("data-lib").removeAttr("data-title").attr("lnh-op", "new");
 }
 
 function fn_submit_form(e) {

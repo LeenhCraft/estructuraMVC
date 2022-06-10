@@ -83,7 +83,7 @@
                             </div>
                         </form>
                     </div>
-                    <form class="row">
+                    <form class="row frm_new_lib">
                         <div class="col-md-12 row mb-2">
                             <div class="col-md-12">
                                 <label class="form-label">Título</label>
@@ -146,10 +146,10 @@
                             <label class="form-label">Detalle</label>
                             <input id="det_lib" name="det_lib" type="text" class="form-control">
                         </div>
-                        <div class="col-md-12 text-end pb-3 border-bottom">
-                            <button id="btnInsert" type="button" class="btn btn-primary text-capitalize" onclick="agregarDetalle(this)">Insertar libro</button>
-                        </div>
                     </form>
+                    <div class="col-md-12 text-end pb-3 border-bottom">
+                        <button id="btnInsert" type="button" class="btn btn-primary text-capitalize" onclick="agregarDetalle(this)" lnh-op="new">Insertar libro</button>
+                    </div>
 
                 </div>
             </div>

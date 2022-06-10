@@ -140,4 +140,36 @@ class Donacion extends Controllers
         }
         die();
     }
+
+    public function newbook()
+    {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === "POST") {
+            $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => 'No tiene los permisos necesarios.');
+            if ($this->permisos['perm_w'] == 1) {
+                //asignar variables
+                $titulo = (isset($_POST['titulo_lib'])) ? strClean($_POST['titulo_lib']) : '';
+                $codLib = passGenerator(12);
+                $detalle = (isset($_POST['det_lib'])) ? strClean($_POST['det_lib']) : '';
+                $isbn = (isset($_POST['isbn_10'])) ? intval($_POST['isbn_10']) : 0;
+                $idusuario = $_SESSION['lnh_id'];
+                $idtipoarticulo = 1;
+
+                //validar
+                if (!empty($titulo)) {
+                    //registrar
+                    $request = $this->model->reg_book($titulo, $codLib, $isbn, $detalle, $idtipoarticulo);
+                    if ($request['status']) {
+                        $arrResponse = array("status" => true, 'icon' => 'success', 'title' => 'Exito!!', "text" => 'Se registro la donación correctamente.', 'data' => $request['text']);
+                    } else {
+                        $arrResponse = array("status" => false, 'icon' => 'info', 'title' => 'Atención!!', "text" => $request['text']);
+                    }
+                } else {
+                    $arrResponse = array("status" => false, 'icon' => 'warning', 'title' => 'Atención!!', "text" => 'Ingrese el titulo del libro para continuar.');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        } else {
+            header('Location: ' . base_url());
+        }
+    }
 }
